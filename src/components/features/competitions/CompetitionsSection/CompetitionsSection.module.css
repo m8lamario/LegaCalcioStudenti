@@ -1,0 +1,385 @@
+.section {
+  padding: var(--lcs-space-20) 0;
+  background-color: var(--lcs-bg-main);
+  border-bottom: 1px solid var(--lcs-border-default);
+}
+
+.container {
+  max-width: var(--lcs-container-max);
+  margin: 0 auto;
+  padding: 0 var(--lcs-container-padding);
+}
+
+.topRow {
+  margin-bottom: var(--lcs-space-6);
+}
+
+.headerOverride {
+  margin-bottom: 0;
+}
+
+/* ========================================================================
+   FILTER BAR
+   ======================================================================== */
+.filterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: var(--lcs-space-8);
+  padding: 0.75rem 1rem;
+  background-color: var(--lcs-bg-elevated);
+  border: 1px solid var(--lcs-border-subtle);
+  border-radius: var(--lcs-radius-sm);
+}
+
+.filterTabs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  background-color: transparent;
+  color: var(--lcs-text-secondary);
+  border: 1px solid transparent;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background-color var(--lcs-transition-fast),
+              color var(--lcs-transition-fast),
+              border-color var(--lcs-transition-fast);
+}
+
+.filterBtn:hover {
+  color: var(--lcs-text-primary);
+  background-color: var(--lcs-bg-card);
+}
+
+.filterBtnActive {
+  background-color: var(--lcs-blue-primary);
+  color: var(--lcs-text-primary);
+  border-color: var(--lcs-blue-primary);
+}
+
+.filterLegend {
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-text-xs);
+  font-weight: 300;
+  color: var(--lcs-text-secondary);
+}
+
+/* ========================================================================
+   COMPETITIONS GRID
+   ======================================================================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--lcs-space-6);
+}
+
+.card {
+  background-color: var(--lcs-bg-card);
+  border: 1px solid var(--lcs-border-default);
+  border-radius: var(--lcs-radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--lcs-transition-base),
+              border-color var(--lcs-transition-base),
+              background-color var(--lcs-transition-base);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--lcs-aqua);
+  background-color: var(--lcs-bg-card-hover);
+}
+
+.cardFeatured {
+  border-top: 3px solid var(--lcs-aqua);
+}
+
+/* Banner Header with City Illustration & Official Emblem */
+.visualBanner {
+  position: relative;
+  height: 175px;
+  background-color: var(--lcs-blue-institutional);
+  overflow: hidden;
+  border-bottom: 1px solid var(--lcs-border-default);
+}
+
+.bannerImg {
+  object-fit: cover;
+  object-position: center;
+  transition: transform var(--lcs-transition-slow);
+}
+
+.card:hover .bannerImg {
+  transform: scale(1.05);
+}
+
+.bannerOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(14, 16, 22, 0.48);
+  pointer-events: none;
+}
+
+.bannerTopBar {
+  position: absolute;
+  top: 0.85rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.cityTag {
+  background-color: rgba(14, 16, 22, 0.88);
+  color: var(--lcs-text-primary);
+  border: 1px solid var(--lcs-border-default);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.emblemBox {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 1rem;
+  width: 58px;
+  height: 58px;
+  background-color: var(--lcs-bg-main);
+  border: 2px solid var(--lcs-border-strong);
+  border-radius: var(--lcs-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: border-color var(--lcs-transition-fast);
+}
+
+.card:hover .emblemBox {
+  border-color: var(--lcs-aqua);
+}
+
+.emblemImg {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.emblemFallback {
+  font-family: var(--lcs-font-display);
+  font-size: 1.25rem;
+  color: var(--lcs-text-primary);
+}
+
+/* Card Body */
+.cardBody {
+  padding: 1.35rem 1.35rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1.15rem;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.seasonTag {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--lcs-aqua);
+}
+
+.cupTitle {
+  font-family: var(--lcs-font-display);
+  font-size: 2.15rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0;
+}
+
+.titleLink {
+  color: var(--lcs-text-primary);
+  text-decoration: none;
+  transition: color var(--lcs-transition-fast);
+}
+
+.titleLink:hover {
+  color: var(--lcs-aqua);
+}
+
+.cupSubtitle {
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-text-sm);
+  font-weight: 300;
+  color: var(--lcs-text-secondary);
+  margin: 0.15rem 0 0 0;
+  line-height: 1.45;
+}
+
+/* Stats Row */
+.statsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  padding: 0.9rem;
+  background-color: var(--lcs-bg-elevated);
+  border: 1px solid var(--lcs-border-subtle);
+  border-radius: var(--lcs-radius-xs);
+}
+
+.statBox {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.statNumber {
+  font-family: var(--lcs-font-display);
+  font-size: 1.85rem;
+  line-height: 1;
+  color: var(--lcs-text-primary);
+}
+
+.statText {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lcs-text-secondary);
+}
+
+.statBoxWide {
+  grid-column: 1 / -1;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--lcs-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.venueLabel {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--lcs-text-secondary);
+}
+
+.venueValue {
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-text-xs);
+  font-weight: 700;
+  color: var(--lcs-text-primary);
+}
+
+/* Card Footer */
+.cardFooter {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--lcs-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.quickSubLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.subLink {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--lcs-text-secondary);
+  text-decoration: none;
+  transition: color var(--lcs-transition-fast);
+}
+
+.subLink:hover {
+  color: var(--lcs-text-primary);
+}
+
+.dotSep {
+  color: var(--lcs-border-strong);
+  font-size: 0.75rem;
+}
+
+.primaryCardCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--lcs-blue-institutional);
+  color: var(--lcs-text-primary);
+  border: 1px solid var(--lcs-border-default);
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color var(--lcs-transition-fast),
+              color var(--lcs-transition-fast),
+              border-color var(--lcs-transition-fast);
+}
+
+.card:hover .primaryCardCta {
+  background-color: var(--lcs-aqua);
+  color: var(--lcs-text-on-aqua);
+  border-color: var(--lcs-aqua);
+}
+
+/* ========================================================================
+   RESPONSIVE BREAKPOINTS
+   ======================================================================== */
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding: var(--lcs-space-12) 0;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filterLegend {
+    display: none;
+  }
+}

@@ -99,6 +99,7 @@ const leagueSections = (league, matches) => {
 
 export async function generateStaticParams() {
     const localLeagues = await getLeagueBySlug();
+    if (!Array.isArray(localLeagues)) return [];
     return localLeagues.flatMap((league) => {
         const slug = league.slug?.toLowerCase();
         if (!slug) return [];

@@ -4,9 +4,10 @@ import "./Squadre.css";
 import { getLeagueBySlug } from "@/lib/queries";
 
 export default async function Squadre() {
-    const localLeagues = await getLeagueBySlug();
+    const rawLocalLeagues = await getLeagueBySlug();
+    const localLeagues = Array.isArray(rawLocalLeagues) ? rawLocalLeagues : [];
     const totalCities = localLeagues.length;
-    const totalTeams = localLeagues.reduce((acc, league) => acc + (Array.isArray(league.teams) ? league.teams.length : 0), 0);
+    const totalTeams = localLeagues.reduce((acc, league) => acc + (Array.isArray(league?.teams) ? league.teams.length : 0), 0);
 
     const formatSteps = [
         {

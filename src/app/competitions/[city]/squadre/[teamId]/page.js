@@ -48,15 +48,17 @@ const buildRoster = (team) => team.players.map((player, index) => {
 
 export async function generateStaticParams() {
     const leagues = await getLeagueBySlug();
+    if (!Array.isArray(leagues)) return [];
     return leagues.flatMap((league) => (
-        Array.isArray(league.teams)
+        Array.isArray(league?.teams)
             ? league.teams.map((team) => ({ city: league.slug, teamId: team.slug }))
             : []
     ));
 }
 
 export async function generateMetadata({ params }) {
-    const { city, teamId } = params;
+    const resolvedParams = await params;
+    const { city, teamId } = resolvedParams;
     const citySlug = normalizeSlug(city);
     const teamSlug = normalizeSlug(teamId);
     const { league, team } = findCombinedTeam(citySlug, teamSlug);
@@ -70,7 +72,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function TeamPage({ params }) {
-    const { city, teamId } = params;
+    const resolvedParams = await params;
+    const { city, teamId } = resolvedParams;
     const citySlug = normalizeSlug(city);
     const teamSlug = normalizeSlug(teamId);
     const { league, team } = await findCombinedTeam(citySlug, teamSlug);

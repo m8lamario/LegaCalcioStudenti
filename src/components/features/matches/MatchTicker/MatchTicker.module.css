@@ -1,0 +1,116 @@
+.tickerWrapper {
+  background-color: var(--lcs-bg-subtle);
+  border-bottom: 1px solid var(--lcs-border-default);
+  padding: 0.65rem 0;
+  width: 100%;
+}
+
+.inner {
+  max-width: var(--lcs-container-max);
+  margin: 0 auto;
+  padding: 0 var(--lcs-container-padding);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.labelCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 155px;
+  border-right: 1px solid var(--lcs-border-default);
+  padding-right: 1.25rem;
+}
+
+.statusBox {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--lcs-aqua);
+}
+
+.tickerTitle {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--lcs-text-primary);
+  white-space: nowrap;
+}
+
+.allMatchesLink {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--lcs-aqua);
+  text-decoration: none;
+}
+
+.allMatchesLink:hover {
+  text-decoration: underline;
+}
+
+.scrollTrackWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+}
+
+.scrollTrack {
+  display: flex;
+  align-items: stretch;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.15rem 0;
+  flex: 1;
+}
+
+.scrollTrack::-webkit-scrollbar {
+  display: none;
+}
+
+.matchItem {
+  flex-shrink: 0;
+}
+
+.navButton {
+  background-color: var(--lcs-bg-elevated);
+  border: 1px solid var(--lcs-border-default);
+  color: var(--lcs-text-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--lcs-radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: background-color var(--lcs-transition-fast), color var(--lcs-transition-fast);
+}
+
+.navButton:hover {
+  background-color: var(--lcs-aqua);
+  color: var(--lcs-text-on-aqua);
+  border-color: var(--lcs-aqua);
+}
+
+@media (max-width: 768px) {
+  .labelCol {
+    display: none;
+  }
+}

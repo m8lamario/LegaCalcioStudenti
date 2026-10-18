@@ -1,0 +1,468 @@
+.hero {
+  position: relative;
+  width: 100%;
+  background-color: var(--lcs-bg-main);
+  border-bottom: 1px solid var(--lcs-border-default);
+  padding: var(--lcs-space-10) 0 var(--lcs-space-12);
+}
+
+.container {
+  max-width: var(--lcs-container-max);
+  margin: 0 auto;
+  padding: 0 var(--lcs-container-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--lcs-space-10);
+}
+
+/* ========================================================================
+   ASYMMETRIC EDITORIAL GRID
+   ======================================================================== */
+.editorialGrid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--lcs-space-10);
+  align-items: stretch;
+}
+
+.copyColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--lcs-space-5);
+}
+
+.metaTop {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.scriptMotto {
+  font-family: var(--lcs-font-script);
+  font-size: 1.45rem;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  text-transform: none;
+  color: var(--lcs-aqua);
+  letter-spacing: 0.01em;
+  line-height: 1;
+  font-feature-settings: "liga" 1, "kern" 1;
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--lcs-font-display);
+  font-size: clamp(3.1rem, 5.6vw, 5.25rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--lcs-text-primary);
+}
+
+.headlineTop {
+  display: block;
+}
+
+.headlineAccent {
+  display: inline-block;
+  color: var(--lcs-aqua);
+}
+
+.headlineBottom {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.22em;
+}
+
+.headlineScriptWord {
+  font-family: var(--lcs-font-script);
+  font-size: 0.92em;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  color: var(--lcs-aqua);
+  line-height: 0.9;
+  font-feature-settings: "liga" 1, "kern" 1;
+}
+
+.payoff {
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-text-base);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--lcs-text-secondary);
+  margin: 0;
+  max-width: 540px;
+}
+
+.payoff strong {
+  color: var(--lcs-text-primary);
+  font-weight: 700;
+}
+
+.payoff em {
+  color: var(--lcs-text-primary);
+  font-style: normal;
+  border-bottom: 1px solid var(--lcs-aqua);
+}
+
+.ctaGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  padding-top: 0.25rem;
+}
+
+.featuredCupsNote {
+  margin-top: var(--lcs-space-2);
+  padding-top: var(--lcs-space-4);
+  border-top: 1px solid var(--lcs-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.noteLabel {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--lcs-text-secondary);
+}
+
+.noteLinks {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.noteLink {
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-text-xs);
+  font-weight: 700;
+  color: var(--lcs-text-primary);
+  text-decoration: none;
+  transition: color var(--lcs-transition-fast);
+}
+
+.noteLink:hover {
+  color: var(--lcs-aqua);
+}
+
+.sep {
+  color: var(--lcs-border-strong);
+  font-size: var(--lcs-text-xs);
+}
+
+/* ========================================================================
+   SCENIC PHOTOGRAPHIC STAGE
+   ======================================================================== */
+.stageColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.photoFrame {
+  position: relative;
+  width: 100%;
+  background-color: var(--lcs-bg-card);
+  border: 1px solid var(--lcs-border-default);
+  border-radius: var(--lcs-radius-md);
+  overflow: hidden;
+  box-shadow: var(--lcs-shadow-elevated);
+}
+
+.imageAspect {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 360px;
+}
+
+.stageImage {
+  object-fit: cover;
+  object-position: center;
+  transition: transform var(--lcs-transition-slow);
+}
+
+.photoFrame:hover .stageImage {
+  transform: scale(1.02);
+}
+
+.solidTint {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(14, 16, 22, 0.22);
+  pointer-events: none;
+}
+
+.photoBadgeBar {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.photoCode {
+  background-color: var(--lcs-blue-institutional);
+  color: var(--lcs-text-primary);
+  border: 1px solid rgba(244, 247, 251, 0.22);
+  padding: 0.3rem 0.65rem;
+  font-family: var(--lcs-font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  border-radius: var(--lcs-radius-xs);
+}
+
+.photoLocation {
+  background-color: rgba(14, 16, 22, 0.88);
+  color: var(--lcs-aqua);
+  border: 1px solid var(--lcs-border-default);
+  padding: 0.3rem 0.7rem;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: var(--lcs-radius-xs);
+}
+
+.photoCaptionBox {
+  background-color: var(--lcs-bg-elevated);
+  border-top: 1px solid var(--lcs-border-default);
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.captionCopy {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.captionScriptTag {
+  font-family: var(--lcs-font-script);
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  text-transform: none;
+  color: var(--lcs-aqua);
+  line-height: 1;
+}
+
+.captionTitle {
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-text-sm);
+  font-weight: 700;
+  color: var(--lcs-text-primary);
+  margin: 0;
+}
+
+.captionLink {
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--lcs-aqua);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.captionLink:hover {
+  text-decoration: underline;
+}
+
+/* Interactive Slide Selector */
+.slideSelector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+.slideTab {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.9rem;
+  background-color: var(--lcs-bg-elevated);
+  border: 1px solid var(--lcs-border-subtle);
+  border-top: 2px solid transparent;
+  border-radius: var(--lcs-radius-xs);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--lcs-transition-fast), border-color var(--lcs-transition-fast);
+}
+
+.slideTab:hover {
+  background-color: var(--lcs-bg-card);
+  border-color: var(--lcs-border-default);
+}
+
+.slideTabActive {
+  background-color: var(--lcs-bg-card);
+  border-color: var(--lcs-border-default);
+  border-top-color: var(--lcs-aqua);
+}
+
+.slideTabNum {
+  font-family: var(--lcs-font-display);
+  font-size: 1.25rem;
+  color: var(--lcs-aqua);
+  line-height: 1;
+}
+
+.slideTabText {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--lcs-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ========================================================================
+   STATS STRIP (Editorial Numbers in Komu New C)
+   ======================================================================== */
+.statsStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: var(--lcs-bg-elevated);
+  border: 1px solid var(--lcs-border-default);
+  border-radius: var(--lcs-radius-sm);
+}
+
+.statCell {
+  padding: 1.25rem 1.5rem;
+  border-right: 1px solid var(--lcs-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.statCell:last-child {
+  border-right: none;
+}
+
+.statTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statIndex {
+  font-family: var(--lcs-font-display);
+  font-size: 0.95rem;
+  color: var(--lcs-blue-primary);
+  letter-spacing: 0.06em;
+}
+
+.statHint {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 300;
+  color: var(--lcs-text-secondary);
+}
+
+.statMain {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.statValue {
+  font-family: var(--lcs-font-display);
+  font-size: 2.75rem;
+  line-height: 0.9;
+  color: var(--lcs-text-primary);
+  letter-spacing: 0.02em;
+}
+
+.statLabel {
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lcs-aqua);
+}
+
+/* ========================================================================
+   RESPONSIVE BREAKPOINTS
+   ======================================================================== */
+@media (max-width: 1080px) {
+  .editorialGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .payoff {
+    max-width: 100%;
+  }
+
+  .statsStrip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statCell:nth-child(2) {
+    border-right: none;
+  }
+
+  .statCell:nth-child(1),
+  .statCell:nth-child(2) {
+    border-bottom: 1px solid var(--lcs-border-subtle);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: var(--lcs-space-6) 0 var(--lcs-space-8);
+  }
+
+  .imageAspect {
+    min-height: 250px;
+  }
+
+  .slideSelector {
+    grid-template-columns: 1fr;
+  }
+
+  .photoCaptionBox {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .statsStrip {
+    grid-template-columns: 1fr;
+  }
+
+  .statCell {
+    border-right: none;
+    border-bottom: 1px solid var(--lcs-border-subtle);
+  }
+
+  .statCell:last-child {
+    border-bottom: none;
+  }
+}

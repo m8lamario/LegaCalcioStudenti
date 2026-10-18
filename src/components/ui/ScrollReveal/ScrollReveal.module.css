@@ -1,0 +1,31 @@
+.revealWrapper {
+  will-change: opacity, transform;
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.initial {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revealWrapper,
+  .hidden,
+  .visible,
+  .initial {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

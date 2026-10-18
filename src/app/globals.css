@@ -1,3 +1,5 @@
+@import "../styles/variables.css";
+
 /* Rimuove il gap in alto che causa la riga nera */
 html, body, #__next {
     margin: 0;
@@ -29,9 +31,19 @@ html, body, #__next {
     --fs-h4-mobile: 16px;
     --lt-row-gap: 18px;
 }
+html {
+    scroll-behavior: smooth;
+    font-family: var(--lcs-font-sans);
+    background-color: var(--lcs-bg-main);
+    color: var(--lcs-text-primary);
+}
 body{
     margin:0;
-    background-color: var(--primary);
+    background-color: var(--lcs-bg-main);
+    color: var(--lcs-text-primary);
+    font-family: var(--lcs-font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .logo{font-weight:700}
 .main{

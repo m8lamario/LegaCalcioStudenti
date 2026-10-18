@@ -77,73 +77,64 @@ const buildTopScorers = (matches = [], limit = 3) => {
     * if no param is provided, it will fetch all items of that type (e.g., all leagues, all matches)
 */
 
-export async function getLeagueBySlug(slug = null) {
-    const slugComponent = slug? `${slug}/` : '';
-    const response = await fetch(`${API_URL_BASE}/local-leagues/${slugComponent}`, {next: { revalidate: REVALIDATE_HOUR }});
-    if (!response.ok) {
-        console.warn(`Failed to fetch league: ${response.status}`);
+async function safeFetch(path, options) {
+    if (!API_URL_BASE) return null;
+    try {
+        const fullUrl = `${API_URL_BASE.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+        const response = await fetch(fullUrl, options);
+        if (!response.ok) {
+            console.warn(`Failed to fetch ${fullUrl}: ${response.status}`);
+            return null;
+        }
+        return await response.json();
+    } catch (error) {
+        console.warn(`Error fetching ${path}:`, error?.message);
         return null;
     }
-    return await response.json();
+}
+
+export async function getLeagueBySlug(slug = null) {
+    const slugComponent = slug ? `${slug}/` : '';
+    return await safeFetch(`local-leagues/${slugComponent}`, { next: { revalidate: REVALIDATE_HOUR } });
 }
 
 export async function getMatchesByLeagueSlug(leagueSlug = null) {
-    const filter = leagueSlug ? "?local-league=" + leagueSlug : "";
-    const response = await fetch(`${API_URL_BASE}/matches/${filter}`, {next: { revalidate: REVALIDATE_HOUR/10 }});
-    if (!response.ok) {
-        console.warn(`Failed to fetch matches: ${response.status}`);
-        return null;
-    }
-    return await response.json();
+    const filter = leagueSlug ? `?local-league=${leagueSlug}` : '';
+    return await safeFetch(`matches/${filter}`, { next: { revalidate: REVALIDATE_HOUR / 10 } });
 }
 
 export async function getMatchById(matchId = null) {
     const slugComponent = matchId ? `${matchId}/` : '';
-    const response = await fetch(`${API_URL_BASE}/matches/${slugComponent}`, {next: { revalidate: REVALIDATE_HOUR/10 }});
-    if (!response.ok) {
-        console.warn(`Failed to fetch match: ${response.status}`);
-        return null;
-    }   
-    return await response.json();
+    return await safeFetch(`matches/${slugComponent}`, { next: { revalidate: REVALIDATE_HOUR / 10 } });
 }
 
 export async function getTeamBySlug(teamSlug = null) {
     const slugComponent = teamSlug ? `${teamSlug}/` : '';
-    const response = await fetch(`${API_URL_BASE}/teams/${slugComponent}`, {next: { revalidate: REVALIDATE_HOUR }});
-    if (!response.ok) {
-        console.warn(`Failed to fetch team: ${response.status}`);
-        return null;
-    }
-    return await response.json();
+    return await safeFetch(`teams/${slugComponent}`, { next: { revalidate: REVALIDATE_HOUR } });
 }
 
 export async function getNewsBySlug(slug = null) {
     const slugComponent = slug ? `${slug}/` : '';
-    const response = await fetch(`${API_URL_BASE}/news/${slugComponent}`, {next: { revalidate: REVALIDATE_HOUR/10 }});
-    if (!response.ok) {
-        console.warn(`Failed to fetch news: ${response.status}`);
-        return null;
-    }
-    return await response.json();
+    return await safeFetch(`news/${slugComponent}`, { next: { revalidate: REVALIDATE_HOUR / 10 } });
 }
 
 export async function getNewsByLeagueSlug(leagueSlug = null) {
-    const filter = leagueSlug ? "?local-league=" + leagueSlug : "";
-    const response = await fetch(`${API_URL_BASE}/news/${filter}`, {next: { revalidate: REVALIDATE_HOUR/10 }});
-    if (!response.ok) {
-        console.warn(`Failed to fetch news by league: ${response.status}`);
-        return null;
-    }
-    return await response.json();
+    const filter = leagueSlug ? `?local-league=${leagueSlug}` : '';
+    return await safeFetch(`news/${filter}`, { next: { revalidate: REVALIDATE_HOUR / 10 } });
 }
 
 export async function getLiveDrawStatus() {
-    const response = await fetch(LIVE_SORTEGGIO_URL, { cache: 'no-store' });
-    if (!response.ok) {
-        console.warn(`Failed to fetch live draw status: ${response.status}`);
+    try {
+        const response = await fetch(LIVE_SORTEGGIO_URL, { cache: 'no-store' });
+        if (!response.ok) {
+            console.warn(`Failed to fetch live draw status: ${response.status}`);
+            return null;
+        }
+        return await response.json();
+    } catch (error) {
+        console.warn(`Error fetching live draw status:`, error?.message);
         return null;
     }
-    return await response.json();
 }
 
 export async function getTopScorersByLeagueSlug(leagueSlug, limit = 3) {
