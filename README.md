@@ -1,97 +1,36 @@
-# frontend-lcs
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Frontend Next.js per LCS con gestione accrediti settimanali dedicata alla Leonessa Cup.
+## Getting Started
 
-## Requisiti
-
-- Node.js 18+
-- Progetto Supabase attivo
-
-## Setup rapido
-
-1) Installa dipendenze
-
-```bash
-npm install
-```
-
-2) Configura le variabili ambiente (esempio in `.env.local`)
-
-```bash
-NEXT_PUBLIC_SUPABASE_URL="https://xxxx.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY=""
-SUPABASE_SERVICE_ROLE_KEY=""
-STAFF_USER="staff"
-STAFF_PASSWORD="cassa"
-ACCREDITI_MAX_CAP=400
-```
-
-3) Crea le tabelle in Supabase (SQL Editor)
-
-```sql
-create extension if not exists pgcrypto;
-
-create type accreditation_status as enum (
-  'unused',
-  'used_saturday',
-  'used_sunday'
-);
-
-create table weekends (
-  id uuid primary key default gen_random_uuid(),
-  key text unique not null,
-  start_date timestamptz not null,
-  end_date timestamptz not null,
-  max_capacity int not null,
-  created_at timestamptz default now()
-);
-
-create table accreditations (
-  id uuid primary key default gen_random_uuid(),
-  weekend_id uuid not null references weekends(id) on delete cascade,
-  full_name text not null,
-  phone text not null,
-  email text not null,
-  school text,
-  status accreditation_status not null default 'unused',
-  qr_token_hash text unique not null,
-  marketing_opt_in boolean not null default false,
-  privacy_consent boolean not null default false,
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
-);
-
-create unique index accreditations_weekend_email on accreditations (weekend_id, email);
-create unique index accreditations_weekend_phone on accreditations (weekend_id, phone);
-```
-
-4) Avvia il progetto
+First, run the development server:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Accrediti Leonessa Cup
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Pagine principali:
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- `src/app/competitions/[city]/accrediti/page.js` (form accrediti con banner advertising)
-- `src/app/competitions/[city]/accrediti/cassa/page.js` (scanner cassa + statistiche)
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-API:
+## Learn More
 
-- `POST /api/accrediti` crea accredito e genera QR + PDF
-- `GET /api/accrediti` stato apertura e posti rimanenti
-- `POST /api/accrediti/verify` verifica QR e aggiorna stato
+To learn more about Next.js, take a look at the following resources:
 
-QR code:
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- Contiene solo un token univoco, nessun dato personale
-- Stati: `unused`, `used_saturday`, `used_sunday`
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Note operative
+## Deploy on Vercel
 
-- Accrediti aperti dal lunedi al sabato ore 14:00 (timezone Europe/Rome).
-- Un accredito per weekend per email o telefono.
-- Il PDF del ticket è la prova ufficiale di accredito.
-- Le API server usano `SUPABASE_SERVICE_ROLE_KEY` (non esporla lato client).
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
