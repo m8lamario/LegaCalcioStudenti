@@ -1,0 +1,540 @@
+.hero {
+  position: relative;
+  padding-top: calc(
+    var(--lcs-navbar-height) + var(--lcs-navbar-signature-height) +
+      clamp(1.5rem, 2.6vw, 2.5rem)
+  );
+  padding-bottom: clamp(2.25rem, 3.5vw, 3.25rem);
+  background-color: var(--lcs-bg-dark);
+  border-bottom: 1px solid var(--lcs-border-subtle);
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 2.6vw, 2.5rem);
+}
+
+.stageGrid {
+  display: grid;
+  grid-template-columns: minmax(515px, 4.8fr) minmax(0, 7.2fr);
+  gap: var(--lcs-grid-gap-lg);
+  align-items: stretch;
+}
+
+/* ==========================================================================
+   Colonna Sinistra: Composizione Tipografica Editoriale
+   ========================================================================== */
+.editorialColumn {
+  position: relative;
+  padding-left: clamp(1.25rem, 2vw, 2rem);
+  padding-block: clamp(0.5rem, 1.5vw, 1.25rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Sideline verticale verde acqua #00EDAF */
+.sidelineVertical {
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: 3px;
+  background-color: var(--lcs-aqua);
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+}
+
+.seasonTag {
+  display: inline-block;
+  padding: 0.22rem 0.6rem;
+  background-color: var(--lcs-blue-deep);
+  border: 1px solid rgba(0, 237, 175, 0.45);
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--lcs-aqua);
+  text-transform: uppercase;
+}
+
+.metaDivider {
+  width: 18px;
+  height: 1px;
+  background-color: var(--lcs-border-strong);
+}
+
+.leagueTag {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--lcs-text-secondary);
+  text-transform: uppercase;
+}
+
+/* Accento script in Machton (naturale, senza italic sintetico) */
+.scriptLead {
+  font-family: var(--lcs-font-script);
+  font-size: clamp(1.65rem, 2.4vw, 2.15rem);
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  text-transform: none;
+  color: var(--lcs-aqua);
+  line-height: 1.05;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.01em;
+}
+
+/* Headline enorme in Komu New C (controllata sui monitor ultra-wide) */
+.headline {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--lcs-font-display);
+  font-size: clamp(4.2rem, 6.8vw, 7.2rem);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+  margin: 0;
+}
+
+.headlineLine {
+  display: block;
+}
+
+.headlineLineAccent {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.headlineDot {
+  color: var(--lcs-aqua);
+}
+
+/* Sideline orizzontale verde acqua */
+.sidelineHorizontal {
+  width: 88px;
+  height: 3px;
+  background-color: var(--lcs-aqua);
+  margin: 1.35rem 0 1.25rem;
+}
+
+/* Payoff memorabile con accento finale in Machton */
+.payoff {
+  font-family: var(--lcs-font-sans);
+  font-size: clamp(1.125rem, 1.5vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--lcs-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.payoffScript {
+  font-family: var(--lcs-font-script);
+  font-size: 1.45em;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  color: var(--lcs-aqua);
+  margin-left: 0.15rem;
+}
+
+.description {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.975rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--lcs-text-secondary);
+  max-width: var(--lcs-measure-lead);
+  margin-bottom: 1.85rem;
+}
+
+/* CTA Group */
+.ctaGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.15rem;
+  background-color: var(--lcs-blue-primary);
+  color: var(--lcs-text-primary);
+  border: 1px solid var(--lcs-blue-primary);
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color var(--lcs-transition-fast),
+    border-color var(--lcs-transition-fast),
+    transform var(--lcs-transition-fast);
+}
+
+.primaryCta:hover {
+  background-color: var(--lcs-blue-deep);
+  border-color: var(--lcs-aqua);
+  transform: translateY(-2px);
+}
+
+.ctaArrow {
+  color: var(--lcs-aqua);
+  transition: transform var(--lcs-transition-fast);
+}
+
+.primaryCta:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 1.1rem;
+  background-color: var(--lcs-surface-elevated);
+  color: var(--lcs-text-primary);
+  border: 1px solid var(--lcs-border-strong);
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    border-color var(--lcs-transition-fast),
+    color var(--lcs-transition-fast),
+    background-color var(--lcs-transition-fast);
+}
+
+.secondaryCta:hover {
+  border-color: var(--lcs-aqua);
+  color: var(--lcs-aqua);
+  background-color: var(--lcs-surface-card);
+}
+
+/* ==========================================================================
+   Colonna Destra: Fotografia Dominante e Trattamento Tema Scuro
+   ========================================================================== */
+.visualColumn {
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(450px, 52vh, 600px);
+}
+
+.photoFrame {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: clamp(450px, 52vh, 600px);
+  background-color: var(--lcs-surface-elevated);
+  border: 1px solid var(--lcs-border-strong);
+  border-radius: var(--lcs-radius-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Segno distintivo sideline verde acqua sull'angolo superiore destro */
+.frameCornerAqua {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 96px;
+  height: 4px;
+  background-color: var(--lcs-aqua);
+  z-index: 4;
+}
+
+.photoInner {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  will-change: transform;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+/* Trattamento fotografico coerente con #0E1016 senza oscurare eccessivamente */
+.photoToneOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(14, 16, 22, 0.22);
+  pointer-events: none;
+}
+
+.photoTopBar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 1.35rem;
+}
+
+.photoBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background-color: rgba(14, 16, 22, 0.88);
+  border: 1px solid var(--lcs-border-strong);
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.photoLiveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--lcs-aqua);
+}
+
+.photoIndexTag {
+  padding: 0.3rem 0.65rem;
+  background-color: rgba(1, 22, 116, 0.9);
+  border: 1px solid rgba(0, 237, 175, 0.45);
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--lcs-text-primary);
+}
+
+.photoCaptionBox {
+  position: relative;
+  z-index: 3;
+  margin: 1.15rem;
+  padding: 1.1rem 1.35rem;
+  background-color: rgba(14, 16, 22, 0.92);
+  border-left: 3px solid var(--lcs-aqua);
+  border-top: 1px solid var(--lcs-border-subtle);
+  border-right: 1px solid var(--lcs-border-subtle);
+  border-bottom: 1px solid var(--lcs-border-subtle);
+  max-width: 460px;
+}
+
+.captionHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-bottom: 0.3rem;
+}
+
+.captionCity {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+}
+
+.captionTitle {
+  font-family: var(--lcs-font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.captionText {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.84rem;
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--lcs-text-secondary);
+}
+
+/* ==========================================================================
+   Barra Controlli Integrata alla Base della Hero
+   ========================================================================== */
+.controlBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--lcs-border-subtle);
+}
+
+.slideTabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  flex: 1;
+}
+
+.slideTab {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  text-align: left;
+  background-color: var(--lcs-surface-elevated);
+  border: 1px solid var(--lcs-border-subtle);
+  border-top: 2px solid transparent;
+  border-radius: var(--lcs-radius-xs);
+  transition:
+    border-color var(--lcs-transition-fast),
+    background-color var(--lcs-transition-fast);
+}
+
+.slideTab:hover {
+  background-color: var(--lcs-surface-card);
+  border-color: var(--lcs-border-strong);
+}
+
+.slideTabActive {
+  background-color: var(--lcs-surface-card);
+  border-color: var(--lcs-border-strong);
+  border-top-color: var(--lcs-aqua);
+}
+
+.slideTabIndex {
+  font-family: var(--lcs-font-display);
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--lcs-aqua);
+  letter-spacing: 0.04em;
+}
+
+.slideTabBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.slideTabTitle {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.slideTabMeta {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: var(--lcs-text-secondary);
+}
+
+.scrollCue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+  padding: 0.5rem 0;
+  color: var(--lcs-text-secondary);
+  transition: color var(--lcs-transition-fast);
+}
+
+.scrollCue:hover {
+  color: var(--lcs-aqua);
+}
+
+.scrollCueLabel {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.scrollCueLine {
+  width: 36px;
+  height: 2px;
+  background-color: var(--lcs-aqua);
+}
+
+/* ==========================================================================
+   Responsive Design (Tablet & Mobile)
+   ========================================================================== */
+@media (max-width: 1080px) {
+  .stageGrid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .visualColumn,
+  .photoFrame {
+    min-height: 440px;
+  }
+
+  .scrollCue {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .hero {
+    padding-top: calc(
+      var(--lcs-navbar-height-scrolled) + var(--lcs-navbar-signature-height) +
+        1.5rem
+    );
+    padding-bottom: 2rem;
+  }
+
+  .editorialColumn {
+    padding-left: 1rem;
+  }
+
+  .headline {
+    font-size: clamp(3.5rem, 15vw, 4.8rem);
+  }
+
+  .ctaGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primaryCta,
+  .secondaryCta {
+    justify-content: center;
+  }
+
+  .visualColumn,
+  .photoFrame {
+    min-height: 360px;
+  }
+
+  .photoCaptionBox {
+    margin: 0.75rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .slideTabs {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+}

@@ -1,0 +1,254 @@
+.section {
+  background-color: var(--lcs-bg-dark);
+  border-bottom: 1px solid var(--lcs-border-subtle);
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2.5rem;
+  margin-bottom: clamp(2.25rem, 4vw, 3.25rem);
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--lcs-border-subtle);
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.eyebrowRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.sidelineTick {
+  width: 24px;
+  height: 3px;
+  background-color: var(--lcs-aqua);
+}
+
+.eyebrow {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+}
+
+.title {
+  font-family: var(--lcs-font-display);
+  font-size: clamp(2.6rem, 4.8vw, 4rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.titleScript {
+  font-family: var(--lcs-font-script);
+  font-size: 0.92em;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  text-transform: none;
+  color: var(--lcs-aqua);
+  margin-left: 0.15rem;
+}
+
+.lead {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--lcs-text-secondary);
+  max-width: var(--lcs-measure-lead);
+}
+
+/* Photographic Cards Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--lcs-grid-gap);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--lcs-surface-elevated);
+  border: 1px solid var(--lcs-border-subtle);
+  border-radius: var(--lcs-radius-sm);
+  overflow: hidden;
+  transition:
+    border-color var(--lcs-transition-base),
+    transform var(--lcs-transition-base);
+}
+
+.card:hover {
+  border-color: var(--lcs-aqua);
+  transform: translateY(-4px);
+}
+
+.mediaWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: var(--lcs-surface-card);
+}
+
+.cardImage {
+  object-fit: cover;
+  transition: transform 550ms var(--lcs-ease-out);
+}
+
+.card:hover .cardImage {
+  transform: scale(1.05);
+}
+
+.mediaShade {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(14, 16, 22, 0.28);
+  transition: background-color var(--lcs-transition-base);
+}
+
+.card:hover .mediaShade {
+  background-color: rgba(14, 16, 22, 0.14);
+}
+
+.cardTop {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.crestBox {
+  width: 52px;
+  height: 52px;
+  background-color: rgba(14, 16, 22, 0.92);
+  border: 1px solid var(--lcs-border-strong);
+  border-radius: var(--lcs-radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.crestImage {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.stageTag {
+  padding: 0.28rem 0.6rem;
+  background-color: rgba(14, 16, 22, 0.88);
+  border: 1px solid var(--lcs-border-subtle);
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.cardBody {
+  position: relative;
+  padding: 1.2rem 1.25rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--lcs-surface-elevated);
+}
+
+.cardSideline {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--lcs-blue-primary);
+  transition: background-color var(--lcs-transition-fast);
+}
+
+.card:hover .cardSideline {
+  background-color: var(--lcs-aqua);
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cityLabel {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lcs-text-secondary);
+}
+
+.cupName {
+  font-family: var(--lcs-font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.cardAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lcs-blue-primary);
+  transition: color var(--lcs-transition-fast);
+}
+
+.card:hover .cardAction {
+  color: var(--lcs-aqua);
+}
+
+.cardArrow {
+  transition: transform var(--lcs-transition-fast);
+}
+
+.card:hover .cardArrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 1024px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

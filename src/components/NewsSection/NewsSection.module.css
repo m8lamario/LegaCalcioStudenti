@@ -1,0 +1,306 @@
+.section {
+  background-color: var(--lcs-bg-dark);
+  border-bottom: 1px solid var(--lcs-border-subtle);
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2.5rem;
+  margin-bottom: clamp(2.25rem, 4vw, 3.25rem);
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--lcs-border-subtle);
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.eyebrowRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.sidelineTick {
+  width: 24px;
+  height: 3px;
+  background-color: var(--lcs-aqua);
+}
+
+.eyebrow {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+}
+
+.title {
+  font-family: var(--lcs-font-display);
+  font-size: clamp(2.6rem, 4.8vw, 4rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.titleScript {
+  font-family: var(--lcs-font-script);
+  font-size: 0.92em;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  text-transform: none;
+  color: var(--lcs-aqua);
+  margin-left: 0.15rem;
+}
+
+.lead {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--lcs-text-secondary);
+  max-width: var(--lcs-measure-lead);
+}
+
+/* Editorial Asymmetric Grid: 1 Featured + 2 Secondary */
+.editorialGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--lcs-grid-gap);
+  align-items: stretch;
+}
+
+.featuredCard {
+  background-color: var(--lcs-surface-elevated);
+  border: 1px solid var(--lcs-border-subtle);
+  border-top: 3px solid var(--lcs-aqua);
+  border-radius: var(--lcs-radius-sm);
+  overflow: hidden;
+  display: flex;
+  transition:
+    border-color var(--lcs-transition-base),
+    transform var(--lcs-transition-base);
+}
+
+.featuredCard:hover {
+  border-color: var(--lcs-aqua);
+  transform: translateY(-3px);
+}
+
+.featuredLink {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.featuredMedia {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--lcs-surface-card);
+}
+
+.articleImage {
+  object-fit: cover;
+  transition: transform 550ms var(--lcs-ease-out);
+}
+
+.featuredCard:hover .articleImage,
+.secondaryCard:hover .articleImage {
+  transform: scale(1.04);
+}
+
+.mediaShade {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(14, 16, 22, 0.2);
+}
+
+.featuredBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  padding: 0.3rem 0.7rem;
+  background-color: var(--lcs-blue-deep);
+  border: 1px solid rgba(0, 237, 175, 0.5);
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+}
+
+.featuredBody {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.85rem;
+}
+
+.articleMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lcs-text-secondary);
+}
+
+.cityTag {
+  color: var(--lcs-aqua);
+}
+
+.metaDot {
+  color: var(--lcs-border-strong);
+}
+
+.featuredTitle {
+  font-family: var(--lcs-font-display);
+  font-size: clamp(1.9rem, 2.8vw, 2.55rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.featuredExcerpt {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--lcs-text-secondary);
+  max-width: var(--lcs-measure-body);
+}
+
+.readMore {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lcs-blue-primary);
+  transition: color var(--lcs-transition-fast);
+}
+
+.featuredCard:hover .readMore,
+.secondaryCard:hover .readMore {
+  color: var(--lcs-aqua);
+}
+
+.readArrow {
+  transition: transform var(--lcs-transition-fast);
+}
+
+.featuredCard:hover .readArrow,
+.secondaryCard:hover .readArrow {
+  transform: translateX(4px);
+}
+
+/* Secondary Stack */
+.secondaryStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.secondaryCard {
+  flex: 1;
+  background-color: var(--lcs-surface-elevated);
+  border: 1px solid var(--lcs-border-subtle);
+  border-left: 3px solid var(--lcs-blue-primary);
+  border-radius: var(--lcs-radius-sm);
+  overflow: hidden;
+  display: flex;
+  transition:
+    border-color var(--lcs-transition-base),
+    transform var(--lcs-transition-base);
+}
+
+.secondaryCard:hover {
+  border-color: var(--lcs-aqua);
+  transform: translateY(-3px);
+}
+
+.secondaryLink {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  width: 100%;
+}
+
+.secondaryMedia {
+  position: relative;
+  width: 100%;
+  min-height: 180px;
+  overflow: hidden;
+  background-color: var(--lcs-surface-card);
+}
+
+.secondaryBody {
+  padding: 1.35rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.secondaryTitle {
+  font-family: var(--lcs-font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.secondaryExcerpt {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--lcs-text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .editorialGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .secondaryLink {
+    grid-template-columns: 1fr;
+  }
+
+  .secondaryMedia {
+    aspect-ratio: 16 / 9;
+  }
+}

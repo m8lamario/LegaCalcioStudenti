@@ -1,0 +1,148 @@
+.footer {
+  background-color: var(--lcs-bg-dark);
+  border-top: 2px solid var(--lcs-blue-deep);
+  padding: clamp(3.5rem, 6vw, 5rem) 0 2.25rem;
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-bottom: 2.75rem;
+  border-bottom: 1px solid var(--lcs-border-subtle);
+}
+
+.identityCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+}
+
+.logoSymbol {
+  width: 39px;
+  height: 52px;
+  aspect-ratio: 393 / 524;
+  object-fit: cover;
+  object-position: center top;
+  flex-shrink: 0;
+}
+
+.brandLockup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.brandName {
+  font-family: var(--lcs-font-display);
+  font-size: 1.85rem;
+  line-height: 0.92;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.brandSub {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lcs-text-secondary);
+}
+
+.scriptMotto {
+  font-family: var(--lcs-font-script);
+  font-size: 1.55rem;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  color: var(--lcs-aqua);
+  line-height: 1.1;
+}
+
+.missionText {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--lcs-text-secondary);
+  max-width: 46ch;
+}
+
+.linksCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.colTitle {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+}
+
+.linkList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footerLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--lcs-text-primary);
+  transition: color var(--lcs-transition-fast);
+}
+
+.footerLink:hover {
+  color: var(--lcs-aqua);
+}
+
+.linkCity {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lcs-text-secondary);
+}
+
+.bottomBar {
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--lcs-text-secondary);
+}
+
+.conceptNote {
+  color: var(--lcs-text-secondary);
+}
+
+@media (max-width: 900px) {
+  .topGrid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+}

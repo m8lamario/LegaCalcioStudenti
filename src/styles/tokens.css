@@ -1,0 +1,64 @@
+/* ==========================================================================
+   LEGA CALCIO STUDENTI (LCS) — OFFICIAL DESIGN TOKENS & TYPOGRAPHY
+   ========================================================================== */
+
+@font-face {
+  font-family: "Machton";
+  src: url("/font/Machton%20TTF.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Palette Ufficiale LCS */
+  --lcs-blue-deep: #011674;       /* Blu istituzionale */
+  --lcs-blue-primary: #012BFD;    /* Azzurro primario per CTA e link */
+  --lcs-aqua: #00EDAF;            /* Verde acqua per accenti, sideline e dettagli hero */
+  --lcs-bg-dark: #0E1016;         /* Sfondo scuro principale */
+  --lcs-text-primary: #F4F7FB;    /* Testo principale */
+  --lcs-text-secondary: #9AA3B0;  /* Testo secondario */
+
+  /* Superfici derivate coerenti con il tema scuro #0E1016 */
+  --lcs-surface-elevated: #141821;
+  --lcs-surface-card: #181D28;
+  --lcs-surface-interactive: #1E2533;
+  --lcs-border-subtle: rgba(244, 247, 251, 0.09);
+  --lcs-border-strong: rgba(244, 247, 251, 0.18);
+  --lcs-border-aqua: rgba(0, 237, 175, 0.45);
+
+  /* Unico gradiente consentito (esclusivo per la Navbar) */
+  --lcs-navbar-gradient: linear-gradient(90deg, #011674, #012BFD, #00EDAF);
+
+  /* Tipografia Ufficiale LCS */
+  --lcs-font-sans: "helvetica-lt-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --lcs-font-display: "komu-new-c", Impact, "Arial Narrow", sans-serif;
+  --lcs-font-script: "Machton", Georgia, serif;
+
+  /* Sistema di Layout Globale Condiviso (~95% viewport, max 1800px) */
+  --lcs-container-max: 1800px;
+  --lcs-gutter: clamp(1.125rem, 2.5vw, 2.75rem);
+  --lcs-container-width: min(
+    calc(100% - (var(--lcs-gutter) * 2)),
+    var(--lcs-container-max)
+  );
+
+  /* Spaziature Verticali, Altezza Navbar e Griglia Condivisa */
+  --lcs-navbar-height: 82px;
+  --lcs-navbar-height-scrolled: 70px;
+  --lcs-navbar-signature-height: 4px;
+  --lcs-section-space: clamp(4.5rem, 7vw, 7.25rem);
+  --lcs-section-space-sm: clamp(3rem, 5vw, 4.75rem);
+  --lcs-grid-gap: clamp(1.25rem, 1.8vw, 2rem);
+  --lcs-grid-gap-lg: clamp(2rem, 3.2vw, 3.75rem);
+  --lcs-measure-lead: 48ch;
+  --lcs-measure-body: 62ch;
+
+  /* Raggi e Transizioni */
+  --lcs-radius-xs: 2px;
+  --lcs-radius-sm: 4px;
+  --lcs-radius-md: 8px;
+  --lcs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --lcs-transition-fast: 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  --lcs-transition-base: 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}

@@ -1,0 +1,472 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgba(14, 16, 22, 0.72);
+  border-bottom: 1px solid rgba(244, 247, 251, 0.1);
+  transition:
+    background-color var(--lcs-transition-base),
+    border-color var(--lcs-transition-base),
+    box-shadow var(--lcs-transition-base);
+}
+
+.headerScrolled,
+.headerMenuOpen {
+  background-color: var(--lcs-bg-dark);
+  border-bottom-color: rgba(244, 247, 251, 0.16);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
+}
+
+/* Unico gradiente consentito dal brandbook LCS:
+   linear-gradient(90deg, #011674, #012BFD, #00EDAF) */
+.gradientSignature {
+  width: 100%;
+  height: var(--lcs-navbar-signature-height);
+  background: var(--lcs-navbar-gradient);
+}
+
+.inner {
+  height: var(--lcs-navbar-height);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  transition: height var(--lcs-transition-base);
+}
+
+.headerScrolled .inner {
+  height: var(--lcs-navbar-height-scrolled);
+}
+
+/* 1. Brand Identity — Simbolo originale LCS diretto accanto al logotipo testuale */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  justify-self: start;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 102;
+}
+
+.logoSymbol {
+  width: 33px;
+  height: 44px;
+  aspect-ratio: 393 / 524;
+  object-fit: cover;
+  object-position: center top;
+  flex-shrink: 0;
+  transition: transform var(--lcs-transition-fast);
+}
+
+.brand:hover .logoSymbol {
+  transform: translateY(-1px);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.14rem;
+}
+
+.brandTitle {
+  font-family: var(--lcs-font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  color: var(--lcs-text-primary);
+  text-transform: uppercase;
+}
+
+.brandSub {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--lcs-text-secondary);
+  text-transform: uppercase;
+}
+
+/* 2. Essential Desktop Navigation */
+.desktopNav {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 3.2vw, 3.5rem);
+  list-style: none;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  position: relative;
+  padding: 0.5rem 0;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+  transition: color var(--lcs-transition-fast);
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--lcs-aqua);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--lcs-transition-base);
+}
+
+.navLink:hover {
+  color: var(--lcs-aqua);
+}
+
+.navLink:hover::after,
+.navLink:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* 3. Right CTA & Mobile Menu Toggle */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 0.85rem;
+  position: relative;
+  z-index: 102;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.72rem 1.25rem;
+  background-color: var(--lcs-blue-primary);
+  color: var(--lcs-text-primary);
+  border: 1px solid var(--lcs-blue-primary);
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    background-color var(--lcs-transition-fast),
+    border-color var(--lcs-transition-fast),
+    transform var(--lcs-transition-fast);
+}
+
+.primaryCta:hover {
+  background-color: var(--lcs-blue-deep);
+  border-color: var(--lcs-aqua);
+  transform: translateY(-1px);
+}
+
+.ctaArrow {
+  color: var(--lcs-aqua);
+  transition: transform var(--lcs-transition-fast);
+}
+
+.primaryCta:hover .ctaArrow {
+  transform: translateX(3px);
+}
+
+/* Mobile Toggle Button */
+.menuButton {
+  display: none;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  background-color: var(--lcs-surface-elevated);
+  border: 1px solid var(--lcs-border-strong);
+  border-radius: var(--lcs-radius-xs);
+  color: var(--lcs-text-primary);
+  transition: border-color var(--lcs-transition-fast);
+}
+
+.menuButton:hover,
+.menuButtonActive {
+  border-color: var(--lcs-aqua);
+}
+
+.menuButtonLabel {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.burgerLines {
+  width: 18px;
+  height: 10px;
+  position: relative;
+  display: inline-block;
+}
+
+.burgerLineTop,
+.burgerLineBottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--lcs-text-primary);
+  transition:
+    transform var(--lcs-transition-base),
+    top var(--lcs-transition-base),
+    background-color var(--lcs-transition-fast);
+}
+
+.burgerLineTop {
+  top: 1px;
+}
+
+.burgerLineBottom {
+  top: 7px;
+}
+
+.menuButtonActive .burgerLineTop {
+  top: 4px;
+  transform: rotate(45deg);
+  background-color: var(--lcs-aqua);
+}
+
+.menuButtonActive .burgerLineBottom {
+  top: 4px;
+  transform: rotate(-45deg);
+  background-color: var(--lcs-aqua);
+}
+
+/* Mobile Overlay & Drawer */
+.mobileOverlay {
+  position: fixed;
+  inset: 0;
+  top: calc(var(--lcs-navbar-height-scrolled) + var(--lcs-navbar-signature-height));
+  z-index: 99;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity var(--lcs-transition-base),
+    visibility var(--lcs-transition-base);
+}
+
+.mobileOverlayOpen {
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+}
+
+.mobileBackdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(14, 16, 22, 0.82);
+}
+
+.mobilePanel {
+  position: relative;
+  z-index: 1;
+  background-color: var(--lcs-bg-dark);
+  border-bottom: 2px solid var(--lcs-aqua);
+  padding-block: 2rem 2.25rem;
+  max-height: calc(100dvh - var(--lcs-navbar-height-scrolled) - var(--lcs-navbar-signature-height));
+  overflow-y: auto;
+  transform: translateY(-12px);
+  transition: transform var(--lcs-transition-base);
+}
+
+.mobilePanelInner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.mobileOverlayOpen .mobilePanel {
+  transform: translateY(0);
+}
+
+.mobileEyebrow {
+  display: block;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--lcs-aqua);
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.mobileNavList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--lcs-border-subtle);
+}
+
+.mobileNavItem {
+  border-bottom: 1px solid var(--lcs-border-subtle);
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+  gap: 1rem;
+}
+
+.mobileNavIndex {
+  font-family: var(--lcs-font-display);
+  font-size: 1.1rem;
+  color: var(--lcs-aqua);
+  letter-spacing: 0.06em;
+}
+
+.mobileNavTitle {
+  flex: 1;
+  font-family: var(--lcs-font-display);
+  font-size: 2rem;
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.mobileNavArrow {
+  color: var(--lcs-text-secondary);
+  font-size: 1.1rem;
+  transition:
+    transform var(--lcs-transition-fast),
+    color var(--lcs-transition-fast);
+}
+
+.mobileNavLink:hover .mobileNavArrow {
+  transform: translateX(4px);
+  color: var(--lcs-aqua);
+}
+
+.mobileCupsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.mobileCupChip {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  background-color: var(--lcs-surface-elevated);
+  border: 1px solid var(--lcs-border-subtle);
+  border-radius: var(--lcs-radius-xs);
+  transition: border-color var(--lcs-transition-fast);
+}
+
+.mobileCupChip:hover {
+  border-color: var(--lcs-aqua);
+}
+
+.mobileCupLogo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.mobileCupText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.mobileCupName {
+  font-family: var(--lcs-font-display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.mobileCupCity {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 300;
+  color: var(--lcs-text-secondary);
+}
+
+.mobileFooterCta {
+  padding-top: 0.25rem;
+}
+
+.mobilePrimaryBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.95rem 1.25rem;
+  background-color: var(--lcs-blue-primary);
+  color: var(--lcs-text-primary);
+  border: 1px solid var(--lcs-aqua);
+  border-radius: var(--lcs-radius-xs);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 960px) {
+  .desktopNav,
+  .primaryCta {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
+  }
+
+  .inner {
+    height: var(--lcs-navbar-height-scrolled);
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .logoSymbol {
+    width: 28px;
+    height: 37px;
+  }
+
+  .brandSub {
+    display: none;
+  }
+
+  .brandTitle {
+    font-size: 1.5rem;
+  }
+
+  .mobileCupsGrid {
+    grid-template-columns: 1fr;
+  }
+}
