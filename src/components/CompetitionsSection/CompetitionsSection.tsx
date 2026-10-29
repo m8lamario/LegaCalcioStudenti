@@ -1,78 +1,146 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
-import { TERRITORIAL_COMPETITIONS } from "@/data/homeData";
-import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
+import Link from "next/link";
+import { getCompetitionHref, LOCAL_COMPETITIONS } from "@/data/homeData";
+import { gsap, ScrollTrigger } from "@/lib/gsapClient";
 import styles from "./CompetitionsSection.module.css";
 
 export const CompetitionsSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const motion = gsap.matchMedia();
+
+    motion.add("(prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
+        gsap.from("[data-comp-line]", {
+          y: 18,
+          opacity: 0,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: "[data-comp-title]",
+            start: "top 85%",
+            once: true,
+          },
+        });
+
+        gsap.from("[data-comp-lead]", {
+          y: 22,
+          opacity: 0,
+          duration: 0.7,
+          ease: "power3.out",
+          delay: 0.12,
+          scrollTrigger: {
+            trigger: "[data-comp-title]",
+            start: "top 82%",
+            once: true,
+          },
+        });
+
+        gsap.set("[data-comp-card]", { y: 32, opacity: 0 });
+        ScrollTrigger.batch("[data-comp-card]", {
+          start: "top 90%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              y: 0,
+              opacity: 1,
+              duration: 0.7,
+              stagger: 0.08,
+              ease: "power3.out",
+              overwrite: true,
+            });
+          },
+        });
+      }, section);
+
+      let active = true;
+      document.fonts?.ready.then(() => {
+        if (active) ScrollTrigger.refresh();
+      });
+
+      return () => {
+        active = false;
+        ctx.revert();
+      };
+    });
+
+    return () => motion.revert();
+  }, []);
+
   return (
     <section
       id="competizioni"
-      className={`lcs-section ${styles.section}`}
+      ref={sectionRef}
+      className={styles.section}
       aria-labelledby="competizioni-heading"
     >
       <div className="lcs-container">
-        <RevealOnScroll>
-          <header className={styles.header}>
-            <div className={styles.headerLeft}>
-              <div className={styles.eyebrowRow}>
-                <span className={styles.sidelineTick} aria-hidden="true" />
-                <span className={styles.eyebrow}>IL CIRCUITO NAZIONALE LCS</span>
-              </div>
-              <h2 id="competizioni-heading" className={styles.title}>
-                <span>LE COMPETIZIONI </span>
-                <span className={styles.titleScript}>Territoriali</span>
-              </h2>
-            </div>
+        <header className={styles.header}>
+          <p className={styles.eyebrow}>Il circuito nazionale LCS</p>
+          <h2 id="competizioni-heading" className={styles.title} data-comp-title>
+            <span className={styles.displayMask}>
+              <span className={styles.titleLine} data-comp-line>
+                Le competizioni
+              </span>
+            </span>
+            <span className={styles.scriptMask}>
+              <span className={styles.titleScript} data-comp-line>
+                Locali
+              </span>
+            </span>
+          </h2>
+          <p className={styles.lead} data-comp-lead>
+            Coppe cittadine con identità e storia propria. I migliori istituti
+            conquistano sul campo la qualificazione alle finali nazionali.
+          </p>
+        </header>
 
-            <p className={styles.lead}>
-              Sei città, sei coppe cittadine con identità e storia propria. I
-              migliori istituti conquistano sul campo la qualificazione alle
-              finali nazionali.
-            </p>
-          </header>
-        </RevealOnScroll>
+        <div className={styles.grid}>
+          {LOCAL_COMPETITIONS.map((cup) => {
+            const place = [cup.city, cup.regionTag].filter(Boolean).join(" · ");
 
-        <RevealOnScroll>
-          <div className={styles.grid}>
-            {TERRITORIAL_COMPETITIONS.map((cup) => (
-              <a
+            return (
+              <Link
                 key={cup.id}
-                href={cup.href}
+                href={getCompetitionHref(cup.slug)}
                 className={styles.card}
-                aria-label={`${cup.name} — ${cup.city}`}
+                data-comp-card
+                aria-label={place ? `${cup.name}, ${place}` : cup.name}
               >
                 <div className={styles.mediaWrapper}>
-                  <Image
-                    src={cup.image}
-                    alt={`Panorama e atmosfera ${cup.name} a ${cup.city}`}
-                    fill
-                    sizes="(max-width: 680px) 100vw, (max-width: 1080px) 50vw, 33vw"
-                    className={styles.cardImage}
-                  />
-                  <div className={styles.mediaShade} aria-hidden="true" />
-
-                  <div className={styles.cardTop}>
-                    <span className={styles.crestBox}>
+                  {cup.image ? (
+                    <>
                       <Image
-                        src={cup.logo}
-                        alt={`Stemma ${cup.name}`}
-                        width={36}
-                        height={36}
-                        className={styles.crestImage}
+                        src={cup.image}
+                        alt={cup.imageAlt ?? ""}
+                        fill
+                        sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 30vw"
+                        className={styles.cardImage}
                       />
-                    </span>
-                    <span className={styles.stageTag}>{cup.stageLabel}</span>
-                  </div>
+                      <div className={styles.mediaShade} aria-hidden="true" />
+                    </>
+                  ) : (
+                    <div className={styles.mediaFallback}>
+                      <span className={styles.mediaPending}>Immagine in arrivo</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className={styles.cardBody}>
-                  <span className={styles.cardSideline} aria-hidden="true" />
                   <div className={styles.cardInfo}>
-                    <span className={styles.cityLabel}>
-                      {cup.city} · {cup.regionTag}
-                    </span>
+                    {place ? <span className={styles.cityLabel}>{place}</span> : null}
                     <h3 className={styles.cupName}>{cup.name}</h3>
+                    {cup.stageLabel ? (
+                      <span className={styles.stageLabel}>{cup.stageLabel}</span>
+                    ) : null}
                   </div>
                   <span className={styles.cardAction}>
                     <span>Esplora</span>
@@ -81,10 +149,10 @@ export const CompetitionsSection: React.FC = () => {
                     </span>
                   </span>
                 </div>
-              </a>
-            ))}
-          </div>
-        </RevealOnScroll>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

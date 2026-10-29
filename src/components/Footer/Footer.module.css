@@ -1,6 +1,5 @@
 .footer {
-  background-color: var(--lcs-bg-dark);
-  border-top: 2px solid var(--lcs-blue-deep);
+  background-color: transparent;
   padding: clamp(3.5rem, 6vw, 5rem) 0 2.25rem;
 }
 
@@ -33,12 +32,6 @@
   flex-shrink: 0;
 }
 
-.brandLockup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
 .brandName {
   font-family: var(--lcs-font-display);
   font-size: 1.85rem;
@@ -46,15 +39,6 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--lcs-text-primary);
-}
-
-.brandSub {
-  font-family: var(--lcs-font-sans);
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--lcs-text-secondary);
 }
 
 .scriptMotto {
@@ -67,13 +51,22 @@
   line-height: 1.1;
 }
 
-.missionText {
+.missionLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
   font-family: var(--lcs-font-sans);
-  font-size: 0.875rem;
-  font-weight: 300;
-  line-height: 1.6;
-  color: var(--lcs-text-secondary);
-  max-width: 46ch;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+  transition: color var(--lcs-transition-fast);
+}
+
+.missionLink:hover {
+  color: var(--lcs-aqua);
 }
 
 .linksCol {
@@ -133,10 +126,6 @@
   font-family: var(--lcs-font-sans);
   font-size: 0.75rem;
   font-weight: 300;
-  color: var(--lcs-text-secondary);
-}
-
-.conceptNote {
   color: var(--lcs-text-secondary);
 }
 

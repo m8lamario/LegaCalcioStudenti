@@ -29,10 +29,10 @@
 
 .inner {
   height: var(--lcs-navbar-height);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  display: flex;
   align-items: center;
-  gap: clamp(1.5rem, 3vw, 3.5rem);
+  justify-content: space-between;
+  gap: clamp(1rem, 2vw, 2rem);
   transition: height var(--lcs-transition-base);
 }
 
@@ -44,9 +44,9 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.9rem;
-  justify-self: start;
-  flex-shrink: 0;
+  gap: 0.85rem;
+  flex-shrink: 1;
+  min-width: 0;
   position: relative;
   z-index: 102;
 }
@@ -65,43 +65,37 @@
   transform: translateY(-1px);
 }
 
-.brandText {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.14rem;
-}
-
 .brandTitle {
   font-family: var(--lcs-font-display);
-  font-size: 1.75rem;
+  font-size: clamp(1.2rem, 1.55vw, 1.7rem);
   font-weight: 400;
   line-height: 0.9;
   letter-spacing: 0.04em;
   color: var(--lcs-text-primary);
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.brandSub {
-  font-family: var(--lcs-font-sans);
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: var(--lcs-text-secondary);
-  text-transform: uppercase;
+.trailing {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(1.25rem, 2.4vw, 2.5rem);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 102;
 }
 
 /* 2. Essential Desktop Navigation */
 .desktopNav {
   display: flex;
   align-items: center;
-  justify-self: center;
 }
 
 .navList {
   display: flex;
   align-items: center;
-  gap: clamp(2rem, 3.2vw, 3.5rem);
+  gap: clamp(1.35rem, 2.2vw, 2.35rem);
   list-style: none;
 }
 
@@ -143,51 +137,6 @@
 .navLink:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left center;
-}
-
-/* 3. Right CTA & Mobile Menu Toggle */
-.actions {
-  display: flex;
-  align-items: center;
-  justify-self: end;
-  gap: 0.85rem;
-  position: relative;
-  z-index: 102;
-}
-
-.primaryCta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.72rem 1.25rem;
-  background-color: var(--lcs-blue-primary);
-  color: var(--lcs-text-primary);
-  border: 1px solid var(--lcs-blue-primary);
-  border-radius: var(--lcs-radius-xs);
-  font-family: var(--lcs-font-sans);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  transition:
-    background-color var(--lcs-transition-fast),
-    border-color var(--lcs-transition-fast),
-    transform var(--lcs-transition-fast);
-}
-
-.primaryCta:hover {
-  background-color: var(--lcs-blue-deep);
-  border-color: var(--lcs-aqua);
-  transform: translateY(-1px);
-}
-
-.ctaArrow {
-  color: var(--lcs-aqua);
-  transition: transform var(--lcs-transition-fast);
-}
-
-.primaryCta:hover .ctaArrow {
-  transform: translateX(3px);
 }
 
 /* Mobile Toggle Button */
@@ -385,11 +334,16 @@
   border-color: var(--lcs-aqua);
 }
 
-.mobileCupLogo {
+.mobileCupLogo,
+.mobileCupMark {
   width: 22px;
   height: 22px;
   object-fit: contain;
   flex-shrink: 0;
+}
+
+.mobileCupMark {
+  border-left: 2px solid var(--lcs-aqua);
 }
 
 .mobileCupText {
@@ -414,31 +368,8 @@
   color: var(--lcs-text-secondary);
 }
 
-.mobileFooterCta {
-  padding-top: 0.25rem;
-}
-
-.mobilePrimaryBtn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  padding: 0.95rem 1.25rem;
-  background-color: var(--lcs-blue-primary);
-  color: var(--lcs-text-primary);
-  border: 1px solid var(--lcs-aqua);
-  border-radius: var(--lcs-radius-xs);
-  font-family: var(--lcs-font-sans);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
 @media (max-width: 960px) {
-  .desktopNav,
-  .primaryCta {
+  .desktopNav {
     display: none;
   }
 
@@ -448,7 +379,6 @@
 
   .inner {
     height: var(--lcs-navbar-height-scrolled);
-    grid-template-columns: minmax(0, 1fr) auto;
   }
 }
 
@@ -458,12 +388,8 @@
     height: 37px;
   }
 
-  .brandSub {
-    display: none;
-  }
-
   .brandTitle {
-    font-size: 1.5rem;
+    font-size: 1.15rem;
   }
 
   .mobileCupsGrid {

@@ -12,7 +12,7 @@ html {
   background-color: var(--lcs-bg-dark);
   color: var(--lcs-text-primary);
   color-scheme: dark;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -101,6 +101,44 @@ button {
    Unica sorgente di verità per container (~95% viewport, max 1800px),
    spaziature verticali di sezione e griglia editoriale a 12 colonne.
    ========================================================================== */
+.lcs-pitch {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(0, 237, 175, 0.42) 0.8px, transparent 1.1px),
+    linear-gradient(to right, rgba(244, 247, 251, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(244, 247, 251, 0.032) 1px, transparent 1px);
+  background-size:
+    calc(var(--lcs-pitch) * 2) calc(var(--lcs-pitch) * 2),
+    var(--lcs-pitch) var(--lcs-pitch),
+    var(--lcs-pitch) var(--lcs-pitch);
+  background-position: -0.5px -0.5px;
+}
+
+.lcs-page-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  color: var(--lcs-text-primary);
+}
+
+.lcs-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+section[id] {
+  scroll-margin-top: calc(
+    var(--lcs-navbar-height-scrolled) + var(--lcs-navbar-signature-height) + 0.75rem
+  );
+}
+
 .lcs-container {
   width: var(--lcs-container-width);
   margin-inline: auto;
@@ -125,5 +163,15 @@ button {
 @media (max-width: 640px) {
   .lcs-grid-12 {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .lcs-pitch {
+    opacity: 0.45;
+    background-size:
+      calc(var(--lcs-pitch) * 3) calc(var(--lcs-pitch) * 3),
+      var(--lcs-pitch) var(--lcs-pitch),
+      var(--lcs-pitch) var(--lcs-pitch);
   }
 }

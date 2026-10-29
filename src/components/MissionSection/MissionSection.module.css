@@ -1,0 +1,136 @@
+.section {
+  background-color: transparent;
+  padding-block: var(--lcs-section-space);
+  text-align: center;
+}
+
+.eyebrow {
+  margin-bottom: clamp(0.85rem, 1.6vw, 1.25rem);
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-type-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+}
+
+.claim {
+  margin: 0;
+}
+
+.displayMask,
+.scriptMask {
+  display: block;
+}
+
+.displayMask {
+  font-size: var(--lcs-type-title);
+  line-height: 0.92;
+}
+
+.scriptMask {
+  font-size: var(--lcs-type-script);
+  line-height: 1.05;
+  margin-top: 0.15rem;
+}
+
+.claimDisplay,
+.claimScript {
+  display: block;
+}
+
+.claimDisplay {
+  font-family: var(--lcs-font-display);
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.claimScript {
+  font-family: var(--lcs-font-script);
+  font-size: 1em;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  line-height: 1.05;
+  text-transform: none;
+  color: var(--lcs-aqua);
+}
+
+.statement {
+  max-width: var(--lcs-measure-lead);
+  margin: clamp(1.25rem, 2vw, 1.75rem) auto 0;
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-type-body);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--lcs-text-secondary);
+}
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--lcs-grid-gap-lg);
+  width: 100%;
+  max-width: min(100%, 72rem);
+  margin-inline: auto;
+  margin-top: clamp(2.25rem, 4vw, 3.25rem);
+  padding: 0;
+  list-style: none;
+  justify-items: center;
+  text-align: center;
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 22rem;
+}
+
+.pillarIndex {
+  display: block;
+  font-family: var(--lcs-font-display);
+  font-size: var(--lcs-type-index);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--lcs-aqua);
+}
+
+.pillarTitle {
+  margin-top: 0.45rem;
+  font-family: var(--lcs-font-display);
+  font-size: clamp(1.2rem, 1.4vw, 1.55rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.pillarText {
+  max-width: 32ch;
+  margin-top: 0.55rem;
+  margin-inline: auto;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--lcs-text-secondary);
+}
+
+@media (max-width: 860px) {
+  .pillars {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    max-width: var(--lcs-measure-body);
+  }
+
+  .pillar {
+    max-width: none;
+  }
+}

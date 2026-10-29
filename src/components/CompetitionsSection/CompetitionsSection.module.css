@@ -1,197 +1,171 @@
 .section {
-  background-color: var(--lcs-bg-dark);
-  border-bottom: 1px solid var(--lcs-border-subtle);
+  background-color: transparent;
+  padding-block: var(--lcs-section-space);
 }
 
 .header {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2.5rem;
-  margin-bottom: clamp(2.25rem, 4vw, 3.25rem);
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--lcs-border-subtle);
-}
-
-.headerLeft {
-  display: flex;
   flex-direction: column;
-  gap: 0.45rem;
-}
-
-.eyebrowRow {
-  display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-}
-
-.sidelineTick {
-  width: 24px;
-  height: 3px;
-  background-color: var(--lcs-aqua);
+  text-align: center;
+  margin-bottom: clamp(2rem, 3.5vw, 3.25rem);
 }
 
 .eyebrow {
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
   font-family: var(--lcs-font-sans);
-  font-size: 0.72rem;
+  font-size: var(--lcs-type-eyebrow);
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lcs-aqua);
 }
 
 .title {
+  margin: 0;
+}
+
+.displayMask,
+.scriptMask {
+  display: block;
+}
+
+.displayMask {
+  font-size: var(--lcs-type-title);
+  line-height: 0.9;
+  padding-top: 0.08em;
+  padding-bottom: 0.18em;
+}
+
+.scriptMask {
+  font-size: var(--lcs-type-script);
+  line-height: 0.95;
+  padding-top: 0.1em;
+  padding-bottom: 0.5em;
+}
+
+.titleLine,
+.titleScript {
+  display: block;
+}
+
+.titleLine {
   font-family: var(--lcs-font-display);
-  font-size: clamp(2.6rem, 4.8vw, 4rem);
+  font-size: 1em;
   font-weight: 400;
-  line-height: 0.92;
-  letter-spacing: 0.02em;
+  line-height: 0.9;
+  letter-spacing: 0.015em;
   text-transform: uppercase;
   color: var(--lcs-text-primary);
 }
 
 .titleScript {
+  margin-left: 0;
   font-family: var(--lcs-font-script);
-  font-size: 0.92em;
+  font-size: 1em;
   font-weight: 400;
   font-style: normal;
   font-synthesis: none;
+  line-height: 0.95;
   text-transform: none;
   color: var(--lcs-aqua);
-  margin-left: 0.15rem;
 }
 
 .lead {
+  max-width: var(--lcs-measure-lead);
+  margin-top: clamp(1.25rem, 2vw, 1.75rem);
+  margin-inline: auto;
   font-family: var(--lcs-font-sans);
-  font-size: 0.95rem;
+  font-size: 1.02rem;
   font-weight: 300;
   line-height: 1.6;
   color: var(--lcs-text-secondary);
-  max-width: var(--lcs-measure-lead);
 }
 
-/* Photographic Cards Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--lcs-grid-gap);
+  gap: clamp(1.75rem, 2.4vw, 2.75rem) clamp(1.25rem, 1.8vw, 2rem);
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  background-color: var(--lcs-surface-elevated);
-  border: 1px solid var(--lcs-border-subtle);
-  border-radius: var(--lcs-radius-sm);
-  overflow: hidden;
-  transition:
-    border-color var(--lcs-transition-base),
-    transform var(--lcs-transition-base);
+  min-width: 0;
+  color: inherit;
 }
 
-.card:hover {
-  border-color: var(--lcs-aqua);
-  transform: translateY(-4px);
+.card:focus-visible {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .mediaWrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   background-color: var(--lcs-surface-card);
 }
 
 .cardImage {
   object-fit: cover;
-  transition: transform 550ms var(--lcs-ease-out);
+  transition: transform 480ms var(--lcs-ease-out);
 }
 
-.card:hover .cardImage {
-  transform: scale(1.05);
+.card:hover .cardImage,
+.card:focus-visible .cardImage {
+  transform: scale(1.045);
 }
 
 .mediaShade {
   position: absolute;
   inset: 0;
-  background-color: rgba(14, 16, 22, 0.28);
+  background-color: rgba(14, 16, 22, 0.18);
   transition: background-color var(--lcs-transition-base);
+  pointer-events: none;
 }
 
-.card:hover .mediaShade {
-  background-color: rgba(14, 16, 22, 0.14);
+.card:hover .mediaShade,
+.card:focus-visible .mediaShade {
+  background-color: rgba(14, 16, 22, 0.05);
 }
 
-.cardTop {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 1rem;
-}
-
-.crestBox {
-  width: 52px;
-  height: 52px;
-  background-color: rgba(14, 16, 22, 0.92);
-  border: 1px solid var(--lcs-border-strong);
-  border-radius: var(--lcs-radius-xs);
+.mediaFallback {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--lcs-surface-card);
 }
 
-.crestImage {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-}
-
-.stageTag {
-  padding: 0.28rem 0.6rem;
-  background-color: rgba(14, 16, 22, 0.88);
-  border: 1px solid var(--lcs-border-subtle);
-  border-radius: var(--lcs-radius-xs);
+.mediaPending {
   font-family: var(--lcs-font-sans);
-  font-size: 0.65rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--lcs-text-primary);
+  color: var(--lcs-text-secondary);
 }
 
 .cardBody {
-  position: relative;
-  padding: 1.2rem 1.25rem;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
-  background-color: var(--lcs-surface-elevated);
-}
-
-.cardSideline {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: var(--lcs-blue-primary);
-  transition: background-color var(--lcs-transition-fast);
-}
-
-.card:hover .cardSideline {
-  background-color: var(--lcs-aqua);
+  padding-top: 0.95rem;
 }
 
 .cardInfo {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  min-width: 0;
 }
 
-.cityLabel {
+.cityLabel,
+.stageLabel {
   font-family: var(--lcs-font-sans);
   font-size: 0.6875rem;
   font-weight: 700;
@@ -202,28 +176,37 @@
 
 .cupName {
   font-family: var(--lcs-font-display);
-  font-size: 2rem;
+  font-size: clamp(1.7rem, 2.1vw, 2.45rem);
   font-weight: 400;
   line-height: 0.95;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--lcs-text-primary);
+  transition: color var(--lcs-transition-fast);
+}
+
+.card:hover .cupName,
+.card:focus-visible .cupName {
+  color: var(--lcs-aqua);
 }
 
 .cardAction {
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
   gap: 0.4rem;
+  padding-bottom: 0.25rem;
   font-family: var(--lcs-font-sans);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--lcs-blue-primary);
+  color: var(--lcs-text-secondary);
   transition: color var(--lcs-transition-fast);
 }
 
-.card:hover .cardAction {
+.card:hover .cardAction,
+.card:focus-visible .cardAction {
   color: var(--lcs-aqua);
 }
 
@@ -231,15 +214,14 @@
   transition: transform var(--lcs-transition-fast);
 }
 
-.card:hover .cardArrow {
+.card:hover .cardArrow,
+.card:focus-visible .cardArrow {
   transform: translateX(4px);
 }
 
-@media (max-width: 1024px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+@media (max-width: 900px) {
+  .lead {
+    max-width: 46ch;
   }
 
   .grid {

@@ -54,6 +54,17 @@
   --lcs-measure-lead: 48ch;
   --lcs-measure-body: 62ch;
 
+  /* Scala tipografica condivisa delle sezioni (news, mission, competizioni) */
+  --lcs-type-eyebrow: 0.72rem;
+  --lcs-type-body: 1rem;
+  --lcs-type-title: clamp(2.6rem, 4.8vw, 4.25rem);
+  --lcs-type-script: clamp(2.05rem, 3.5vw, 3.25rem);
+  --lcs-type-subtitle: clamp(1.65rem, 2.15vw, 2.15rem);
+  --lcs-type-index: clamp(1.45rem, 1.8vw, 1.9rem);
+
+  /* Modulo della griglia di sfondo, allineato a una suddivisione regolare della viewport */
+  --lcs-pitch: clamp(88px, 8.333vw, 150px);
+
   /* Raggi e Transizioni */
   --lcs-radius-xs: 2px;
   --lcs-radius-sm: 4px;

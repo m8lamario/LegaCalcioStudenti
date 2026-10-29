@@ -3,26 +3,30 @@ export interface NavItem {
   href: string;
 }
 
-export interface HeroSlide {
+export interface HeroImage {
   id: string;
-  index: string;
-  title: string;
-  cup: string;
-  city: string;
-  caption: string;
   image: string;
   imageAlt: string;
 }
 
-export interface TerritorialCompetition {
+export interface LocalCompetition {
   id: string;
+  slug: string;
   name: string;
-  city: string;
-  regionTag: string;
-  stageLabel: string;
-  logo: string;
-  image: string;
-  href: string;
+  city?: string;
+  regionTag?: string;
+  stageLabel?: string;
+  logo?: string;
+  image?: string;
+  imageAlt?: string;
+  description?: string;
+}
+
+export interface ContactChannel {
+  id: string;
+  label: string;
+  value: string;
+  href?: string;
 }
 
 export interface MatchPreview {
@@ -74,107 +78,142 @@ export interface EditorialArticle {
 }
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "Competizioni", href: "#competizioni" },
-  { label: "Risultati", href: "#risultati" },
-  { label: "News", href: "#news" },
-  { label: "La Lega", href: "#la-lega" },
+  { label: "Competizioni", href: "/#competizioni" },
+  { label: "News", href: "/#news" },
+  { label: "Mission", href: "/#mission" },
 ];
 
-export const HERO_SLIDES: HeroSlide[] = [
+export const HERO_IMAGES: HeroImage[] = [
   {
     id: "cerimoniale-notturno",
-    index: "01",
-    title: "L'ingresso in campo",
-    cup: "Circuito Nazionale LCS",
-    city: "Turno Serale",
-    caption: "Riflettori accesi, terna arbitrale e colori d'istituto prima del fischio d'inizio.",
     image: "/eslHome/DSCF6614-Migliorato-NR.webp",
-    imageAlt: "Ingresso in campo notturno delle squadre liceali con fontane luminose e arbitro",
+    imageAlt:
+      "Squadre liceali in campo di sera, con fontane luminose e la terna arbitrale",
   },
   {
     id: "agonismo-istituti",
-    index: "02",
-    title: "Orgoglio di maglia",
-    cup: "Fase a Gironi Cittadina",
-    city: "Sfida tra Licei",
-    caption: "Ogni contrasto vale il primato cittadino e l'accesso al tabellone finale.",
     image: "/eslHome/20.webp",
-    imageAlt: "Giocatori liceali schierati sul terreno di gioco durante una gara ufficiale LCS",
+    imageAlt:
+      "Giocatori liceali schierati sul terreno di gioco durante una gara della Lega Calcio Studenti",
   },
   {
     id: "calore-spalti",
-    index: "03",
-    title: "La voce degli spalti",
-    cup: "Rivalità Studentesca",
-    city: "Curve d'Istituto",
-    caption: "Cori, bandiere e compagni di scuola trasformano ogni impianto in uno stadio.",
     image: "/eslHome/19.webp",
-    imageAlt: "Tifoseria studentesca sugli spalti durante una partita della Lega Calcio Studenti",
+    imageAlt:
+      "Studenti sugli spalti durante una partita della Lega Calcio Studenti",
   },
 ];
 
-export const TERRITORIAL_COMPETITIONS: TerritorialCompetition[] = [
+export const SITE_MOTTO = "Una lega. Tante città. Un'unica passione.";
+
+export const MISSION_LINES = [
+  { id: "lega", text: "Una lega.", tone: "display" },
+  { id: "citta", text: "Tante città.", tone: "display" },
+  { id: "passione", text: "Un'unica passione.", tone: "script" },
+] as const;
+
+/**
+ * Testo di identità già presente nel sito.
+ * Sostituire `statement` quando sarà disponibile la dichiarazione ufficiale.
+ */
+export const MISSION = {
+  id: "mission",
+  eyebrow: "Chi siamo",
+  statement:
+    "Lega Calcio Studenti riunisce i tornei calcistici inter-scolastici italiani sotto un'unica identità sportiva, valorizzando il senso di appartenenza ai licei e agli istituti superiori.",
+};
+
+export const MISSION_PILLARS = [
+  {
+    index: "01",
+    title: "Circuito nazionale",
+    text: "I tornei inter-scolastici riuniti sotto un'unica identità sportiva.",
+  },
+  {
+    index: "02",
+    title: "Identità locali",
+    text: "Coppe cittadine, ciascuna con la propria identità.",
+  },
+  {
+    index: "03",
+    title: "Finali nazionali",
+    text: "I migliori istituti conquistano sul campo la qualificazione.",
+  },
+] as const;
+
+/** Recapiti ufficiali. Vuoto finché non sono presenti nel progetto. */
+export const CONTACT_CHANNELS: ContactChannel[] = [];
+
+export const LOCAL_COMPETITIONS: LocalCompetition[] = [
   {
     id: "mole-cup",
+    slug: "mole-cup",
     name: "Mole Cup",
     city: "Torino",
     regionTag: "Piemonte",
     stageLabel: "Fase a Gironi",
     logo: "/logoCities/molecup.png",
     image: "/backgroundCities/molecup.jpg",
-    href: "#risultati",
+    imageAlt: "Atmosfera della Mole Cup a Torino",
   },
   {
     id: "leonessa-cup",
+    slug: "leonessa-cup",
     name: "Leonessa Cup",
     city: "Brescia",
     regionTag: "Lombardia",
     stageLabel: "Fase a Gironi",
     logo: "/logoCities/leonessacup.png",
     image: "/backgroundCities/leonessacup.jpg",
-    href: "#risultati",
+    imageAlt: "Atmosfera della Leonessa Cup a Brescia",
   },
   {
     id: "ferrea-cup",
+    slug: "ferrea-cup",
     name: "Ferrea Cup",
     city: "Monza",
     regionTag: "Lombardia",
     stageLabel: "Fase a Gironi",
     logo: "/logoCities/ferreacup.png",
     image: "/backgroundCities/ferreacup.jpg",
-    href: "#risultati",
+    imageAlt: "Atmosfera della Ferrea Cup a Monza",
   },
   {
     id: "olympius-cup",
+    slug: "olympius-cup",
     name: "Olympius Cup",
     city: "Modena",
     regionTag: "Emilia-Romagna",
     stageLabel: "Fase a Gironi",
     logo: "/logoCities/olympiuscup.png",
     image: "/backgroundCities/olympiuscup.jpg",
-    href: "#risultati",
+    imageAlt: "Atmosfera della Olympius Cup a Modena",
   },
   {
     id: "turas-cup",
+    slug: "turas-cup",
     name: "Turàs Cup",
     city: "Cremona",
     regionTag: "Lombardia",
     stageLabel: "Fase a Gironi",
     logo: "/logoCities/turascup.png",
     image: "/backgroundCities/turascup.jpg",
-    href: "#risultati",
+    imageAlt: "Atmosfera della Turàs Cup a Cremona",
   },
   {
-    id: "bora-cup",
-    name: "Bora Cup",
-    city: "Trieste",
-    regionTag: "Friuli-Venezia Giulia",
-    stageLabel: "Nuova Tappa",
-    logo: "/logoCities/boracup.png",
-    image: "/backgroundCities/boracup.jpg",
-    href: "#risultati",
+    id: "colosseo-cup",
+    slug: "colosseo-cup",
+    name: "Colosseo Cup",
   },
 ];
+
+export function getLocalCompetition(slug: string) {
+  return LOCAL_COMPETITIONS.find((competition) => competition.slug === slug);
+}
+
+export function getCompetitionHref(slug: string) {
+  return `/competizioni/${slug}`;
+}
 
 export const COMPACT_LEAGUE_SNAPSHOTS: TournamentSnapshot[] = [
   {
@@ -363,7 +402,7 @@ export const EDITORIAL_NEWS: EditorialArticle[] = [
     image: "/eslHome/20.webp",
     imageAlt: "Squadre liceali schierate in campo sotto i riflettori durante il turno serale LCS",
     featured: true,
-    href: "#la-lega",
+    href: "/#mission",
   },
   {
     id: "curve-studentesche",
@@ -376,7 +415,7 @@ export const EDITORIAL_NEWS: EditorialArticle[] = [
       "Dietro ogni undici titolare c'è un intero istituto che organizza la trasferta cittadina e sostiene i propri compagni per novanta minuti.",
     image: "/eslHome/19.webp",
     imageAlt: "Studenti sugli spalti con bandiere e cori durante una partita della Lega Calcio Studenti",
-    href: "#competizioni",
+    href: "/#competizioni",
   },
   {
     id: "verso-il-knockout-day",
@@ -389,6 +428,6 @@ export const EDITORIAL_NEWS: EditorialArticle[] = [
       "Tre turni di qualificazione territoriale, classifica di merito e accesso diretto a semifinali e finale secca in un'unica giornata evento.",
     image: "/eslHome/13.jpeg",
     imageAlt: "Azione di gioco e celebrazione sul campo della Lega Calcio Studenti",
-    href: "#risultati",
+    href: "/#competizioni",
   },
 ];

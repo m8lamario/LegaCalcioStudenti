@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
+import { Navbar } from "@/components/Navbar/Navbar";
+import { Footer } from "@/components/Footer/Footer";
+import { SmoothScroll } from "@/components/SmoothScroll/SmoothScroll";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Lega Calcio Studenti (LCS) — Il Calcio dei Licei",
+  title: "Lega Calcio Studenti (LCS)",
   description:
-    "Una lega. Tante città. Un'unica passione. Il circuito nazionale ufficiale delle competizioni calcistiche tra licei e istituti superiori italiani.",
+    "Oltre la scuola, oltre lo sport. Il circuito nazionale delle competizioni calcistiche tra licei e istituti superiori italiani.",
   openGraph: {
-    title: "Lega Calcio Studenti (LCS) — Il Calcio dei Licei",
+    title: "Lega Calcio Studenti (LCS)",
     description:
-      "Una lega. Tante città. Un'unica passione. Competizioni territoriali, risultati e racconti dal campionato studentesco italiano.",
+      "Oltre la scuola, oltre lo sport. Competizioni locali e racconti della Lega Calcio Studenti.",
     locale: "it_IT",
     type: "website",
   },
@@ -34,10 +37,19 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <div className="lcs-pitch" aria-hidden="true" />
         <a href="#main-content" className="skip-to-content">
           Salta al contenuto principale
         </a>
-        {children}
+        <SmoothScroll>
+          <div className="lcs-page-shell">
+            <Navbar />
+            <main id="main-content" className="lcs-main">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </SmoothScroll>
       </body>
     </html>
   );

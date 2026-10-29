@@ -2,7 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { NAV_ITEMS, TERRITORIAL_COMPETITIONS } from "@/data/homeData";
+import Link from "next/link";
+import {
+  getCompetitionHref,
+  LOCAL_COMPETITIONS,
+  NAV_ITEMS,
+} from "@/data/homeData";
 import styles from "./Navbar.module.css";
 
 export const Navbar: React.FC = () => {
@@ -50,47 +55,35 @@ export const Navbar: React.FC = () => {
 
       <div className={`lcs-container ${styles.inner}`}>
         {/* 1. Brand LCS a sinistra: simbolo originale diretto accanto al logotipo testuale */}
-        <a
-          href="#top"
+        <Link
+          href="/#top"
           className={styles.brand}
           aria-label="Lega Calcio Studenti — Torna all'inizio"
           onClick={closeMobileMenu}
         >
           <Image
             src="/logoCities/lcsw.png"
-            alt="Simbolo ufficiale Lega Calcio Studenti"
+            alt=""
             width={36}
-            height={66}
+            height={48}
             priority
             className={styles.logoSymbol}
           />
-          <span className={styles.brandText}>
-            <span className={styles.brandTitle}>LEGA CALCIO STUDENTI</span>
-            <span className={styles.brandSub}>CIRCUITO NAZIONALE LICEI</span>
-          </span>
-        </a>
+          <span className={styles.brandTitle}>LEGA CALCIO STUDENTI</span>
+        </Link>
 
-        {/* 2. Navigazione essenziale al centro */}
-        <nav className={styles.desktopNav} aria-label="Navigazione principale">
-          <ul className={styles.navList}>
-            {NAV_ITEMS.map((item) => (
-              <li key={item.href} className={styles.navItem}>
-                <a href={item.href} className={styles.navLink}>
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* 3. CTA primaria a destra + controllo menu mobile */}
-        <div className={styles.actions}>
-          <a href="#competizioni" className={styles.primaryCta}>
-            <span>Scopri i Tornei</span>
-            <span className={styles.ctaArrow} aria-hidden="true">
-              →
-            </span>
-          </a>
+        <div className={styles.trailing}>
+          <nav className={styles.desktopNav} aria-label="Navigazione principale">
+            <ul className={styles.navList}>
+              {NAV_ITEMS.map((item) => (
+                <li key={item.href} className={styles.navItem}>
+                  <Link href={item.href} className={styles.navLink}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <button
             type="button"
@@ -116,13 +109,14 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Menu Mobile progettato specificamente */}
-      <div
-        id="lcs-mobile-menu"
-        className={`${styles.mobileOverlay} ${
-          mobileOpen ? styles.mobileOverlayOpen : ""
-        }`}
-        aria-hidden={!mobileOpen}
-      >
+        <div
+          id="lcs-mobile-menu"
+          className={`${styles.mobileOverlay} ${
+            mobileOpen ? styles.mobileOverlayOpen : ""
+          }`}
+          data-lenis-prevent
+          aria-hidden={!mobileOpen}
+        >
         <div
           className={styles.mobileBackdrop}
           onClick={closeMobileMenu}
@@ -138,7 +132,7 @@ export const Navbar: React.FC = () => {
               <ul className={styles.mobileNavList}>
                 {NAV_ITEMS.map((item, idx) => (
                   <li key={item.href} className={styles.mobileNavItem}>
-                    <a
+                    <Link
                       href={item.href}
                       className={styles.mobileNavLink}
                       onClick={closeMobileMenu}
@@ -148,47 +142,42 @@ export const Navbar: React.FC = () => {
                       <span className={styles.mobileNavArrow} aria-hidden="true">
                         →
                       </span>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div className={styles.mobileCupsBlock}>
-              <span className={styles.mobileEyebrow}>TAPPE TERRITORIALI ATTIVE</span>
+              <span className={styles.mobileEyebrow}>COMPETIZIONI LOCALI</span>
               <div className={styles.mobileCupsGrid}>
-                {TERRITORIAL_COMPETITIONS.map((cup) => (
-                  <a
+                {LOCAL_COMPETITIONS.map((cup) => (
+                  <Link
                     key={cup.id}
-                    href="#competizioni"
+                    href={getCompetitionHref(cup.slug)}
                     className={styles.mobileCupChip}
                     onClick={closeMobileMenu}
                   >
-                    <Image
-                      src={cup.logo}
-                      alt=""
-                      width={22}
-                      height={22}
-                      className={styles.mobileCupLogo}
-                    />
+                    {cup.logo ? (
+                      <Image
+                        src={cup.logo}
+                        alt=""
+                        width={22}
+                        height={22}
+                        className={styles.mobileCupLogo}
+                      />
+                    ) : (
+                      <span className={styles.mobileCupMark} aria-hidden="true" />
+                    )}
                     <span className={styles.mobileCupText}>
                       <strong className={styles.mobileCupName}>{cup.name}</strong>
-                      <small className={styles.mobileCupCity}>{cup.city}</small>
+                      {cup.city ? (
+                        <small className={styles.mobileCupCity}>{cup.city}</small>
+                      ) : null}
                     </span>
-                  </a>
+                  </Link>
                 ))}
               </div>
-            </div>
-
-            <div className={styles.mobileFooterCta}>
-              <a
-                href="#competizioni"
-                className={styles.mobilePrimaryBtn}
-                onClick={closeMobileMenu}
-              >
-                <span>Esplora le Competizioni</span>
-                <span aria-hidden="true">→</span>
-              </a>
             </div>
           </div>
         </nav>
