@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { NATIONAL_FINALS } from "@/data/homeData";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Finali nazionali — Lega Calcio Studenti",
   description:
     "Le competizioni territoriali di Lega Calcio Studenti fanno parte di un unico circuito e possono culminare nelle finali nazionali.",
-};
+  path: "/finali-nazionali",
+});
 
 export default function NationalFinalsPage() {
   return (

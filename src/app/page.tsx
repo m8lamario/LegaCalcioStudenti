@@ -8,10 +8,20 @@ import { SchoolInviteSection } from "@/components/SchoolInviteSection/SchoolInvi
 import { CircuitStatsSection } from "@/components/CircuitStatsSection/CircuitStatsSection";
 import { NewsSection } from "@/components/NewsSection/NewsSection";
 import { PartnersSection } from "@/components/PartnersSection/PartnersSection";
+import { JsonLd } from "@/components/JsonLd/JsonLd";
+import { sportsOrganizationJsonLd } from "@/lib/jsonLd";
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
+  path: "/",
+});
 
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={sportsOrganizationJsonLd()} />
       <Hero />
       <MissionSection />
       <CompetitionsMapSection />

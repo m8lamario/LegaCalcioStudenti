@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { LocalCompetition } from "@/data/homeData";
+import { getCupBlogHref, getCupBlogPosts } from "@/data/cupBlog";
 import styles from "./LocalCompetitionPage.module.css";
 
 interface LocalCompetitionPageProps {
@@ -19,6 +20,7 @@ export const LocalCompetitionPage: React.FC<LocalCompetitionPageProps> = ({
   ].filter((fact): fact is { label: string; value: string } => fact !== null);
 
   const awaitingAssets = !competition.image && !competition.logo && !competition.city;
+  const hasBlog = getCupBlogPosts(competition.slug).length > 0;
 
   return (
     <article className={styles.page}>
@@ -72,6 +74,13 @@ export const LocalCompetitionPage: React.FC<LocalCompetitionPageProps> = ({
             Immagine, logo e informazioni di questa competizione saranno
             pubblicati quando disponibili.
           </p>
+        ) : null}
+
+        {hasBlog ? (
+          <Link href={getCupBlogHref(competition.slug)} className={styles.cronacheLink}>
+            <span>Cronache della {competition.name}</span>
+            <span aria-hidden="true">→</span>
+          </Link>
         ) : null}
 
         <Link href="/#competizioni" className={styles.backLink}>

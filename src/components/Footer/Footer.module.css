@@ -129,6 +129,24 @@
   color: var(--lcs-text-secondary);
 }
 
+.legalNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.25rem;
+}
+
+.legalLink {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lcs-text-secondary);
+  transition: color var(--lcs-transition-fast);
+}
+
+.legalLink:hover {
+  color: var(--lcs-aqua);
+}
+
 @media (max-width: 900px) {
   .topGrid {
     grid-template-columns: 1fr;

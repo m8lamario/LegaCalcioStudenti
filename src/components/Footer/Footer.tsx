@@ -72,6 +72,17 @@ export const Footer: React.FC = () => {
           <span className={styles.copyright}>
             © 2026 Lega Calcio Studenti (LCS). Tutti i diritti riservati.
           </span>
+          <nav className={styles.legalNav} aria-label="Documenti legali">
+            <Link href="/privacy" className={styles.legalLink}>
+              Privacy
+            </Link>
+            <Link href="/terms" className={styles.legalLink}>
+              Termini
+            </Link>
+            <Link href="/cookie" className={styles.legalLink}>
+              Cookie
+            </Link>
+          </nav>
         </div>
       </div>
     </footer>

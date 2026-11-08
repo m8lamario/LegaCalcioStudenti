@@ -134,6 +134,7 @@
   color: var(--lcs-text-secondary);
 }
 
+.cronacheLink,
 .backLink {
   display: inline-flex;
   align-items: center;
@@ -147,8 +148,17 @@
   transition: color var(--lcs-transition-fast);
 }
 
+.cronacheLink {
+  color: var(--lcs-aqua);
+}
+
+.cronacheLink:hover,
 .backLink:hover {
   color: var(--lcs-aqua);
+}
+
+.cronacheLink:hover {
+  color: var(--lcs-text-primary);
 }
 
 @media (max-width: 720px) {

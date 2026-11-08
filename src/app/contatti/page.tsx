@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CONTACT_CHANNELS } from "@/data/homeData";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contatti — Lega Calcio Studenti",
   description:
     "Pagina contatti della Lega Calcio Studenti. I recapiti ufficiali saranno pubblicati quando disponibili.",
-};
+  path: "/contatti",
+});
 
 export default function ContactsPage() {
   return (
