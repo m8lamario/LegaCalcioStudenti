@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  CIRCUIT_PARTNERS,
   PARTNER_KINDS,
   PARTNER_KIND_LABELS,
   type CircuitPartner,
@@ -14,8 +13,10 @@ function isExternal(href: string) {
   return /^https?:\/\//.test(href);
 }
 
-export const PartnersSection: React.FC = () => {
-  const partners = CIRCUIT_PARTNERS.filter((partner) => partner.name.trim().length > 0);
+export const PartnersSection: React.FC<{ partners: CircuitPartner[] }> = ({
+  partners: incoming,
+}) => {
+  const partners = incoming.filter((partner) => partner.name.trim().length > 0);
 
   if (partners.length === 0) return null;
 

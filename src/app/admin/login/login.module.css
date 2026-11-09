@@ -1,0 +1,65 @@
+.page {
+  min-height: calc(100dvh - var(--lcs-navbar-height));
+  display: grid;
+  place-items: center;
+  padding: 4rem var(--lcs-gutter);
+}
+
+.card {
+  width: min(100%, 28rem);
+  background: var(--lcs-surface-card);
+  border: 1px solid var(--lcs-border-subtle);
+  border-radius: var(--lcs-radius-md);
+  padding: 2rem 1.5rem;
+}
+
+.eyebrow {
+  font-size: var(--lcs-type-eyebrow);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+}
+
+.title {
+  font-family: var(--lcs-font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin: 0.6rem 0 1.25rem;
+}
+
+.form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  color: var(--lcs-text-secondary);
+}
+
+.input,
+.button {
+  min-height: 2.85rem;
+  border-radius: var(--lcs-radius-sm);
+  font: inherit;
+}
+
+.input {
+  width: 100%;
+  padding: 0 0.85rem;
+  background: var(--lcs-surface-interactive);
+  border: 1px solid var(--lcs-border-subtle);
+  color: var(--lcs-text-primary);
+}
+
+.button {
+  border: 0;
+  background: var(--lcs-blue-primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+.note {
+  margin-top: 1rem;
+  color: var(--lcs-text-secondary);
+  line-height: 1.5;
+}

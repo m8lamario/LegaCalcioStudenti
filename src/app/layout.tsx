@@ -13,6 +13,7 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "@/lib/seo";
+import { getHomePageContent } from "@/lib/queries/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -39,11 +40,13 @@ export const metadata: Metadata = {
     : { index: false, follow: false },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { competitions, motto, navItems } = await getHomePageContent();
+
   return (
     <html lang="it">
       <head>
@@ -65,11 +68,11 @@ export default function RootLayout({
         </a>
         <SmoothScroll>
           <div className="lcs-page-shell">
-            <Navbar />
+            <Navbar competitions={competitions} navItems={navItems} />
             <main id="main-content" className="lcs-main">
               {children}
             </main>
-            <Footer />
+            <Footer competitions={competitions} motto={motto} />
           </div>
         </SmoothScroll>
         <Analytics />

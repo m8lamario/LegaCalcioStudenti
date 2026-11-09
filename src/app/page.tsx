@@ -10,6 +10,7 @@ import { NewsSection } from "@/components/NewsSection/NewsSection";
 import { PartnersSection } from "@/components/PartnersSection/PartnersSection";
 import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { sportsOrganizationJsonLd } from "@/lib/jsonLd";
+import { getHomePageContent } from "@/lib/queries/site";
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -18,19 +19,25 @@ export const metadata = pageMetadata({
   path: "/",
 });
 
-export default function HomePage() {
+export default async function HomePage() {
+  const content = await getHomePageContent();
+
   return (
     <>
-      <JsonLd data={sportsOrganizationJsonLd()} />
-      <Hero />
-      <MissionSection />
-      <CompetitionsMapSection />
-      <CompetitionsSection />
-      <NationalFinalsSection />
-      <SchoolInviteSection />
-      <CircuitStatsSection />
-      <NewsSection />
-      <PartnersSection />
+      <JsonLd data={sportsOrganizationJsonLd(content.motto)} />
+      <Hero images={content.heroImages} />
+      <MissionSection
+        mission={content.mission}
+        lines={content.missionLines}
+        pillars={content.missionPillars}
+      />
+      <CompetitionsMapSection competitions={content.competitions} />
+      <CompetitionsSection competitions={content.competitions} />
+      <NationalFinalsSection content={content.nationalFinals} />
+      <SchoolInviteSection invite={content.schoolInvite} />
+      <CircuitStatsSection stats={content.circuitStats} />
+      <NewsSection articles={content.editorialNews} />
+      <PartnersSection partners={content.partners} />
     </>
   );
 }

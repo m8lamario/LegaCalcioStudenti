@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CONTACT_CHANNELS } from "@/data/homeData";
+import { getHomePageContent } from "@/lib/queries/site";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -11,7 +11,9 @@ export const metadata: Metadata = pageMetadata({
   path: "/contatti",
 });
 
-export default function ContactsPage() {
+export default async function ContactsPage() {
+  const { contactChannels } = await getHomePageContent();
+
   return (
     <section className={styles.page} aria-labelledby="contatti-heading">
       <div className="lcs-container">
@@ -26,9 +28,9 @@ export default function ContactsPage() {
           </h1>
         </div>
 
-        {CONTACT_CHANNELS.length > 0 ? (
+        {contactChannels.length > 0 ? (
           <ul className={styles.channels}>
-            {CONTACT_CHANNELS.map((channel) => (
+            {contactChannels.map((channel) => (
               <li key={channel.id} className={styles.channel}>
                 <span className={styles.channelLabel}>{channel.label}</span>
                 {channel.href ? (

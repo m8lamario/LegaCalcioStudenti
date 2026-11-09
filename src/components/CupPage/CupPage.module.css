@@ -1,0 +1,241 @@
+.page {
+  background-color: var(--lcs-bg-dark);
+}
+
+.block {
+  padding-block: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.strip {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.stripLabel {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+}
+
+.tabs {
+  display: flex;
+  gap: 0.65rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tab,
+.tabActive {
+  flex: 0 0 auto;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--lcs-border-subtle);
+  font-family: var(--lcs-font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lcs-text-secondary);
+}
+
+.tabActive,
+.tab:hover {
+  color: var(--lcs-text-primary);
+  border-color: var(--lcs-aqua);
+}
+
+.grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.twoCol {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.cta,
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.6rem;
+  padding: 0 1rem;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cta {
+  background: var(--lcs-aqua);
+  color: var(--lcs-bg-dark);
+}
+
+.ctaGhost {
+  border: 1px solid var(--lcs-border-strong);
+  color: var(--lcs-text-primary);
+}
+
+.sectionTitle {
+  font-family: var(--lcs-font-display);
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+  margin-bottom: 0.4rem;
+}
+
+.list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.schoolGrid,
+.newsGrid,
+.staffGrid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+.card {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.9rem;
+  border: 1px solid var(--lcs-border-subtle);
+  background: var(--lcs-surface-elevated);
+  color: inherit;
+}
+
+.cardTitle {
+  font-family: var(--lcs-font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.muted {
+  color: var(--lcs-text-secondary);
+  font-size: 0.9rem;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+  padding: 0.55rem 0.45rem;
+  border-bottom: 1px solid var(--lcs-border-subtle);
+  text-align: left;
+}
+
+.table th {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lcs-text-secondary);
+}
+
+.rank {
+  font-family: var(--lcs-font-display);
+  color: var(--lcs-aqua);
+}
+
+.infoList {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.infoList a {
+  color: var(--lcs-aqua);
+}
+
+.heroExtra {
+  margin-top: 0.85rem;
+  max-width: var(--lcs-measure-body);
+  color: var(--lcs-text-secondary);
+}
+
+.subpage {
+  padding-top: calc(var(--lcs-navbar-height) + var(--lcs-navbar-signature-height) + 1.5rem);
+  padding-bottom: 3rem;
+}
+
+.matchHero {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.25rem 0 2rem;
+}
+
+.score {
+  font-family: var(--lcs-font-display);
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  letter-spacing: 0.04em;
+}
+
+.events {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.filters label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lcs-text-secondary);
+}
+
+.filters select {
+  min-height: 2.4rem;
+  min-width: 10rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--lcs-surface-interactive);
+  border: 1px solid var(--lcs-border-subtle);
+  color: var(--lcs-text-primary);
+}
+
+.empty {
+  color: var(--lcs-text-secondary);
+  max-width: 42ch;
+}
+
+@media (min-width: 860px) {
+  .twoCol {
+    grid-template-columns: 1fr 1fr;
+  }
+}

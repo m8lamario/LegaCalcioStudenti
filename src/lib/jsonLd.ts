@@ -5,7 +5,7 @@ import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 
-export function sportsOrganizationJsonLd() {
+export function sportsOrganizationJsonLd(motto = SITE_MOTTO) {
   return {
     "@context": "https://schema.org",
     "@type": "SportsOrganization",
@@ -13,7 +13,7 @@ export function sportsOrganizationJsonLd() {
     name: SITE_NAME,
     alternateName: "LCS",
     url: SITE_URL,
-    description: SITE_MOTTO,
+    description: motto,
     logo: absoluteUrl("/logoCities/lcsw.png"),
     image: absoluteUrl(DEFAULT_OG_IMAGE),
     sport: "Soccer",
@@ -61,6 +61,76 @@ export function sportsEventJsonLd(competition: LocalCompetition) {
           },
         }
       : {}),
+  };
+}
+
+export function matchSportsEventJsonLd(input: {
+  id: string;
+  homeName: string;
+  awayName: string;
+  startDate?: string | null;
+  venueName?: string | null;
+  competitionName: string;
+  competitionSlug: string;
+  status: string;
+  homeScore?: number | null;
+  awayScore?: number | null;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SportsEvent",
+    name: `${input.homeName} vs ${input.awayName}`,
+    url: absoluteUrl(`/partite/${input.id}`),
+    startDate: input.startDate ?? undefined,
+    eventStatus:
+      input.status === "finished"
+        ? "https://schema.org/EventScheduled"
+        : input.status === "live"
+          ? "https://schema.org/EventScheduled"
+          : "https://schema.org/EventScheduled",
+    sport: "Soccer",
+    location: input.venueName
+      ? { "@type": "Place", name: input.venueName }
+      : undefined,
+    homeTeam: { "@type": "SportsTeam", name: input.homeName },
+    awayTeam: { "@type": "SportsTeam", name: input.awayName },
+    superEvent: {
+      "@type": "SportsEvent",
+      name: input.competitionName,
+      url: absoluteUrl(`/competizioni/${input.competitionSlug}`),
+    },
+    organizer: {
+      "@id": ORGANIZATION_ID,
+      "@type": "SportsOrganization",
+      name: SITE_NAME,
+    },
+  };
+}
+
+export function sportsTeamJsonLd(input: {
+  name: string;
+  slug: string;
+  competitionSlug: string;
+  competitionName: string;
+  logo?: string | null;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SportsTeam",
+    name: input.name,
+    sport: "Soccer",
+    url: absoluteUrl(`/competizioni/${input.competitionSlug}/squadre/${input.slug}`),
+    logo: input.logo ? absoluteUrl(input.logo) : undefined,
+    memberOf: {
+      "@type": "SportsEvent",
+      name: input.competitionName,
+      url: absoluteUrl(`/competizioni/${input.competitionSlug}`),
+    },
+    parentOrganization: {
+      "@id": ORGANIZATION_ID,
+      "@type": "SportsOrganization",
+      name: SITE_NAME,
+    },
   };
 }
 

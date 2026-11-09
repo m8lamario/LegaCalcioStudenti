@@ -5,12 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   getCompetitionHref,
-  LOCAL_COMPETITIONS,
   NAV_ITEMS,
+  type LocalCompetition,
+  type NavItem,
 } from "@/data/homeData";
 import styles from "./Navbar.module.css";
 
-export const Navbar: React.FC = () => {
+export const Navbar: React.FC<{
+  competitions: LocalCompetition[];
+  navItems?: NavItem[];
+}> = ({ competitions, navItems = NAV_ITEMS }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -75,7 +79,7 @@ export const Navbar: React.FC = () => {
         <div className={styles.trailing}>
           <nav className={styles.desktopNav} aria-label="Navigazione principale">
             <ul className={styles.navList}>
-              {NAV_ITEMS.map((item) => (
+              {navItems.map((item) => (
                 <li key={item.href} className={styles.navItem}>
                   <Link href={item.href} className={styles.navLink}>
                     {item.label}
@@ -130,7 +134,7 @@ export const Navbar: React.FC = () => {
             <div className={styles.mobilePanelTop}>
               <span className={styles.mobileEyebrow}>NAVIGAZIONE UFFICIALE</span>
               <ul className={styles.mobileNavList}>
-                {NAV_ITEMS.map((item, idx) => (
+                {navItems.map((item, idx) => (
                   <li key={item.href} className={styles.mobileNavItem}>
                     <Link
                       href={item.href}
@@ -151,7 +155,7 @@ export const Navbar: React.FC = () => {
             <div className={styles.mobileCupsBlock}>
               <span className={styles.mobileEyebrow}>COMPETIZIONI LOCALI</span>
               <div className={styles.mobileCupsGrid}>
-                {LOCAL_COMPETITIONS.map((cup) => (
+                {competitions.map((cup) => (
                   <Link
                     key={cup.id}
                     href={getCompetitionHref(cup.slug)}

@@ -21,6 +21,46 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
       {
+        source: "/competitions/:slug/squadre/:team",
+        destination: "/competizioni/:slug/squadre/:team",
+        statusCode: 301,
+      },
+      {
+        source: "/competitions/:slug/partite",
+        destination: "/competizioni/:slug/partite",
+        statusCode: 301,
+      },
+      {
+        source: "/competitions/:slug/classifica",
+        destination: "/competizioni/:slug/classifica",
+        statusCode: 301,
+      },
+      {
+        source: "/competitions/:slug/squadre",
+        destination: "/competizioni/:slug/squadre",
+        statusCode: 301,
+      },
+      {
+        source: "/competitions/:slug/blog",
+        destination: "/competizioni/:slug/blog",
+        statusCode: 301,
+      },
+      {
+        source: "/competitions/:slug/staff",
+        destination: "/competizioni/:slug/staff",
+        statusCode: 301,
+      },
+      {
+        source: "/competitions/:slug/info",
+        destination: "/competizioni/:slug/info",
+        statusCode: 301,
+      },
+      {
+        source: "/competitions/:slug/statistiche",
+        destination: "/competizioni/:slug/statistiche",
+        statusCode: 301,
+      },
+      {
         source: "/competitions/:slug/:path*",
         destination: "/competizioni/:slug",
         statusCode: 301,
@@ -37,11 +77,6 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/partite",
-        destination: "/#competizioni",
-        statusCode: 301,
-      },
-      {
-        source: "/partite/:path*",
         destination: "/#competizioni",
         statusCode: 301,
       },

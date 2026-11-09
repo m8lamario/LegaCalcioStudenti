@@ -1,12 +1,16 @@
 import React from "react";
 import Image from "next/image";
-import { EDITORIAL_NEWS } from "@/data/homeData";
+import type { EditorialArticle } from "@/data/homeData";
 import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
 import styles from "./NewsSection.module.css";
 
-export const NewsSection: React.FC = () => {
-  const featuredArticle = EDITORIAL_NEWS[0];
-  const secondaryArticles = EDITORIAL_NEWS.slice(1);
+export const NewsSection: React.FC<{ articles: EditorialArticle[] }> = ({
+  articles,
+}) => {
+  const featuredArticle = articles[0];
+  const secondaryArticles = articles.slice(1);
+
+  if (!featuredArticle) return null;
 
   return (
     <section

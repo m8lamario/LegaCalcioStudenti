@@ -3,11 +3,13 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getCompetitionHref, LOCAL_COMPETITIONS } from "@/data/homeData";
+import { getCompetitionHref, type LocalCompetition } from "@/data/homeData";
 import { gsap, ScrollTrigger } from "@/lib/gsapClient";
 import styles from "./CompetitionsSection.module.css";
 
-export const CompetitionsSection: React.FC = () => {
+export const CompetitionsSection: React.FC<{
+  competitions: LocalCompetition[];
+}> = ({ competitions }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -104,7 +106,7 @@ export const CompetitionsSection: React.FC = () => {
         </header>
 
         <div className={styles.grid}>
-          {LOCAL_COMPETITIONS.map((cup) => {
+          {competitions.map((cup) => {
             const place = [cup.city, cup.regionTag].filter(Boolean).join(" · ");
 
             return (

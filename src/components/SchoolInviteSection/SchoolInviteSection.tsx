@@ -1,16 +1,17 @@
 import React from "react";
-import { SCHOOL_INVITE } from "@/data/homeData";
+import type { SchoolInviteContent } from "@/lib/queries/site";
 import styles from "./SchoolInviteSection.module.css";
 
-const CLOSER_PARTS = SCHOOL_INVITE.closer
-  .split(".")
-  .map((part) => part.trim())
-  .filter(Boolean);
-
-export const SchoolInviteSection: React.FC = () => {
+export const SchoolInviteSection: React.FC<{ invite: SchoolInviteContent }> = ({
+  invite,
+}) => {
+  const closerParts = invite.closer
+    .split(".")
+    .map((part) => part.trim())
+    .filter(Boolean);
   return (
     <section
-      id={SCHOOL_INVITE.id}
+      id={invite.id}
       className={styles.section}
       aria-labelledby="scuole-heading"
     >
@@ -35,12 +36,12 @@ export const SchoolInviteSection: React.FC = () => {
       <div className={`lcs-container ${styles.inner}`}>
         <p className={styles.concept}>
           <span className={styles.sidelineTick} aria-hidden="true" />
-          {SCHOOL_INVITE.concept}
+          {invite.concept}
         </p>
 
         <h2 id="scuole-heading" className={styles.title}>
-          {SCHOOL_INVITE.titleLines.map((line, index) => {
-            const isLast = index === SCHOOL_INVITE.titleLines.length - 1;
+          {invite.titleLines.map((line, index) => {
+            const isLast = index === invite.titleLines.length - 1;
 
             return (
               <span key={line} className={styles.titleLine}>
@@ -58,14 +59,14 @@ export const SchoolInviteSection: React.FC = () => {
         </h2>
 
         <div className={styles.band}>
-          <p className={styles.statement}>{SCHOOL_INVITE.statement}</p>
+          <p className={styles.statement}>{invite.statement}</p>
           <a
             className={styles.cta}
-            href={SCHOOL_INVITE.ctaHref}
+            href={invite.ctaHref}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span>{SCHOOL_INVITE.ctaLabel}</span>
+            <span>{invite.ctaLabel}</span>
             <span className={styles.ctaArrow} aria-hidden="true">
               ↗
             </span>
@@ -74,7 +75,7 @@ export const SchoolInviteSection: React.FC = () => {
         </div>
 
         <ul className={styles.closer}>
-          {CLOSER_PARTS.map((part) => (
+          {closerParts.map((part) => (
             <li key={part}>{part}</li>
           ))}
         </ul>

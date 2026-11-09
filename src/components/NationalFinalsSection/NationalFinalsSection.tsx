@@ -1,10 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import { NATIONAL_FINALS } from "@/data/homeData";
+import type { NationalFinalsContent } from "@/lib/queries/site";
 import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
 import styles from "./NationalFinalsSection.module.css";
 
-export const NationalFinalsSection: React.FC = () => {
+export const NationalFinalsSection: React.FC<{
+  content: NationalFinalsContent;
+}> = ({ content: NATIONAL_FINALS }) => {
   return (
     <section
       id={NATIONAL_FINALS.id}

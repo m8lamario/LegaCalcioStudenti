@@ -2,14 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  CUP_BLOG_POSTS,
-  getCupBlogHref,
-  getCupBlogPost,
-} from "@/data/cupBlog";
-import { getLocalCompetition } from "@/data/homeData";
+import { getCupBlogHref } from "@/data/cupBlog";
 import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { newsArticleJsonLd } from "@/lib/jsonLd";
+import { getCompetitionBySlug } from "@/lib/queries/site";
+import { getPublishedPost, getPublishedPosts } from "@/lib/queries/posts";
 import { pageMetadata } from "@/lib/seo";
 import styles from "@/components/CupBlog/CupBlog.module.css";
 
@@ -17,8 +14,9 @@ interface BlogPostProps {
   params: Promise<{ slug: string; post: string }>;
 }
 
-export function generateStaticParams() {
-  return CUP_BLOG_POSTS.map((article) => ({
+export async function generateStaticParams() {
+  const posts = await getPublishedPosts();
+  return posts.map((article) => ({
     slug: article.competitionSlug,
     post: article.slug,
   }));
@@ -28,8 +26,8 @@ export async function generateMetadata({
   params,
 }: BlogPostProps): Promise<Metadata> {
   const { slug, post } = await params;
-  const article = getCupBlogPost(slug, post);
-  const competition = getLocalCompetition(slug);
+  const article = await getPublishedPost(slug, post);
+  const competition = await getCompetitionBySlug(slug);
 
   if (!article || !competition) {
     return { title: "Articolo non trovato — Lega Calcio Studenti" };
@@ -48,8 +46,8 @@ export async function generateMetadata({
 
 export default async function CupBlogPostPage({ params }: BlogPostProps) {
   const { slug, post } = await params;
-  const article = getCupBlogPost(slug, post);
-  const competition = getLocalCompetition(slug);
+  const article = await getPublishedPost(slug, post);
+  const competition = await getCompetitionBySlug(slug);
 
   if (!article || !competition) {
     notFound();

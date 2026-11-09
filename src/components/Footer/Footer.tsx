@@ -3,8 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   getCompetitionHref,
-  LOCAL_COMPETITIONS,
-  SITE_MOTTO,
+  type LocalCompetition,
 } from "@/data/homeData";
 import styles from "./Footer.module.css";
 
@@ -15,7 +14,10 @@ const FOOTER_LINKS = [
   { label: "Contatti", href: "/contatti" },
 ];
 
-export const Footer: React.FC = () => {
+export const Footer: React.FC<{
+  competitions: LocalCompetition[];
+  motto: string;
+}> = ({ competitions, motto }) => {
   return (
     <footer className={styles.footer} role="contentinfo">
       <div className="lcs-container">
@@ -32,7 +34,7 @@ export const Footer: React.FC = () => {
               <span className={styles.brandName}>LEGA CALCIO STUDENTI</span>
             </Link>
 
-            <p className={styles.scriptMotto}>{SITE_MOTTO}</p>
+            <p className={styles.scriptMotto}>{motto}</p>
 
             <Link href="/#mission" className={styles.missionLink}>
               <span>Leggi la mission</span>
@@ -43,7 +45,7 @@ export const Footer: React.FC = () => {
           <div className={styles.linksCol}>
             <h2 className={styles.colTitle}>COMPETIZIONI LOCALI</h2>
             <ul className={styles.linkList}>
-              {LOCAL_COMPETITIONS.map((cup) => (
+              {competitions.map((cup) => (
                 <li key={cup.id}>
                   <Link href={getCompetitionHref(cup.slug)} className={styles.footerLink}>
                     <span>{cup.name}</span>

@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import {
-  MISSION,
-  MISSION_LINES,
-  MISSION_PILLARS,
-} from "@/data/homeData";
+import type { MissionContent, MissionLine, MissionPillar } from "@/lib/queries/site";
 import { gsap, ScrollTrigger } from "@/lib/gsapClient";
 import styles from "./MissionSection.module.css";
 
-export const MissionSection: React.FC = () => {
+export const MissionSection: React.FC<{
+  mission: MissionContent;
+  lines: MissionLine[];
+  pillars: MissionPillar[];
+}> = ({ mission, lines, pillars }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -79,16 +79,16 @@ export const MissionSection: React.FC = () => {
 
   return (
     <section
-      id={MISSION.id}
+      id={mission.id}
       ref={sectionRef}
       className={styles.section}
       aria-labelledby="mission-heading"
     >
       <div className="lcs-container">
-        <p className={styles.eyebrow}>{MISSION.eyebrow}</p>
+        <p className={styles.eyebrow}>{mission.eyebrow}</p>
 
         <h2 id="mission-heading" className={styles.claim} data-claim>
-          {MISSION_LINES.map((line) => (
+          {lines.map((line) => (
             <span
               key={line.id}
               className={line.tone === "script" ? styles.scriptMask : styles.displayMask}
@@ -106,11 +106,11 @@ export const MissionSection: React.FC = () => {
         </h2>
 
         <p className={styles.statement} data-statement>
-          {MISSION.statement}
+          {mission.statement}
         </p>
 
         <ul className={styles.pillars} data-pillars>
-          {MISSION_PILLARS.map((pillar) => (
+          {pillars.map((pillar) => (
             <li key={pillar.index} className={styles.pillar} data-pillar>
               <span className={styles.pillarIndex}>{pillar.index}</span>
               <h3 className={styles.pillarTitle}>{pillar.title}</h3>

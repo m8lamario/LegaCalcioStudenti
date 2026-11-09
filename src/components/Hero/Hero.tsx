@@ -4,12 +4,12 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
-import { HERO_IMAGES } from "@/data/homeData";
+import type { HeroImage } from "@/data/homeData";
 import styles from "./Hero.module.css";
 
 const SLIDE_DURATION_MS = 7000;
 
-export const Hero: React.FC = () => {
+export const Hero: React.FC<{ images: HeroImage[] }> = ({ images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const heroRef = useRef<HTMLElement | null>(null);
@@ -57,15 +57,15 @@ export const Hero: React.FC = () => {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (prefersReducedMotion || paused || HERO_IMAGES.length < 2) return;
+    if (prefersReducedMotion || paused || images.length < 2) return;
 
     const timer = window.setInterval(() => {
       if (document.hidden) return;
-      setActiveIndex((current) => (current + 1) % HERO_IMAGES.length);
+      setActiveIndex((current) => (current + 1) % images.length);
     }, SLIDE_DURATION_MS);
 
     return () => window.clearInterval(timer);
-  }, [paused]);
+  }, [paused, images.length]);
 
   return (
     <section
@@ -76,7 +76,7 @@ export const Hero: React.FC = () => {
     >
       <div className={styles.stage}>
         <div className={styles.media} data-hero-media>
-          {HERO_IMAGES.map((slide, index) => {
+          {images.map((slide, index) => {
             const isActive = index === activeIndex;
             return (
               <div
@@ -119,7 +119,7 @@ export const Hero: React.FC = () => {
               </span>
             </Link>
 
-            {HERO_IMAGES.length > 1 && (
+            {images.length > 1 && (
               <button
                 type="button"
                 className={styles.playback}

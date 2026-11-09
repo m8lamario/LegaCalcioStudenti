@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  competitionsWithBlog,
-  getCupBlogHref,
-  getCupBlogPosts,
-} from "@/data/cupBlog";
-import { getLocalCompetition } from "@/data/homeData";
+import { getCupBlogHref } from "@/data/cupBlog";
+import { getCompetitionBySlug } from "@/lib/queries/site";
+import { getPublishedCupSlugs } from "@/lib/queries/cup";
+import { getPublishedPostsByCompetition } from "@/lib/queries/posts";
 import { pageMetadata } from "@/lib/seo";
 import styles from "@/components/CupBlog/CupBlog.module.css";
 
@@ -15,18 +13,17 @@ interface BlogIndexProps {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return competitionsWithBlog().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  return getPublishedCupSlugs();
 }
 
 export async function generateMetadata({
   params,
 }: BlogIndexProps): Promise<Metadata> {
   const { slug } = await params;
-  const competition = getLocalCompetition(slug);
-  const posts = getCupBlogPosts(slug);
+  const competition = await getCompetitionBySlug(slug);
 
-  if (!competition || posts.length === 0) {
+  if (!competition) {
     return { title: "Cronache non trovate — Lega Calcio Studenti" };
   }
 
@@ -39,10 +36,10 @@ export async function generateMetadata({
 
 export default async function CupBlogIndexPage({ params }: BlogIndexProps) {
   const { slug } = await params;
-  const competition = getLocalCompetition(slug);
-  const posts = getCupBlogPosts(slug);
+  const competition = await getCompetitionBySlug(slug);
+  const posts = await getPublishedPostsByCompetition(slug);
 
-  if (!competition || posts.length === 0) {
+  if (!competition) {
     notFound();
   }
 
@@ -64,6 +61,11 @@ export default async function CupBlogIndexPage({ params }: BlogIndexProps) {
           </p>
         </header>
 
+        {posts.length === 0 ? (
+          <p className={styles.lead}>
+            Le cronache della {competition.name} saranno pubblicate dopo le prime giornate.
+          </p>
+        ) : (
         <div className={styles.grid}>
           {posts.map((post) => (
             <Link
@@ -90,6 +92,7 @@ export default async function CupBlogIndexPage({ params }: BlogIndexProps) {
             </Link>
           ))}
         </div>
+        )}
 
         <Link href={`/competizioni/${slug}`} className={styles.backLink}>
           <span aria-hidden="true">←</span>

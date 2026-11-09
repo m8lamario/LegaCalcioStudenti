@@ -1,10 +1,12 @@
 import React from "react";
-import { CIRCUIT_STATS } from "@/data/homeData";
+import type { CircuitStat } from "@/data/homeData";
 import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
 import styles from "./CircuitStatsSection.module.css";
 
-export const CircuitStatsSection: React.FC = () => {
-  const stats = CIRCUIT_STATS.filter(
+export const CircuitStatsSection: React.FC<{ stats: CircuitStat[] }> = ({
+  stats: incoming,
+}) => {
+  const stats = incoming.filter(
     (stat) => stat.value.trim().length > 0 && stat.label.trim().length > 0
   );
 

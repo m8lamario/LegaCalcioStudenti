@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getCompetitionHref, LOCAL_COMPETITIONS } from "@/data/homeData";
+import { getCompetitionHref, type LocalCompetition } from "@/data/homeData";
 import { ITALY_MAP, projectToMap } from "@/data/italyMap";
 import { gsap, ScrollTrigger } from "@/lib/gsapClient";
 import styles from "./CompetitionsMapSection.module.css";
@@ -27,37 +27,43 @@ interface MapSite {
   align: CardAlign;
 }
 
-const MAP_SITES: MapSite[] = LOCAL_COMPETITIONS.flatMap((cup): MapSite[] => {
-  if (!cup.coordinates) return [];
+function buildMapSites(competitions: LocalCompetition[]): MapSite[] {
+  return competitions
+    .flatMap((cup): MapSite[] => {
+      if (!cup.coordinates) return [];
 
-  const { lat, lon } = cup.coordinates;
-  const { x, y } = projectToMap(lat, lon);
-  const { dx, dy } = cup.mapCallout ?? DEFAULT_CALLOUT;
-  const calloutX = (x + dx) / ITALY_MAP.width;
+      const { lat, lon } = cup.coordinates;
+      const { x, y } = projectToMap(lat, lon);
+      const { dx, dy } = cup.mapCallout ?? DEFAULT_CALLOUT;
+      const calloutX = (x + dx) / ITALY_MAP.width;
 
-  return [
-    {
-      id: cup.id,
-      href: getCompetitionHref(cup.slug),
-      name: cup.name,
-      city: cup.city ?? "",
-      place: [cup.city, cup.regionTag].filter(Boolean).join(" · "),
-      logo: cup.logo,
-      coordsLabel: `${lat.toFixed(2)}° N · ${lon.toFixed(2)}° E`,
-      x,
-      y,
-      dx,
-      dy,
-      align: calloutX < 0.28 ? "start" : calloutX > 0.72 ? "end" : "center",
-    },
-  ];
-}).sort((a, b) => a.x - b.x);
-
-const CITY_COUNT = new Set(MAP_SITES.map((site) => site.city).filter(Boolean)).size;
+      return [
+        {
+          id: cup.id,
+          href: getCompetitionHref(cup.slug),
+          name: cup.name,
+          city: cup.city ?? "",
+          place: [cup.city, cup.regionTag].filter(Boolean).join(" · "),
+          logo: cup.logo,
+          coordsLabel: `${lat.toFixed(2)}° N · ${lon.toFixed(2)}° E`,
+          x,
+          y,
+          dx,
+          dy,
+          align: calloutX < 0.28 ? "start" : calloutX > 0.72 ? "end" : "center",
+        },
+      ];
+    })
+    .sort((a, b) => a.x - b.x);
+}
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
-export const CompetitionsMapSection: React.FC = () => {
+export const CompetitionsMapSection: React.FC<{
+  competitions: LocalCompetition[];
+}> = ({ competitions }) => {
+  const MAP_SITES = useMemo(() => buildMapSites(competitions), [competitions]);
+  const CITY_COUNT = new Set(MAP_SITES.map((site) => site.city).filter(Boolean)).size;
   const sectionRef = useRef<HTMLElement | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
   const pointerTypeRef = useRef("mouse");
@@ -168,7 +174,7 @@ export const CompetitionsMapSection: React.FC = () => {
     });
 
     return () => motion.revert();
-  }, []);
+  }, [MAP_SITES]);
 
   useEffect(() => {
     if (!activeId) return;

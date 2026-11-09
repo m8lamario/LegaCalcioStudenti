@@ -1,58 +1,45 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { LocalCompetitionPage } from "@/components/LocalCompetitionPage/LocalCompetitionPage";
+import { CupPage } from "@/components/CupPage/CupPage";
 import { JsonLd } from "@/components/JsonLd/JsonLd";
-import {
-  getLocalCompetition,
-  LOCAL_COMPETITIONS,
-} from "@/data/homeData";
 import { sportsEventJsonLd } from "@/lib/jsonLd";
+import { getCupPageData, getPublishedCupSlugs } from "@/lib/queries/cup";
 import { pageMetadata } from "@/lib/seo";
 
 interface CompetitionRouteProps {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return LOCAL_COMPETITIONS.map((competition) => ({
-    slug: competition.slug,
-  }));
+export async function generateStaticParams() {
+  return getPublishedCupSlugs();
 }
 
 export async function generateMetadata({
   params,
 }: CompetitionRouteProps): Promise<Metadata> {
   const { slug } = await params;
-  const competition = getLocalCompetition(slug);
-
-  if (!competition) {
-    return { title: "Competizione non trovata — Lega Calcio Studenti" };
-  }
-
-  const place = competition.city ? ` — ${competition.city}` : "";
-
+  const data = await getCupPageData(slug);
+  if (!data) return { title: "Competizione non trovata — Lega Calcio Studenti" };
+  const place = data.competition.city ? ` — ${data.competition.city}` : "";
   return pageMetadata({
-    title: `${competition.name}${place} — Lega Calcio Studenti`,
+    title: `${data.competition.name}${place} — Lega Calcio Studenti`,
     description:
-      competition.description ??
-      `${competition.name}, competizione locale della Lega Calcio Studenti.`,
-    path: `/competizioni/${competition.slug}`,
-    image: competition.image ?? competition.logo ?? undefined,
+      data.competition.description ??
+      `${data.competition.name}, competizione locale della Lega Calcio Studenti.`,
+    path: `/competizioni/${data.competition.slug}`,
+    image: data.competition.image ?? data.competition.logo ?? undefined,
   });
 }
 
 export default async function CompetitionRoute({ params }: CompetitionRouteProps) {
   const { slug } = await params;
-  const competition = getLocalCompetition(slug);
-
-  if (!competition) {
-    notFound();
-  }
+  const data = await getCupPageData(slug);
+  if (!data) notFound();
 
   return (
     <>
-      <JsonLd data={sportsEventJsonLd(competition)} />
-      <LocalCompetitionPage competition={competition} />
+      <JsonLd data={sportsEventJsonLd(data.competition)} />
+      <CupPage data={data} />
     </>
   );
 }

@@ -2,15 +2,17 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { LocalCompetition } from "@/data/homeData";
-import { getCupBlogHref, getCupBlogPosts } from "@/data/cupBlog";
+import { getCupBlogHref } from "@/data/cupBlog";
 import styles from "./LocalCompetitionPage.module.css";
 
 interface LocalCompetitionPageProps {
   competition: LocalCompetition;
+  hasBlog?: boolean;
 }
 
 export const LocalCompetitionPage: React.FC<LocalCompetitionPageProps> = ({
   competition,
+  hasBlog = false,
 }) => {
   const place = [competition.city, competition.regionTag].filter(Boolean).join(" · ");
   const facts = [
@@ -20,7 +22,6 @@ export const LocalCompetitionPage: React.FC<LocalCompetitionPageProps> = ({
   ].filter((fact): fact is { label: string; value: string } => fact !== null);
 
   const awaitingAssets = !competition.image && !competition.logo && !competition.city;
-  const hasBlog = getCupBlogPosts(competition.slug).length > 0;
 
   return (
     <article className={styles.page}>
