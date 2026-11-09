@@ -18,6 +18,7 @@ export default async function MatchOgImage({
     data?.match.homeScore != null && data?.match.awayScore != null
       ? `${data.match.homeScore} - ${data.match.awayScore}`
       : "Lega Calcio Studenti";
+  const statusLabel = data?.match.status === "finished" ? "FINALE" : data?.match.status === "live" ? "LIVE" : "";
 
   return new ImageResponse(
     (
@@ -40,6 +41,11 @@ export default async function MatchOgImage({
           {home} vs {away}
         </div>
         <div style={{ fontSize: 72, color: "#00EDAF", marginTop: 24 }}>{score}</div>
+        {statusLabel ? (
+          <div style={{ marginTop: 16, letterSpacing: 6, fontSize: 22, color: "#9AA3B0" }}>
+            {statusLabel}
+          </div>
+        ) : null}
       </div>
     ),
     size,

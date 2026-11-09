@@ -137,6 +137,14 @@ async function Content() {
           <input className={styles.input} name="facebook" />
         </label>
         <label className={styles.label}>
+          Minuti per tempo
+          <input className={styles.input} name="halfMinutes" defaultValue="25" />
+        </label>
+        <label className={styles.label}>
+          Minuti supplementari per tempo
+          <input className={styles.input} name="extraHalfMinutes" defaultValue="10" />
+        </label>
+        <label className={styles.label}>
           Ordine
           <input className={styles.input} name="sortOrder" defaultValue="0" />
         </label>

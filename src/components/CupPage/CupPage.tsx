@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
 import { SponsorSlot } from "@/components/SponsorSlot/SponsorSlot";
+import { LiveStrip } from "@/components/LiveStrip/LiveStrip";
 import type { CupPageData } from "@/lib/cup-types";
 import banner from "@/components/LocalCompetitionPage/LocalCompetitionPage.module.css";
 import { CupSubnav } from "./CupSubnav";
@@ -16,11 +17,9 @@ function socialEntries(social: Record<string, string>) {
 export function CupPage({ data }: { data: CupPageData }) {
   const { competition, visibleBlocks } = data;
   const place = [competition.city, competition.regionTag].filter(Boolean).join(" · ");
-  const liveOrNext = data.liveMatches.length > 0
-    ? data.liveMatches
-    : data.nextMatch
-      ? [data.nextMatch]
-      : data.lastResults.slice(0, 3);
+  const liveOrNext = data.nextMatch
+    ? [data.nextMatch]
+    : data.lastResults.slice(0, 3);
   const showStrip = visibleBlocks.match_strip && liveOrNext.length > 0;
   const showResults =
     visibleBlocks.results_upcoming &&
@@ -93,25 +92,23 @@ export function CupPage({ data }: { data: CupPageData }) {
         </header>
       ) : null}
 
-      {showStrip ? (
+      {visibleBlocks.match_strip ? (
         <RevealOnScroll>
           <section className={`lcs-container ${styles.block}`} aria-label="Partite in evidenza">
-            <p className={styles.stripLabel}>
-              {data.liveMatches.length > 0
-                ? "Live"
-                : data.nextMatch
-                  ? "Prossima partita"
-                  : "Ultimi risultati"}
-            </p>
-            <div className={styles.grid}>
-              {liveOrNext.map((match) => (
-                <MatchCard
-                  key={match.id}
-                  match={match}
-                  countdown={Boolean(data.nextMatch && data.liveMatches.length === 0)}
-                />
-              ))}
-            </div>
+            <LiveStrip competitionId={competition.dbId} />
+            <SponsorSlot placement="live" competitionId={competition.dbId} />
+            {showStrip ? (
+              <>
+                <p className={styles.stripLabel}>
+                  {data.nextMatch ? "Prossima partita" : "Ultimi risultati"}
+                </p>
+                <div className={styles.grid}>
+                  {liveOrNext.map((match) => (
+                    <MatchCard key={match.id} match={match} countdown={Boolean(data.nextMatch)} />
+                  ))}
+                </div>
+              </>
+            ) : null}
           </section>
         </RevealOnScroll>
       ) : null}

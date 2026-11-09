@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { ReactLenis, useLenis } from "lenis/react";
 import type { LenisOptions } from "lenis";
@@ -101,7 +101,9 @@ function LenisRuntime() {
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   return (
     <ReactLenis root options={LENIS_OPTIONS}>
-      <LenisRuntime />
+      <Suspense fallback={null}>
+        <LenisRuntime />
+      </Suspense>
       {children}
     </ReactLenis>
   );

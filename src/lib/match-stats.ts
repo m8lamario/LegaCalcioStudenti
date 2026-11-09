@@ -1,10 +1,13 @@
 export type StatEvent = {
-  type: "goal" | "yellow_card" | "red_card" | "substitution";
+  type: "goal" | "yellow_card" | "red_card" | "substitution" | "note";
   playerId: string | null;
   teamId: string | null;
   playerName?: string | null;
   playerNumber?: number | null;
   publicationConsent?: boolean;
+  goalKind?: "regular" | "penalty" | "own_goal" | null;
+  shootout?: boolean;
+  deletedAt?: string | Date | null;
 };
 
 export type ScorerRow = {
@@ -39,6 +42,7 @@ function publicName(event: StatEvent) {
 export function computeScorers(events: StatEvent[], limit = 5): ScorerRow[] {
   const map = new Map<string, ScorerRow>();
   for (const event of events) {
+    if (event.deletedAt || event.shootout || event.goalKind === "own_goal") continue;
     if (event.type !== "goal" || !event.playerId) continue;
     const current = map.get(event.playerId) ?? {
       playerId: event.playerId,
@@ -56,6 +60,7 @@ export function computeScorers(events: StatEvent[], limit = 5): ScorerRow[] {
 export function computeCards(events: StatEvent[]): CardRow[] {
   const map = new Map<string, CardRow>();
   for (const event of events) {
+    if (event.deletedAt) continue;
     if ((event.type !== "yellow_card" && event.type !== "red_card") || !event.playerId) {
       continue;
     }

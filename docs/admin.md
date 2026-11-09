@@ -34,6 +34,19 @@ npx tsx scripts/create-admin.ts tua@email "Mario"
 - `staff_citta`: solo le città assegnate
 - `refertista`: solo partite delle città assegnate
 
+## Diretta (`/admin/live`)
+
+Pannello telefono per lo staff a bordo campo. Nessuna variabile extra.
+
+1. Assegna la città al refertista da **Utenti**.
+2. In **Coppe** imposta i minuti per tempo (default 25 + 10 di supplementari).
+3. In **Fasi** di eliminazione spunta supplementari e/o rigori.
+4. Apri **Diretta**: vedi le partite di oggi (fuso `Europe/Rome`) e quelle già `live`.
+5. Sulla partita: Avvio, Intervallo, Ripresa, Fine. Gli eventi (gol, autogol, rigore, cartellini, cambio, nota) restano in coda se la rete cade e partono al ritorno, senza duplicati.
+6. Solo un admin può riaprire una partita chiusa. La card social è `/partite/{id}/opengraph-image`.
+
+Il refertista non vede le partite di altre città. Dettagli in `docs/live-architecture.md`.
+
 ## Variabili su Vercel
 
 Imposta su Production e Preview:

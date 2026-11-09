@@ -83,11 +83,13 @@ export function matchSportsEventJsonLd(input: {
     url: absoluteUrl(`/partite/${input.id}`),
     startDate: input.startDate ?? undefined,
     eventStatus:
-      input.status === "finished"
-        ? "https://schema.org/EventScheduled"
-        : input.status === "live"
-          ? "https://schema.org/EventScheduled"
-          : "https://schema.org/EventScheduled",
+      input.status === "postponed"
+        ? "https://schema.org/EventPostponed"
+        : "https://schema.org/EventScheduled",
+    description:
+      input.homeScore != null && input.awayScore != null
+        ? `${input.homeName} ${input.homeScore}-${input.awayScore} ${input.awayName}`
+        : undefined,
     sport: "Soccer",
     location: input.venueName
       ? { "@type": "Place", name: input.venueName }

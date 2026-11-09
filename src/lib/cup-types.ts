@@ -121,11 +121,13 @@ export type CupStatsData = {
 
 export type MatchEventView = {
   id: string;
-  type: "goal" | "yellow_card" | "red_card" | "substitution";
+  type: "goal" | "yellow_card" | "red_card" | "substitution" | "note";
   minute: number | null;
   note: string | null;
   teamId: string | null;
   playerName: string;
+  goalKind?: "regular" | "penalty" | "own_goal" | null;
+  shootout?: boolean;
 };
 
 export type MatchPageData = {

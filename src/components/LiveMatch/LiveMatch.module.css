@@ -1,0 +1,22 @@
+.wrap {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.pulse {
+  animation: livePulse 1.2s ease-out;
+}
+
+.updated {
+  color: var(--lcs-text-secondary);
+  font-size: 0.85rem;
+}
+
+@keyframes livePulse {
+  from {
+    background: rgba(0, 237, 175, 0.35);
+  }
+  to {
+    background: transparent;
+  }
+}

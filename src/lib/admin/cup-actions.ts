@@ -47,7 +47,12 @@ export async function saveMatchEvent(form: FormData) {
     matchId,
     teamId: formString(form, "teamId") || null,
     playerId: formString(form, "playerId") || null,
-    type: formString(form, "type") as "goal" | "yellow_card" | "red_card" | "substitution",
+    type: formString(form, "type") as
+      | "goal"
+      | "yellow_card"
+      | "red_card"
+      | "substitution"
+      | "note",
     minute: formString(form, "minute") ? Number(formString(form, "minute")) : null,
     note: formString(form, "note") || null,
   };

@@ -27,3 +27,9 @@ export function teamTag(competitionSlug: string, teamSlug: string) {
 export function schoolTag(slug: string) {
   return `school:${slug}`;
 }
+
+export function liveMatchTag(id: string) {
+  return `live:${id}`;
+}
+
+export const liveActiveTag = "live:active";

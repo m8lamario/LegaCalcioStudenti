@@ -81,6 +81,22 @@ async function Content() {
           <input className={styles.input} type="date" name="endsOn" />
         </label>
         <label className={styles.label}>
+          Minuti per tempo (vuoto = coppa)
+          <input className={styles.input} name="halfMinutes" />
+        </label>
+        <label className={styles.label}>
+          Minuti supplementari
+          <input className={styles.input} name="extraHalfMinutes" />
+        </label>
+        <label className={styles.label}>
+          Supplementari
+          <input type="checkbox" name="allowExtraTime" />
+        </label>
+        <label className={styles.label}>
+          Rigori
+          <input type="checkbox" name="allowPenalties" />
+        </label>
+        <label className={styles.label}>
           Ordine
           <input className={styles.input} name="sortOrder" defaultValue="0" />
         </label>

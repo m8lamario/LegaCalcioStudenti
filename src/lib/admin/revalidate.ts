@@ -5,11 +5,14 @@ import { competitions, schools, teams } from "@/db/schema";
 import {
   cacheTags,
   cupTag,
+  liveActiveTag,
+  liveMatchTag,
   matchTag,
   schoolTag,
   standingsTag,
   teamTag,
 } from "@/lib/cache-tags";
+import { invalidateLiveMemory } from "@/lib/live/memory-cache";
 
 export async function revalidatePublic() {
   revalidateTag(cacheTags.home, "max");
@@ -69,4 +72,10 @@ export async function revalidateCupById(
   for (const slug of extra?.schoolSlugs ?? []) {
     revalidateTag(schoolTag(slug), "max");
   }
+}
+
+export function revalidateLive(matchId: string) {
+  invalidateLiveMemory(matchId);
+  revalidateTag(liveMatchTag(matchId), "max");
+  revalidateTag(liveActiveTag, "max");
 }

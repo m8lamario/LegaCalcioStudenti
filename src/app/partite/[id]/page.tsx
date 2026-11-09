@@ -1,23 +1,20 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { MatchCard } from "@/components/CupPage/MatchCard";
+import { LiveMatchClient } from "@/components/LiveMatch/LiveMatchClient";
+import { SponsorSlot } from "@/components/SponsorSlot/SponsorSlot";
 import styles from "@/components/CupPage/CupPage.module.css";
 import { matchSportsEventJsonLd } from "@/lib/jsonLd";
+import { loadLiveSnapshot } from "@/lib/live/snapshot";
 import { getMatchPage, getPublishedMatchParams } from "@/lib/queries/cup";
 import { pageMetadata } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ id: string }>;
 }
-
-const EVENT_LABEL = {
-  goal: "Gol",
-  yellow_card: "Giallo",
-  red_card: "Rosso",
-  substitution: "Cambio",
-} as const;
 
 export async function generateStaticParams() {
   return getPublishedMatchParams();
@@ -37,6 +34,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
+async function LiveBlock({
+  matchId,
+  fallbackScore,
+}: {
+  matchId: string;
+  fallbackScore: string;
+}) {
+  const snapshot = await loadLiveSnapshot(matchId);
+  if (!snapshot) {
+    return <p className={styles.score}>{fallbackScore}</p>;
+  }
+  return <LiveMatchClient matchId={matchId} initial={snapshot} />;
+}
+
 export default async function MatchPage({ params }: Props) {
   const { id } = await params;
   const data = await getMatchPage(id);
@@ -44,7 +55,7 @@ export default async function MatchPage({ params }: Props) {
 
   const home = data.match.homeTeam?.name ?? "TBD";
   const away = data.match.awayTeam?.name ?? "TBD";
-  const score =
+  const fallbackScore =
     data.match.homeScore != null && data.match.awayScore != null
       ? `${data.match.homeScore} — ${data.match.awayScore}`
       : data.match.dateLabel ?? data.match.status;
@@ -71,7 +82,9 @@ export default async function MatchPage({ params }: Props) {
           <h1 className={styles.sectionTitle}>
             {home} vs {away}
           </h1>
-          <p className={styles.score}>{score}</p>
+          <Suspense fallback={<p className={styles.score}>{fallbackScore}</p>}>
+            <LiveBlock matchId={data.match.id} fallbackScore={fallbackScore} />
+          </Suspense>
           <p className={styles.muted}>
             {data.match.roundLabel}
             {data.match.venueName ? ` · ${data.match.venueName}` : ""}
@@ -83,20 +96,7 @@ export default async function MatchPage({ params }: Props) {
             </a>
           ) : null}
         </div>
-        <h2 className={styles.cardTitle}>Cronaca eventi</h2>
-        {data.events.length === 0 ? (
-          <p className={styles.empty}>Gli eventi di gara saranno pubblicati a referto chiuso.</p>
-        ) : (
-          <ol className={styles.events}>
-            {data.events.map((event) => (
-              <li key={event.id}>
-                {event.minute != null ? `${event.minute}' · ` : ""}
-                {EVENT_LABEL[event.type]} · {event.playerName}
-                {event.note ? ` · ${event.note}` : ""}
-              </li>
-            ))}
-          </ol>
-        )}
+        <SponsorSlot placement="live" competitionId={data.competition.dbId} />
         <div className={styles.block}>
           <MatchCard match={data.match} />
         </div>

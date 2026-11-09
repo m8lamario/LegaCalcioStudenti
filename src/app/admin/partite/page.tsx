@@ -106,6 +106,7 @@ async function Content() {
               <option value="yellow_card">giallo</option>
               <option value="red_card">rosso</option>
               <option value="substitution">cambio</option>
+              <option value="note">nota</option>
             </select>
             <input className={styles.input} name="minute" placeholder="min" />
             <select className={styles.select} name="teamId">

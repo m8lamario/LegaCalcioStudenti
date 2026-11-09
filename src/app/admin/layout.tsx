@@ -18,6 +18,7 @@ const LINKS = [
   { href: "/admin/squadre", label: "Squadre" },
   { href: "/admin/giocatori", label: "Giocatori" },
   { href: "/admin/partite", label: "Partite" },
+  { href: "/admin/live", label: "Diretta" },
   { href: "/admin/gironi", label: "Gironi" },
   { href: "/admin/mvp", label: "MVP" },
   { href: "/admin/staff", label: "Staff" },
@@ -57,7 +58,7 @@ async function AuthedShell({ children }: { children: React.ReactNode }) {
         <ul className={styles.list}>
           {LINKS.filter((link) => {
             if (user.role === "refertista") {
-              return ["/admin", "/admin/partite", "/admin/mvp"].includes(link.href);
+              return ["/admin", "/admin/partite", "/admin/live", "/admin/mvp"].includes(link.href);
             }
             if (user.role === "staff_citta") {
               return !["/admin/utenti", "/admin/impostazioni"].includes(link.href);

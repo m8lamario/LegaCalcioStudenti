@@ -1,5 +1,5 @@
 import { cacheTag } from "next/cache";
-import { and, asc, eq, or } from "drizzle-orm";
+import { and, asc, eq, isNull, or } from "drizzle-orm";
 import { alias } from "drizzle-orm/pg-core";
 import { getDb } from "@/db";
 import {
@@ -224,14 +224,19 @@ function toStatEvents(
     player: typeof players.$inferSelect | null;
   }[],
 ) {
-  return rows.map((row) => ({
-    type: row.event.type,
-    playerId: row.event.playerId,
-    teamId: row.event.teamId,
-    playerName: row.player?.name ?? null,
-    playerNumber: row.player?.number ?? null,
-    publicationConsent: row.player?.publicationConsent ?? false,
-  }));
+  return rows
+    .filter((row) => !row.event.deletedAt)
+    .map((row) => ({
+      type: row.event.type,
+      playerId: row.event.playerId,
+      teamId: row.event.teamId,
+      playerName: row.player?.name ?? null,
+      playerNumber: row.player?.number ?? null,
+      publicationConsent: row.player?.publicationConsent ?? false,
+      goalKind: row.event.goalKind,
+      shootout: row.event.shootout,
+      deletedAt: row.event.deletedAt,
+    }));
 }
 
 async function loadGroupStandings(
@@ -612,8 +617,8 @@ export async function getMatchPage(idOrSlug: string): Promise<MatchPageData | nu
     .select({ event: matchEvents, player: players })
     .from(matchEvents)
     .leftJoin(players, eq(matchEvents.playerId, players.id))
-    .where(eq(matchEvents.matchId, row.match.id))
-    .orderBy(asc(matchEvents.minute));
+    .where(and(eq(matchEvents.matchId, row.match.id), isNull(matchEvents.deletedAt)))
+    .orderBy(asc(matchEvents.minute), asc(matchEvents.createdAt));
 
   const events: MatchEventView[] = eventRows.map((item) => ({
     id: item.event.id,
@@ -626,6 +631,8 @@ export async function getMatchPage(idOrSlug: string): Promise<MatchPageData | nu
       number: item.player?.number,
       publicationConsent: item.player?.publicationConsent,
     }),
+    goalKind: item.event.goalKind,
+    shootout: item.event.shootout,
   }));
 
   return {

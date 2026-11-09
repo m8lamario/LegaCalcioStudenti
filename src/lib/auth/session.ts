@@ -7,6 +7,13 @@ import {
   SESSION_TTL_MS,
 } from "@/lib/auth/constants";
 import { hashToken, randomToken } from "@/lib/auth/crypto";
+import {
+  canAccessCity,
+  canManageContent,
+  canManageMatches,
+} from "@/lib/auth/access";
+
+export { canAccessCity, canManageContent, canManageMatches };
 
 export type SessionUser = {
   id: string;
@@ -78,21 +85,3 @@ export async function getCurrentUser(): Promise<SessionUser | null> {
   };
 }
 
-export function canAccessCity(user: SessionUser, cityId?: string | null) {
-  if (user.role === "admin") return true;
-  if (!cityId) return false;
-  return user.cityIds.includes(cityId);
-}
-
-export function canManageMatches(user: SessionUser, cityId?: string | null) {
-  if (user.role === "admin") return true;
-  if (!cityId) return false;
-  return user.cityIds.includes(cityId);
-}
-
-export function canManageContent(user: SessionUser, cityId?: string | null) {
-  if (user.role === "admin") return true;
-  if (user.role === "refertista") return false;
-  if (!cityId) return false;
-  return user.cityIds.includes(cityId);
-}

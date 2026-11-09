@@ -37,6 +37,7 @@ async function seed() {
 
   await db.delete(schema.sponsorClicks);
   await db.delete(schema.sponsorImpressions);
+  await db.delete(schema.liveCommands);
   await db.delete(schema.matchEvents);
   await db.delete(schema.matchdayAwards);
   await db.delete(schema.competitionBlocks);

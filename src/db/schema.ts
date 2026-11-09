@@ -44,6 +44,25 @@ export const matchEventTypeEnum = pgEnum("match_event_type", [
   "yellow_card",
   "red_card",
   "substitution",
+  "note",
+]);
+
+export const matchClockPeriodEnum = pgEnum("match_clock_period", [
+  "idle",
+  "first",
+  "interval",
+  "second",
+  "extra_first",
+  "extra_interval",
+  "extra_second",
+  "penalties",
+  "closed",
+]);
+
+export const matchGoalKindEnum = pgEnum("match_goal_kind", [
+  "regular",
+  "penalty",
+  "own_goal",
 ]);
 
 export const postKindEnum = pgEnum("post_kind", ["blog", "news"]);
@@ -173,6 +192,8 @@ export const competitions = pgTable(
     regulationsUrl: text("regulations_url"),
     contacts: jsonb("contacts").$type<CompetitionContacts>(),
     standingsRules: jsonb("standings_rules").$type<StandingsRules>(),
+    halfMinutes: integer("half_minutes").notNull().default(25),
+    extraHalfMinutes: integer("extra_half_minutes").notNull().default(10),
     sortOrder: integer("sort_order").notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
@@ -196,6 +217,10 @@ export const phases = pgTable(
     kind: phaseKindEnum("kind").notNull().default("group"),
     startsOn: date("starts_on"),
     endsOn: date("ends_on"),
+    halfMinutes: integer("half_minutes"),
+    extraHalfMinutes: integer("extra_half_minutes"),
+    allowExtraTime: boolean("allow_extra_time").notNull().default(false),
+    allowPenalties: boolean("allow_penalties").notNull().default(false),
     sortOrder: integer("sort_order").notNull().default(0),
   },
   (table) => [
@@ -308,6 +333,16 @@ export const matches = pgTable(
     homeScore: integer("home_score"),
     awayScore: integer("away_score"),
     status: matchStatusEnum("status").notNull().default("scheduled"),
+    clockPeriod: matchClockPeriodEnum("clock_period").notNull().default("idle"),
+    periodStartedAt: timestamp("period_started_at", { withTimezone: true }),
+    elapsedSeconds: integer("elapsed_seconds").notNull().default(0),
+    halfMinutes: integer("half_minutes").notNull().default(25),
+    extraHalfMinutes: integer("extra_half_minutes").notNull().default(10),
+    allowExtraTime: boolean("allow_extra_time").notNull().default(false),
+    allowPenalties: boolean("allow_penalties").notNull().default(false),
+    homePenaltyScore: integer("home_penalty_score").notNull().default(0),
+    awayPenaltyScore: integer("away_penalty_score").notNull().default(0),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [
     uniqueIndex("matches_legacy_slug_idx").on(table.legacySlug),
@@ -315,6 +350,7 @@ export const matches = pgTable(
     index("matches_phase_idx").on(table.phaseId),
     index("matches_group_idx").on(table.groupId),
     index("matches_kickoff_idx").on(table.kickoffAt),
+    index("matches_status_idx").on(table.status),
   ],
 );
 
@@ -375,8 +411,38 @@ export const matchEvents = pgTable(
     type: matchEventTypeEnum("type").notNull(),
     minute: integer("minute"),
     note: text("note"),
+    goalKind: matchGoalKindEnum("goal_kind").notNull().default("regular"),
+    assistPlayerId: uuid("assist_player_id").references(() => players.id, {
+      onDelete: "set null",
+    }),
+    shirtNumber: integer("shirt_number"),
+    playerOutId: uuid("player_out_id").references(() => players.id, {
+      onDelete: "set null",
+    }),
+    clientId: text("client_id"),
+    shootout: boolean("shootout").notNull().default(false),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
-  (table) => [index("match_events_match_idx").on(table.matchId)],
+  (table) => [
+    index("match_events_match_idx").on(table.matchId),
+    uniqueIndex("match_events_client_id_idx").on(table.clientId),
+  ],
+);
+
+export const liveCommands = pgTable(
+  "live_commands",
+  {
+    clientId: text("client_id").primaryKey(),
+    matchId: uuid("match_id")
+      .notNull()
+      .references(() => matches.id, { onDelete: "cascade" }),
+    userId: uuid("user_id").references(() => users.id, { onDelete: "set null" }),
+    kind: text("kind").notNull(),
+    payload: jsonb("payload").$type<Record<string, unknown>>().notNull().default({}),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("live_commands_match_idx").on(table.matchId)],
 );
 
 export const posts = pgTable(

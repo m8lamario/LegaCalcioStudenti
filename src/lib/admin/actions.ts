@@ -54,6 +54,8 @@ export async function saveCompetition(form: FormData) {
       contactAddress: z.string().optional(),
       instagram: z.string().optional(),
       facebook: z.string().optional(),
+      halfMinutes: z.coerce.number().int().min(5).max(45).default(25),
+      extraHalfMinutes: z.coerce.number().int().min(5).max(20).default(10),
       sortOrder: z.coerce.number().int().default(0),
     })
     .parse({
@@ -77,6 +79,8 @@ export async function saveCompetition(form: FormData) {
       contactAddress: formString(form, "contactAddress"),
       instagram: formString(form, "instagram"),
       facebook: formString(form, "facebook"),
+      halfMinutes: formString(form, "halfMinutes") || "25",
+      extraHalfMinutes: formString(form, "extraHalfMinutes") || "10",
       sortOrder: formString(form, "sortOrder") || "0",
     });
 
@@ -106,6 +110,8 @@ export async function saveCompetition(form: FormData) {
       ...(parsed.instagram ? { instagram: parsed.instagram } : {}),
       ...(parsed.facebook ? { facebook: parsed.facebook } : {}),
     },
+    halfMinutes: parsed.halfMinutes,
+    extraHalfMinutes: parsed.extraHalfMinutes,
     sortOrder: parsed.sortOrder,
     updatedAt: new Date(),
   };
@@ -195,6 +201,12 @@ export async function savePhase(form: FormData) {
     kind: (formString(form, "kind") || "group") as "group" | "knockout",
     startsOn: formString(form, "startsOn") || null,
     endsOn: formString(form, "endsOn") || null,
+    halfMinutes: formString(form, "halfMinutes") ? Number(formString(form, "halfMinutes")) : null,
+    extraHalfMinutes: formString(form, "extraHalfMinutes")
+      ? Number(formString(form, "extraHalfMinutes"))
+      : null,
+    allowExtraTime: form.get("allowExtraTime") === "on",
+    allowPenalties: form.get("allowPenalties") === "on",
     sortOrder: Number(formString(form, "sortOrder") || "0"),
   };
   if (id) await getDb().update(phases).set(values).where(eq(phases.id, id));
