@@ -1,9 +1,11 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { cacheTag } from "next/cache";
 import { eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { cities, competitions } from "@/db/schema";
 import { cacheTags } from "@/lib/cache-tags";
-import type { LocalCompetition } from "@/data/homeData";
+import { LOCAL_COMPETITIONS, type LocalCompetition } from "@/data/homeData";
 
 export async function getCompetitionsWithCities(): Promise<LocalCompetition[]> {
   "use cache";
@@ -47,6 +49,37 @@ function toLocalCompetition(
   competition: typeof competitions.$inferSelect,
   city: typeof cities.$inferSelect | null,
 ): LocalCompetition {
+  const codeMatch = LOCAL_COMPETITIONS.find((item) => item.slug === competition.slug);
+  const publicFile = (path: string | null | undefined) => {
+    if (!path) return { path, exists: false };
+    const relative = path.replace(/^\//, "");
+    return { path, exists: existsSync(join(process.cwd(), "public", relative)) };
+  };
+
+  // #region agent log
+  fetch("http://127.0.0.1:7290/ingest/2cc69b13-f623-451a-9fcc-7fcd9d8725f7", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "7a42a0" },
+    body: JSON.stringify({
+      sessionId: "7a42a0",
+      runId: "pre-fix",
+      hypothesisId: "A",
+      location: "src/lib/queries/competitions.ts:toLocalCompetition",
+      message: "image path from DB vs homeData vs disk",
+      data: {
+        slug: competition.slug,
+        dbImage: competition.image,
+        dbLogo: competition.logo,
+        codeImage: codeMatch?.image ?? null,
+        dbImageOnDisk: publicFile(competition.image),
+        codeImageOnDisk: publicFile(codeMatch?.image),
+        pathsDiffer: (competition.image ?? null) !== (codeMatch?.image ?? null),
+      },
+      timestamp: Date.now(),
+    }),
+  }).catch(() => {});
+  // #endregion
+
   return {
     id: competition.slug,
     slug: competition.slug,
