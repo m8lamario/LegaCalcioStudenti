@@ -7,7 +7,7 @@ import gsap from "gsap";
 import type { HeroImage } from "@/data/homeData";
 import styles from "./Hero.module.css";
 
-const SLIDE_DURATION_MS = 7000;
+const SLIDE_DURATION_MS = 4000;
 
 export const Hero: React.FC<{ images: HeroImage[] }> = ({ images }) => {
   const [activeIndex, setActiveIndex] = useState(0);

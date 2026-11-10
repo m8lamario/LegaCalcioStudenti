@@ -95,6 +95,11 @@ const nextConfig: NextConfig = {
         destination: "/#mission",
         statusCode: 301,
       },
+      {
+        source: "/partner",
+        destination: "/collabora",
+        statusCode: 301,
+      },
     ];
   },
 };

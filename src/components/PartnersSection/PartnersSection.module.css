@@ -2,6 +2,10 @@
   background-color: transparent;
 }
 
+.embedded {
+  padding-block: clamp(1.25rem, 3vw, 2.5rem);
+}
+
 .header {
   display: flex;
   align-items: flex-end;

@@ -1,0 +1,137 @@
+.page {
+  background-color: var(--lcs-bg-dark);
+  padding-top: calc(
+    var(--lcs-navbar-height) + var(--lcs-navbar-signature-height) +
+      clamp(2.5rem, 5vw, 4rem)
+  );
+  padding-bottom: var(--lcs-section-space);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 46rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.eyebrowRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.sidelineTick {
+  width: 24px;
+  height: 3px;
+  background-color: var(--lcs-aqua);
+}
+
+.eyebrow {
+  font-family: var(--lcs-font-sans);
+  font-size: var(--lcs-type-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lcs-aqua);
+}
+
+.title {
+  font-family: var(--lcs-font-display);
+  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.titleScript {
+  font-family: var(--lcs-font-script);
+  font-size: 0.92em;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  text-transform: none;
+  color: var(--lcs-aqua);
+}
+
+.lead,
+.stepText {
+  max-width: var(--lcs-measure-body);
+  font-family: var(--lcs-font-sans);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--lcs-text-secondary);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--lcs-grid-gap-lg);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  list-style: none;
+}
+
+.step {
+  min-width: 0;
+  padding-top: 0.95rem;
+  border-top: 3px solid var(--lcs-aqua);
+}
+
+.stepIndex {
+  display: block;
+  font-family: var(--lcs-font-display);
+  font-size: var(--lcs-type-index);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--lcs-aqua);
+}
+
+.stepTitle {
+  margin-top: 0.55rem;
+  font-family: var(--lcs-font-display);
+  font-size: clamp(1.2rem, 1.6vw, 1.65rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+}
+
+.stepText {
+  margin-top: 0.65rem;
+  font-size: 0.95rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  font-family: var(--lcs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lcs-text-primary);
+  transition: color var(--lcs-transition-fast);
+}
+
+.backLink:hover {
+  color: var(--lcs-aqua);
+}
+
+@media (max-width: 1100px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

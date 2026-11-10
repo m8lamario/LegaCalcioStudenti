@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import type { MissionContent, MissionLine, MissionPillar } from "@/lib/queries/site";
 import { gsap, ScrollTrigger } from "@/lib/gsapClient";
+import { withKeptCompounds } from "@/lib/typography";
 import styles from "./MissionSection.module.css";
 
 export const MissionSection: React.FC<{
@@ -23,9 +24,9 @@ export const MissionSection: React.FC<{
         gsap.from("[data-claim-line]", {
           y: 18,
           opacity: 0,
-          duration: 0.7,
+          duration: 0.5,
           ease: "power3.out",
-          stagger: 0.08,
+          stagger: 0.05,
           scrollTrigger: {
             trigger: "[data-claim]",
             start: "top 85%",
@@ -36,8 +37,8 @@ export const MissionSection: React.FC<{
         gsap.from("[data-statement]", {
           y: 16,
           opacity: 0,
-          duration: 0.65,
-          delay: 0.08,
+          duration: 0.48,
+          delay: 0.04,
           ease: "power3.out",
           scrollTrigger: {
             trigger: "[data-claim]",
@@ -54,8 +55,8 @@ export const MissionSection: React.FC<{
             gsap.to(batch, {
               y: 0,
               opacity: 1,
-              duration: 0.65,
-              stagger: 0.1,
+              duration: 0.48,
+              stagger: 0.07,
               ease: "power3.out",
               overwrite: true,
             });
@@ -106,7 +107,7 @@ export const MissionSection: React.FC<{
         </h2>
 
         <p className={styles.statement} data-statement>
-          {mission.statement}
+          {withKeptCompounds(mission.statement, styles.nowrap)}
         </p>
 
         <ul className={styles.pillars} data-pillars>
@@ -114,7 +115,9 @@ export const MissionSection: React.FC<{
             <li key={pillar.index} className={styles.pillar} data-pillar>
               <span className={styles.pillarIndex}>{pillar.index}</span>
               <h3 className={styles.pillarTitle}>{pillar.title}</h3>
-              <p className={styles.pillarText}>{pillar.text}</p>
+              <p className={styles.pillarText}>
+                {withKeptCompounds(pillar.text, styles.nowrap)}
+              </p>
             </li>
           ))}
         </ul>

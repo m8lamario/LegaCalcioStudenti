@@ -11,6 +11,7 @@ const FOOTER_LINKS = [
   { label: "Mission", href: "/#mission" },
   { label: "Finali nazionali", href: "/finali-nazionali" },
   { label: "News", href: "/#news" },
+  { label: "Collabora", href: "/collabora" },
   { label: "Contatti", href: "/contatti" },
 ];
 

@@ -95,7 +95,7 @@
 .navList {
   display: flex;
   align-items: center;
-  gap: clamp(1.35rem, 2.2vw, 2.35rem);
+  gap: clamp(1.1rem, 1.8vw, 2.05rem);
   list-style: none;
 }
 
@@ -368,7 +368,7 @@
   color: var(--lcs-text-secondary);
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1040px) {
   .desktopNav {
     display: none;
   }

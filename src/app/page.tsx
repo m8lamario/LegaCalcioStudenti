@@ -7,7 +7,6 @@ import { NationalFinalsSection } from "@/components/NationalFinalsSection/Nation
 import { SchoolInviteSection } from "@/components/SchoolInviteSection/SchoolInviteSection";
 import { CircuitStatsSection } from "@/components/CircuitStatsSection/CircuitStatsSection";
 import { NewsSection } from "@/components/NewsSection/NewsSection";
-import { PartnersSection } from "@/components/PartnersSection/PartnersSection";
 import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { LiveStrip } from "@/components/LiveStrip/LiveStrip";
 import { SponsorSlot } from "@/components/SponsorSlot/SponsorSlot";
@@ -41,10 +40,9 @@ export default async function HomePage() {
       <CompetitionsMapSection competitions={content.competitions} />
       <CompetitionsSection competitions={content.competitions} />
       <NationalFinalsSection content={content.nationalFinals} />
-      <SchoolInviteSection invite={content.schoolInvite} />
       <CircuitStatsSection stats={content.circuitStats} />
       <NewsSection articles={content.editorialNews} />
-      <PartnersSection partners={content.partners} />
+      <SchoolInviteSection invite={content.schoolInvite} />
     </>
   );
 }

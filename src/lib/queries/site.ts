@@ -3,16 +3,25 @@ import { eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { homeBlocks, siteSettings } from "@/db/schema";
 import { cacheTags } from "@/lib/cache-tags";
-import type {
-  CircuitPartner,
-  CircuitStat,
-  ContactChannel,
-  EditorialArticle,
-  HeroImage,
-  LocalCompetition,
-  NavItem,
+import {
+  CIRCUIT_PARTNERS,
+  HERO_IMAGES,
+  MISSION,
+  MISSION_LINES,
+  MISSION_PILLARS,
+  NAV_ITEMS,
+  SCHOOL_INVITE,
+  mergeHeroImages,
+  withCollaboraNav,
+  getCompetitionHref,
+  type CircuitPartner,
+  type CircuitStat,
+  type ContactChannel,
+  type EditorialArticle,
+  type HeroImage,
+  type LocalCompetition,
+  type NavItem,
 } from "@/data/homeData";
-import { getCompetitionHref } from "@/data/homeData";
 import {
   getCompetitionWithCity,
   getCompetitionsWithCities,
@@ -106,23 +115,17 @@ export async function getHomePageContent(): Promise<HomePageContent> {
 
   return {
     motto,
-    navItems: blockPayload(blockRows, "nav_items", []),
-    heroImages: blockPayload(blockRows, "hero", []),
-    mission: blockPayload(blockRows, "mission", {
-      id: "mission",
-      eyebrow: "Chi siamo",
-      statement: "",
-    }),
-    missionLines: blockPayload(blockRows, "mission_lines", []),
-    missionPillars: blockPayload(blockRows, "mission_pillars", []),
+    navItems: withCollaboraNav(blockPayload(blockRows, "nav_items", NAV_ITEMS)),
+    heroImages: mergeHeroImages(blockPayload(blockRows, "hero", HERO_IMAGES)),
+    mission: {
+      ...MISSION,
+      ...blockPayload(blockRows, "mission", MISSION),
+    },
+    missionLines: blockPayload(blockRows, "mission_lines", [...MISSION_LINES]),
+    missionPillars: [...MISSION_PILLARS],
     schoolInvite: blockPayload(blockRows, "school_invite", {
-      id: "scuole",
-      concept: "",
-      titleLines: [],
-      statement: "",
-      ctaLabel: "",
-      ctaHref: "/",
-      closer: "",
+      ...SCHOOL_INVITE,
+      titleLines: [...SCHOOL_INVITE.titleLines],
     }),
     circuitStats: blockPayload(blockRows, "circuit_stats", []),
     nationalFinals: blockPayload(blockRows, "national_finals", {
@@ -141,7 +144,7 @@ export async function getHomePageContent(): Promise<HomePageContent> {
       pageMeaning: "",
       unpublishedNote: "",
     }),
-    partners: blockPayload(blockRows, "partners", []),
+    partners: blockPayload(blockRows, "partners", CIRCUIT_PARTNERS),
     editorialNews: blockPayload(blockRows, "editorial_news", []),
     contactChannels: blockPayload(blockRows, "contact_channels", []),
     competitions: competitionRows,

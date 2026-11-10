@@ -13,9 +13,10 @@ function isExternal(href: string) {
   return /^https?:\/\//.test(href);
 }
 
-export const PartnersSection: React.FC<{ partners: CircuitPartner[] }> = ({
-  partners: incoming,
-}) => {
+export const PartnersSection: React.FC<{
+  partners: CircuitPartner[];
+  framed?: boolean;
+}> = ({ partners: incoming, framed = true }) => {
   const partners = incoming.filter((partner) => partner.name.trim().length > 0);
 
   if (partners.length === 0) return null;
@@ -30,7 +31,7 @@ export const PartnersSection: React.FC<{ partners: CircuitPartner[] }> = ({
   return (
     <section
       id="partner"
-      className={`lcs-section ${styles.section}`}
+      className={`${framed ? "lcs-section" : styles.embedded} ${styles.section}`}
       aria-labelledby="partner-heading"
     >
       <div className="lcs-container">

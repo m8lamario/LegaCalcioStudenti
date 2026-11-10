@@ -81,11 +81,34 @@ export interface EditorialArticle {
   href: string;
 }
 
+export const COLLABORA_NAV_ITEM: NavItem = {
+  label: "Collabora",
+  href: "/collabora",
+};
+
 export const NAV_ITEMS: NavItem[] = [
   { label: "Competizioni", href: "/#competizioni" },
   { label: "News", href: "/#news" },
   { label: "Mission", href: "/#mission" },
+  COLLABORA_NAV_ITEM,
 ];
+
+export function withCollaboraNav(items: NavItem[]): NavItem[] {
+  const source = items.length > 0 ? items : NAV_ITEMS;
+  if (source.some((item) => item.href === COLLABORA_NAV_ITEM.href)) {
+    return source;
+  }
+  const next = source.filter((item) => item.href !== "/#partner");
+  const afterMission = next.findIndex((item) => item.href.includes("#mission"));
+  if (afterMission >= 0) {
+    return [
+      ...next.slice(0, afterMission + 1),
+      COLLABORA_NAV_ITEM,
+      ...next.slice(afterMission + 1),
+    ];
+  }
+  return [...next, COLLABORA_NAV_ITEM];
+}
 
 export const HERO_IMAGES: HeroImage[] = [
   {
@@ -93,6 +116,12 @@ export const HERO_IMAGES: HeroImage[] = [
     image: "/eslHome/DSCF6614-Migliorato-NR.webp",
     imageAlt:
       "Squadre liceali in campo di sera, con fontane luminose e la terna arbitrale",
+  },
+  {
+    id: "ingresso-in-campo",
+    image: "/eslHome/13.jpeg",
+    imageAlt:
+      "Giocatori liceali entrano in campo di sera, tra fontane luminose, prima del fischio d'inizio",
   },
   {
     id: "agonismo-istituti",
@@ -107,6 +136,16 @@ export const HERO_IMAGES: HeroImage[] = [
       "Studenti sugli spalti durante una partita della Lega Calcio Studenti",
   },
 ];
+
+export function mergeHeroImages(current: HeroImage[]): HeroImage[] {
+  if (current.length === 0) return HERO_IMAGES;
+  const byId = new Map(current.map((item) => [item.id, item]));
+  const ordered = HERO_IMAGES.map((item) => byId.get(item.id) ?? item);
+  const extras = current.filter(
+    (item) => !HERO_IMAGES.some((canonical) => canonical.id === item.id),
+  );
+  return extras.length > 0 ? [...ordered, ...extras] : ordered;
+}
 
 export const SITE_MOTTO = "Una lega. Tante città. Un'unica passione.";
 
@@ -130,13 +169,13 @@ export const MISSION = {
 export const MISSION_PILLARS = [
   {
     index: "01",
-    title: "Circuito nazionale",
-    text: "I tornei inter-scolastici riuniti sotto un'unica identità sportiva.",
+    title: "Competizioni locali",
+    text: "Coppe cittadine, radicate nel territorio.",
   },
   {
     index: "02",
-    title: "Identità locali",
-    text: "Coppe cittadine, ciascuna con la propria identità.",
+    title: "Circuiti nazionali",
+    text: "I tornei inter-scolastici riuniti sotto un'unica identità sportiva.",
   },
   {
     index: "03",
@@ -224,6 +263,39 @@ export interface CircuitPartner {
   href?: string;
 }
 
+export const COLLABORATION_PAGE = {
+  eyebrow: "Al fianco del circuito",
+  titleLead: "Collabora",
+  titleScript: "con LCS",
+  lead: "Istituzioni, sponsor, media e realtà tecniche possono sostenere il circuito e far crescere le coppe cittadine.",
+  meaning:
+    "Ogni collaborazione resta visibile sul campo, nelle coppe e nei racconti della Lega Calcio Studenti.",
+  opportunities: [
+    {
+      index: "01",
+      title: "Istituzioni",
+      text: "Enti e territori che riconoscono il valore educativo e sportivo delle coppe cittadine.",
+    },
+    {
+      index: "02",
+      title: "Sponsor",
+      text: "Marchi che accompagnano le squadre, gli eventi e la stagione del circuito.",
+    },
+    {
+      index: "03",
+      title: "Media",
+      text: "Redazioni e voci che raccontano partite, istituti e il cammino verso le finali.",
+    },
+    {
+      index: "04",
+      title: "Tecnico",
+      text: "Piattaforme e servizi che rendono possibile organizzare, iscriversi e comunicare.",
+    },
+  ],
+  ctaLabel: "Contatti",
+  ctaHref: "/contatti",
+} as const;
+
 /**
  * Collaborazioni reali in produzione. Voci di test per anteprima UI — rimuovere o
  * sostituire prima del go-live. `logo` in /public, `href` facoltativo.
@@ -309,7 +381,7 @@ export const LOCAL_COMPETITIONS: LocalCompetition[] = [
     regionTag: "Piemonte",
     stageLabel: "Fase a Gironi",
     logo: "/logoCities/molecup.png",
-    image: "/backgroundCities/molecup.jpg",
+    image: "/backgroundCities/molecup.png",
     imageAlt: "Atmosfera della Mole Cup a Torino",
     coordinates: { lat: 45.0703, lon: 7.6869 },
     mapCallout: { dx: -150, dy: 10 },
@@ -361,7 +433,7 @@ export const LOCAL_COMPETITIONS: LocalCompetition[] = [
     regionTag: "Lombardia",
     stageLabel: "Fase a Gironi",
     logo: "/logoCities/turascup.png",
-    image: "/backgroundCities/turascup.jpg",
+    image: "/backgroundCities/turascup.png",
     imageAlt: "Atmosfera della Turàs Cup a Cremona",
     coordinates: { lat: 45.1335, lon: 10.0222 },
     mapCallout: { dx: -125, dy: 175 },
@@ -373,7 +445,8 @@ export const LOCAL_COMPETITIONS: LocalCompetition[] = [
     city: "Roma",
     regionTag: "Lazio",
     stageLabel: "Fase a Gironi",
-    logo: "/logoCities/lcsw.png",
+    logo: "/logoCities/colosseocup.png",
+    image: "/backgroundCities/colosseocup.png",
     imageAlt: "Atmosfera della Colosseo Cup a Roma",
     coordinates: { lat: 41.9028, lon: 12.4964 },
     mapCallout: { dx: -155, dy: 165 },
