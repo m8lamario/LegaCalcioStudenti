@@ -62,7 +62,7 @@ function toLocalCompetition(
     headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "7a42a0" },
     body: JSON.stringify({
       sessionId: "7a42a0",
-      runId: "pre-fix",
+      runId: "post-fix",
       hypothesisId: "A",
       location: "src/lib/queries/competitions.ts:toLocalCompetition",
       message: "image path from DB vs homeData vs disk",
