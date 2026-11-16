@@ -173,13 +173,27 @@
 }
 
 @media (max-width: 860px) {
+  .concept {
+    justify-content: center;
+  }
+
+  .title,
+  .statement {
+    margin-inline: auto;
+    text-align: center;
+  }
+
   .band {
     grid-template-columns: 1fr;
-    align-items: start;
+    justify-items: center;
   }
 
   .cta {
-    justify-self: start;
+    justify-self: center;
+  }
+
+  .closer li {
+    text-align: center;
   }
 }
 
@@ -189,8 +203,8 @@
   }
 
   .cta {
-    justify-self: start;
-    width: 100%;
+    justify-self: center;
+    width: min(100%, 22rem);
   }
 
   .closer {

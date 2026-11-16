@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CupAwaiting } from "@/components/CupPage/CupAwaiting";
 import styles from "@/components/CupPage/CupPage.module.css";
+import { CUP_AWAITING } from "@/data/cupAwaiting";
 import { getPublishedSchoolParams, getSchoolPage } from "@/lib/queries/cup";
 import { pageMetadata } from "@/lib/seo";
 
@@ -34,7 +36,7 @@ export default async function SchoolPage({ params }: Props) {
       <p className={styles.eyebrow}>{data.cityName ?? "Istituto"}</p>
       <h1 className={styles.sectionTitle}>{data.name}</h1>
       {data.teams.length === 0 ? (
-        <p className={styles.empty}>Nessuna squadra pubblicata per questo istituto.</p>
+        <CupAwaiting copy={CUP_AWAITING.schoolTeams} />
       ) : (
         <div className={styles.schoolGrid}>
           {data.teams.map((team) => (

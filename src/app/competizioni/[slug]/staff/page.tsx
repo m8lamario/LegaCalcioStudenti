@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { CupAwaiting } from "@/components/CupPage/CupAwaiting";
 import { CupSubpage } from "@/components/CupPage/CupSubpage";
 import styles from "@/components/CupPage/CupPage.module.css";
+import { CUP_AWAITING } from "@/data/cupAwaiting";
 import { getCupStaff, getPublishedCupSlugs } from "@/lib/queries/cup";
 import { pageMetadata } from "@/lib/seo";
 
@@ -33,7 +35,7 @@ export default async function CupStaffPage({ params }: Props) {
   return (
     <CupSubpage competition={data.competition} title="Staff" current="staff">
       {data.staff.length === 0 ? (
-        <p className={styles.empty}>Lo staff sarà pubblicato a breve.</p>
+        <CupAwaiting copy={CUP_AWAITING.staff} />
       ) : (
         <div className={styles.staffGrid}>
           {data.staff.map((member) => (

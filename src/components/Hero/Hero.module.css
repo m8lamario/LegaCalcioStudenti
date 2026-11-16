@@ -150,6 +150,19 @@
     align-items: flex-end;
   }
 
+  .content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .sideline {
+    margin-inline: auto;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+
   .scrim {
     background: linear-gradient(
       180deg,

@@ -374,17 +374,17 @@ export const CONTACT_CHANNELS: ContactChannel[] = [];
 
 export const LOCAL_COMPETITIONS: LocalCompetition[] = [
   {
-    id: "mole-cup",
-    slug: "mole-cup",
-    name: "Mole Cup",
-    city: "Torino",
-    regionTag: "Piemonte",
+    id: "turas-cup",
+    slug: "turas-cup",
+    name: "Turàs Cup",
+    city: "Cremona",
+    regionTag: "Lombardia",
     stageLabel: "Fase a Gironi",
-    logo: "/logoCities/molecup.png",
-    image: "/backgroundCities/molecup.png",
-    imageAlt: "Atmosfera della Mole Cup a Torino",
-    coordinates: { lat: 45.0703, lon: 7.6869 },
-    mapCallout: { dx: -150, dy: 10 },
+    logo: "/logoCities/turascup.png",
+    image: "/backgroundCities/turascup.png",
+    imageAlt: "Atmosfera della Turàs Cup a Cremona",
+    coordinates: { lat: 45.1335, lon: 10.0222 },
+    mapCallout: { dx: -125, dy: 175 },
   },
   {
     id: "leonessa-cup",
@@ -400,17 +400,17 @@ export const LOCAL_COMPETITIONS: LocalCompetition[] = [
     mapCallout: { dx: 95, dy: -175 },
   },
   {
-    id: "ferrea-cup",
-    slug: "ferrea-cup",
-    name: "Ferrea Cup",
-    city: "Monza",
-    regionTag: "Lombardia",
+    id: "mole-cup",
+    slug: "mole-cup",
+    name: "Mole Cup",
+    city: "Torino",
+    regionTag: "Piemonte",
     stageLabel: "Fase a Gironi",
-    logo: "/logoCities/ferreacup.png",
-    image: "/backgroundCities/ferreacup.jpg",
-    imageAlt: "Atmosfera della Ferrea Cup a Monza",
-    coordinates: { lat: 45.5845, lon: 9.2744 },
-    mapCallout: { dx: -95, dy: -175 },
+    logo: "/logoCities/molecup.png",
+    image: "/backgroundCities/molecup.png",
+    imageAlt: "Atmosfera della Mole Cup a Torino",
+    coordinates: { lat: 45.0703, lon: 7.6869 },
+    mapCallout: { dx: -150, dy: 10 },
   },
   {
     id: "olympius-cup",
@@ -426,19 +426,6 @@ export const LOCAL_COMPETITIONS: LocalCompetition[] = [
     mapCallout: { dx: 190, dy: 5 },
   },
   {
-    id: "turas-cup",
-    slug: "turas-cup",
-    name: "Turàs Cup",
-    city: "Cremona",
-    regionTag: "Lombardia",
-    stageLabel: "Fase a Gironi",
-    logo: "/logoCities/turascup.png",
-    image: "/backgroundCities/turascup.png",
-    imageAlt: "Atmosfera della Turàs Cup a Cremona",
-    coordinates: { lat: 45.1335, lon: 10.0222 },
-    mapCallout: { dx: -125, dy: 175 },
-  },
-  {
     id: "colosseo-cup",
     slug: "colosseo-cup",
     name: "Colosseo Cup",
@@ -451,10 +438,32 @@ export const LOCAL_COMPETITIONS: LocalCompetition[] = [
     coordinates: { lat: 41.9028, lon: 12.4964 },
     mapCallout: { dx: -155, dy: 165 },
   },
+  {
+    id: "ferrea-cup",
+    slug: "ferrea-cup",
+    name: "Ferrea Cup",
+    city: "Monza",
+    regionTag: "Lombardia",
+    stageLabel: "Fase a Gironi",
+    logo: "/logoCities/ferreacup.png",
+    image: "/backgroundCities/ferreacup.jpg",
+    imageAlt: "Atmosfera della Ferrea Cup a Monza",
+    coordinates: { lat: 45.5845, lon: 9.2744 },
+    mapCallout: { dx: -95, dy: -175 },
+  },
 ];
 
 export function getLocalCompetition(slug: string) {
   return LOCAL_COMPETITIONS.find((competition) => competition.slug === slug);
+}
+
+export function sortByLocalCompetitionOrder<T extends { slug: string }>(items: T[]): T[] {
+  const order = new Map(LOCAL_COMPETITIONS.map((cup, index) => [cup.slug, index]));
+  return [...items].sort(
+    (a, b) =>
+      (order.get(a.slug) ?? Number.MAX_SAFE_INTEGER) -
+      (order.get(b.slug) ?? Number.MAX_SAFE_INTEGER),
+  );
 }
 
 export function getCompetitionHref(slug: string) {

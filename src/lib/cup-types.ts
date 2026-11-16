@@ -65,6 +65,13 @@ export type CupVenueInfo = {
   mapsUrl: string | null;
 };
 
+export type CupPhaseInfo = {
+  name: string;
+  kind: "group" | "knockout";
+  startsOn: string | null;
+  endsOn: string | null;
+};
+
 export type CupMvp = {
   roundLabel: string;
   name: string;
@@ -95,6 +102,7 @@ export type CupPageData = {
   posts: CupBlogPost[];
   schools: CupSchoolCard[];
   venues: CupVenueInfo[];
+  phases: CupPhaseInfo[];
 };
 
 export type CupTeamPageData = {

@@ -3,7 +3,11 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getCompetitionHref, type LocalCompetition } from "@/data/homeData";
+import {
+  getCompetitionHref,
+  sortByLocalCompetitionOrder,
+  type LocalCompetition,
+} from "@/data/homeData";
 import { gsap, ScrollTrigger } from "@/lib/gsapClient";
 import styles from "./CompetitionsSection.module.css";
 
@@ -106,7 +110,7 @@ export const CompetitionsSection: React.FC<{
         </header>
 
         <div className={styles.grid}>
-          {competitions.map((cup) => {
+          {sortByLocalCompetitionOrder(competitions).map((cup) => {
             const place = [cup.city, cup.regionTag].filter(Boolean).join(" · ");
 
             return (

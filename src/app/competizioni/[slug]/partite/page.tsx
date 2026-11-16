@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { CupAwaiting } from "@/components/CupPage/CupAwaiting";
 import { CupSubpage } from "@/components/CupPage/CupSubpage";
 import { MatchCard } from "@/components/CupPage/MatchCard";
 import styles from "@/components/CupPage/CupPage.module.css";
+import { CUP_AWAITING } from "@/data/cupAwaiting";
 import { getCupMatches, getPublishedCupSlugs } from "@/lib/queries/cup";
 import { pageMetadata } from "@/lib/seo";
 
@@ -34,7 +36,7 @@ export default async function CupMatchesPage({ params, searchParams }: Props) {
 
   return (
     <CupSubpage competition={data.competition} title="Partite" current="partite">
-      <Suspense fallback={<p className={styles.muted}>Caricamento calendario…</p>}>
+      <Suspense fallback={<p className={styles.muted}>Il calendario sta arrivando…</p>}>
         <MatchesList slug={slug} searchParams={searchParams} />
       </Suspense>
     </CupSubpage>
@@ -63,37 +65,47 @@ async function MatchesList({
     return true;
   });
 
+  if (data.matches.length === 0) {
+    return <CupAwaiting copy={CUP_AWAITING.matches} />;
+  }
+
   return (
     <>
-      <form className={styles.filters} method="get">
-        <label>
-          Girone
-          <select name="girone" defaultValue={girone ?? ""}>
-            <option value="">Tutti</option>
-            {data.groups.map((group) => (
-              <option key={group.slug} value={group.slug}>
-                {group.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Squadra
-          <select name="squadra" defaultValue={squadra ?? ""}>
-            <option value="">Tutte</option>
-            {data.teams.map((team) => (
-              <option key={team.slug} value={team.slug}>
-                {team.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <button className={styles.cta} type="submit">
-          Filtra
-        </button>
-      </form>
+      {data.groups.length > 0 || data.teams.length > 0 ? (
+        <form className={styles.filters} method="get">
+          {data.groups.length > 0 ? (
+            <label>
+              Girone
+              <select name="girone" defaultValue={girone ?? ""}>
+                <option value="">Tutti</option>
+                {data.groups.map((group) => (
+                  <option key={group.slug} value={group.slug}>
+                    {group.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : null}
+          {data.teams.length > 0 ? (
+            <label>
+              Squadra
+              <select name="squadra" defaultValue={squadra ?? ""}>
+                <option value="">Tutte</option>
+                {data.teams.map((team) => (
+                  <option key={team.slug} value={team.slug}>
+                    {team.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : null}
+          <button className={styles.cta} type="submit">
+            Filtra
+          </button>
+        </form>
+      ) : null}
       {filtered.length === 0 ? (
-        <p className={styles.empty}>Nessuna partita in questo filtro.</p>
+        <CupAwaiting copy={CUP_AWAITING.matchesFilter} />
       ) : (
         <div className={styles.grid}>
           {filtered.map((match) => (

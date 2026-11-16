@@ -6,7 +6,7 @@
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: clamp(420px, 58vh, 640px);
+  min-height: clamp(300px, 42vh, 460px);
   overflow: hidden;
   background-color: var(--lcs-surface-elevated);
 }

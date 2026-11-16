@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CupAwaiting } from "@/components/CupPage/CupAwaiting";
 import { CupSubpage } from "@/components/CupPage/CupSubpage";
 import { MatchCard } from "@/components/CupPage/MatchCard";
 import { JsonLd } from "@/components/JsonLd/JsonLd";
 import styles from "@/components/CupPage/CupPage.module.css";
+import { CUP_AWAITING } from "@/data/cupAwaiting";
 import { sportsTeamJsonLd } from "@/lib/jsonLd";
 import { getCupTeamPage, getPublishedTeamParams } from "@/lib/queries/cup";
 import { pageMetadata } from "@/lib/seo";
@@ -48,7 +50,7 @@ export default async function CupTeamPage({ params }: Props) {
         {data.team.groupName ? <p className={styles.muted}>{data.team.groupName}</p> : null}
         <h2 className={styles.cardTitle}>Rosa</h2>
         {data.players.length === 0 ? (
-          <p className={styles.empty}>Rosa non ancora pubblicata.</p>
+          <CupAwaiting copy={CUP_AWAITING.roster} />
         ) : (
           <ul className={styles.list}>
             {data.players.map((player) => (
@@ -61,11 +63,15 @@ export default async function CupTeamPage({ params }: Props) {
           </ul>
         )}
         <h2 className={styles.cardTitle}>Risultati</h2>
-        <div className={styles.grid}>
-          {data.matches.map((match) => (
-            <MatchCard key={match.id} match={match} />
-          ))}
-        </div>
+        {data.matches.length > 0 ? (
+          <div className={styles.grid}>
+            {data.matches.map((match) => (
+              <MatchCard key={match.id} match={match} />
+            ))}
+          </div>
+        ) : (
+          <CupAwaiting copy={CUP_AWAITING.teamResults} />
+        )}
         {data.scorers.length > 0 ? (
           <>
             <h2 className={styles.cardTitle}>Marcatori</h2>

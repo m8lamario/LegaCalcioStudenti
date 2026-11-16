@@ -89,6 +89,21 @@
   color: var(--lcs-text-secondary);
 }
 
+@media (max-width: 900px) {
+  .header {
+    text-align: center;
+  }
+
+  .eyebrowRow {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .stat {
+    text-align: center;
+  }
+}
+
 @media (max-width: 640px) {
   .stats {
     grid-template-columns: 1fr 1fr;

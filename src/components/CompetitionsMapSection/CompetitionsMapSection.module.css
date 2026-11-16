@@ -414,6 +414,23 @@
     grid-template-rows: auto;
   }
 
+  .head {
+    text-align: center;
+  }
+
+  .eyebrowRow {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .lead {
+    margin-inline: auto;
+  }
+
+  .figures {
+    justify-content: center;
+  }
+
   .map {
     width: min(100%, 640px);
   }

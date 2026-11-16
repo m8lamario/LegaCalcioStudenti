@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CupAwaiting } from "@/components/CupPage/CupAwaiting";
+import { CUP_AWAITING } from "@/data/cupAwaiting";
 import { getCupBlogHref } from "@/data/cupBlog";
 import { getCompetitionBySlug } from "@/lib/queries/site";
 import { getPublishedCupSlugs } from "@/lib/queries/cup";
@@ -62,9 +64,7 @@ export default async function CupBlogIndexPage({ params }: BlogIndexProps) {
         </header>
 
         {posts.length === 0 ? (
-          <p className={styles.lead}>
-            Le cronache della {competition.name} saranno pubblicate dopo le prime giornate.
-          </p>
+          <CupAwaiting copy={CUP_AWAITING.news} />
         ) : (
         <div className={styles.grid}>
           {posts.map((post) => (

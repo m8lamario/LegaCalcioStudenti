@@ -51,6 +51,15 @@ const awayTeams = alias(teams, "away_teams");
 const homeSchools = alias(schools, "home_schools");
 const awaySchools = alias(schools, "away_schools");
 
+function toDateOnly(value: string | Date | null | undefined) {
+  if (!value) return null;
+  if (value instanceof Date) {
+    if (Number.isNaN(value.getTime())) return null;
+    return value.toISOString().slice(0, 10);
+  }
+  return String(value).slice(0, 10);
+}
+
 function toLocalCompetition(
   competition: typeof competitions.$inferSelect,
   city: typeof cities.$inferSelect | null,
@@ -305,7 +314,7 @@ export async function getCupPageData(slug: string): Promise<CupPageData | null> 
   const loaded = await loadCompetition(slug);
   if (!loaded) return null;
   const competition = toCupCompetition(loaded.competition, loaded.city);
-  const [matchList, eventRows, blockRows, awardRows, schoolRows, venueRows, rules] =
+  const [matchList, eventRows, blockRows, awardRows, schoolRows, venueRows, rules, phaseRows] =
     await Promise.all([
       loadMatches(loaded.competition.id, slug),
       loadEventsForCompetition(loaded.competition.id),
@@ -329,6 +338,16 @@ export async function getCupPageData(slug: string): Promise<CupPageData | null> 
         .innerJoin(matches, eq(matches.venueId, venues.id))
         .where(eq(matches.competitionId, loaded.competition.id)),
       loadStandingsRules(loaded.competition),
+      getDb()
+        .select({
+          name: phases.name,
+          kind: phases.kind,
+          startsOn: phases.startsOn,
+          endsOn: phases.endsOn,
+        })
+        .from(phases)
+        .where(eq(phases.competitionId, loaded.competition.id))
+        .orderBy(asc(phases.sortOrder), asc(phases.name)),
     ]);
 
   const liveMatches = matchList.filter((match) => match.status === "live");
@@ -385,6 +404,12 @@ export async function getCupPageData(slug: string): Promise<CupPageData | null> 
     posts: (await getPublishedPostsByCompetition(slug)).slice(0, 3),
     schools: [...schoolsMap.values()].sort((a, b) => a.name.localeCompare(b.name, "it")),
     venues: [...venuesMap.values()],
+    phases: phaseRows.map((phase) => ({
+      name: phase.name,
+      kind: phase.kind,
+      startsOn: toDateOnly(phase.startsOn),
+      endsOn: toDateOnly(phase.endsOn),
+    })),
   };
 }
 
@@ -555,6 +580,7 @@ export async function getCupInfo(slug: string) {
     social: data.competition.social,
     contacts: data.competition.contacts,
     regulationsUrl: data.competition.regulationsUrl,
+    phases: data.phases,
   };
 }
 

@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CupAwaiting } from "@/components/CupPage/CupAwaiting";
 import { CupSubpage } from "@/components/CupPage/CupSubpage";
 import styles from "@/components/CupPage/CupPage.module.css";
+import { CUP_AWAITING } from "@/data/cupAwaiting";
 import { getCupTeams, getPublishedCupSlugs } from "@/lib/queries/cup";
 import { pageMetadata } from "@/lib/seo";
 
@@ -34,7 +36,7 @@ export default async function CupTeamsPage({ params }: Props) {
   return (
     <CupSubpage competition={data.competition} title="Squadre" current="squadre">
       {data.teams.length === 0 ? (
-        <p className={styles.empty}>Le squadre saranno pubblicate a breve.</p>
+        <CupAwaiting copy={CUP_AWAITING.teams} />
       ) : (
         <div className={styles.schoolGrid}>
           {data.teams.map((team) => (
