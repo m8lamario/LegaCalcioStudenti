@@ -63,7 +63,6 @@ export const CompetitionsMapSection: React.FC<{
   competitions: LocalCompetition[];
 }> = ({ competitions }) => {
   const MAP_SITES = useMemo(() => buildMapSites(competitions), [competitions]);
-  const CITY_COUNT = new Set(MAP_SITES.map((site) => site.city).filter(Boolean)).size;
   const sectionRef = useRef<HTMLElement | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
   const pointerTypeRef = useRef("mouse");
@@ -222,25 +221,17 @@ export const CompetitionsMapSection: React.FC<{
       <div className="lcs-container">
         <div className={styles.layout}>
           <header className={styles.head}>
-            <div className={styles.eyebrowRow} data-map-intro>
-              <span className={styles.sidelineTick} aria-hidden="true" />
-              <p className={styles.eyebrow}>Il circuito sul territorio</p>
-            </div>
             <h2 id="mappa-heading" className={styles.title} data-map-intro>
               <span>Dove si </span>
               <span className={styles.titleScript}>gioca</span>
             </h2>
             <p className={styles.lead} data-map-intro>
-              Ogni coppa nasce in una città e ne porta i colori. Insieme
-              disegnano la geografia di Lega Calcio Studenti.
+              Lega Calcio Studenti si radica sul territorio tramite sei Coppe
+              diverse
             </p>
             <dl className={styles.figures} data-map-intro>
               <div>
-                <dt>Città</dt>
-                <dd>{pad(CITY_COUNT)}</dd>
-              </div>
-              <div>
-                <dt>Competizioni sulla mappa</dt>
+                <dt>Coppe sul territorio</dt>
                 <dd>{pad(MAP_SITES.length)}</dd>
               </div>
             </dl>

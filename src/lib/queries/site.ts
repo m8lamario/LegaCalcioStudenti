@@ -117,10 +117,7 @@ export async function getHomePageContent(): Promise<HomePageContent> {
     motto,
     navItems: withCollaboraNav(blockPayload(blockRows, "nav_items", NAV_ITEMS)),
     heroImages: mergeHeroImages(blockPayload(blockRows, "hero", HERO_IMAGES)),
-    mission: {
-      ...MISSION,
-      ...blockPayload(blockRows, "mission", MISSION),
-    },
+    mission: { ...MISSION },
     missionLines: blockPayload(blockRows, "mission_lines", [...MISSION_LINES]),
     missionPillars: [...MISSION_PILLARS],
     schoolInvite: blockPayload(blockRows, "school_invite", {

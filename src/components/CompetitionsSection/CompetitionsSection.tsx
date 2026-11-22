@@ -104,14 +104,14 @@ export const CompetitionsSection: React.FC<{
             </span>
           </h2>
           <p className={styles.lead} data-comp-lead>
-            Coppe cittadine con identità e storia propria. I migliori istituti
+            Coppe locali con identità e storia propria. I migliori istituti
             conquistano sul campo la qualificazione alle finali nazionali.
           </p>
         </header>
 
         <div className={styles.grid}>
           {sortByLocalCompetitionOrder(competitions).map((cup) => {
-            const place = [cup.city, cup.regionTag].filter(Boolean).join(" · ");
+            const place = cup.regionTag;
 
             return (
               <Link

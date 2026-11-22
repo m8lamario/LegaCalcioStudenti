@@ -163,19 +163,19 @@ export const MISSION = {
   id: "mission",
   eyebrow: "Chi siamo",
   statement:
-    "Lega Calcio Studenti riunisce i tornei calcistici inter-scolastici italiani sotto un'unica identità sportiva, valorizzando il senso di appartenenza ai licei e agli istituti superiori.",
+    "Lega Calcio Studenti è la più importante lega nazionale di calcio tra gli istituti superiori",
 };
 
 export const MISSION_PILLARS = [
   {
     index: "01",
     title: "Competizioni locali",
-    text: "Coppe cittadine, radicate nel territorio.",
+    text: "Sei coppe locali, in cui le squadre del territorio si affrontano tra loro",
   },
   {
     index: "02",
-    title: "Circuiti nazionali",
-    text: "I tornei inter-scolastici riuniti sotto un'unica identità sportiva.",
+    title: "Circuito nazionale",
+    text: "Le sei coppe sono riunite sotto un'unica identità sportiva: Lega Calcio Studenti",
   },
   {
     index: "03",
