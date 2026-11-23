@@ -3,6 +3,7 @@
 import { put } from "@vercel/blob";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { visibleStatNote } from "@/data/homeData";
 import { getDb } from "@/db";
 import {
   cities,
@@ -474,11 +475,23 @@ export async function saveSponsor(form: FormData) {
   await revalidatePublic();
 }
 
+function normalizeHomePayload(key: string, payload: unknown) {
+  if (key !== "circuit_stats" || !Array.isArray(payload)) return payload;
+  return payload.map((item) => {
+    if (!item || typeof item !== "object" || Array.isArray(item)) return item;
+    const stat = { ...(item as Record<string, unknown>) };
+    const note = visibleStatNote(typeof stat.note === "string" ? stat.note : undefined);
+    if (!note) delete stat.note;
+    else stat.note = note;
+    return stat;
+  });
+}
+
 export async function saveHomeBlock(form: FormData) {
   const user = await requireUser();
   assertAdmin(user);
   const key = formString(form, "key");
-  const payload = JSON.parse(formString(form, "payload") || "{}");
+  const payload = normalizeHomePayload(key, JSON.parse(formString(form, "payload") || "{}"));
   await getDb()
     .update(homeBlocks)
     .set({ payload, updatedAt: new Date() })

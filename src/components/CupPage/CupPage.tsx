@@ -242,7 +242,6 @@ export function CupPage({ data }: { data: CupPageData }) {
           </div>
           <nav className={styles.quietLinks} aria-label="Altre sezioni">
             <Link href={`/competizioni/${competition.slug}/info`}>Info</Link>
-            <Link href={`/competizioni/${competition.slug}/staff`}>Staff</Link>
             <Link href={`/competizioni/${competition.slug}/blog`}>Cronache</Link>
             {competition.regulationsUrl ? (
               <a href={competition.regulationsUrl}>Regolamento</a>

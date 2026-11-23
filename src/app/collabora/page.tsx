@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { PartnersSection } from "@/components/PartnersSection/PartnersSection";
 import { COLLABORATION_PAGE } from "@/data/homeData";
-import { getHomePageContent } from "@/lib/queries/site";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -13,9 +10,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/collabora",
 });
 
-export default async function CollaboraPage() {
-  const { partners } = await getHomePageContent();
-
+export default function CollaboraPage() {
   return (
     <article className={styles.page} aria-labelledby="collabora-heading">
       <div className="lcs-container">
@@ -41,15 +36,13 @@ export default async function CollaboraPage() {
             </li>
           ))}
         </ol>
-      </div>
 
-      <PartnersSection partners={partners} framed={false} />
-
-      <div className="lcs-container">
-        <Link href={COLLABORATION_PAGE.ctaHref} className={styles.backLink}>
+        <a className={styles.cta} href={COLLABORATION_PAGE.ctaHref}>
           <span>{COLLABORATION_PAGE.ctaLabel}</span>
-          <span aria-hidden="true">→</span>
-        </Link>
+          <span className={styles.ctaArrow} aria-hidden="true">
+            →
+          </span>
+        </a>
       </div>
     </article>
   );

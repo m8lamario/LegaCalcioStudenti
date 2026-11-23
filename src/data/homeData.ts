@@ -199,44 +199,24 @@ export interface CircuitStat {
   id: string;
   value: string;
   label: string;
+  /** Facoltativa: se manca o è vuota, in pagina resta solo numero ed etichetta. */
   note?: string;
 }
 
-/**
- * Solo cifre verificabili in produzione. Valori sotto contrassegnati come test
- * servono a verificare il layout; sostituirli prima della pubblicazione.
- */
+/** Nota visibile solo se, dopo il trim, resta del testo. */
+export function visibleStatNote(note: string | null | undefined): string | null {
+  const text = note?.trim();
+  return text ? text : null;
+}
+
+/** Consuntivo stagione 2025/2026. La nota è facoltativa. */
 export const CIRCUIT_STATS: CircuitStat[] = [
-  {
-    id: "schools",
-    value: "120+",
-    label: "Scuole partecipanti",
-    note: "Anteprima layout · dato di test",
-  },
-  {
-    id: "students",
-    value: "2.400+",
-    label: "Studenti coinvolti",
-    note: "Anteprima layout · dato di test",
-  },
-  {
-    id: "cities",
-    value: "6",
-    label: "Città del circuito",
-    note: "Coppe con sede territoriale pubblicata",
-  },
-  {
-    id: "competitions",
-    value: "6",
-    label: "Competizioni organizzate",
-    note: "Elenco competizioni locali + Colosseo Cup",
-  },
-  {
-    id: "matches",
-    value: "180+",
-    label: "Partite disputate",
-    note: "Anteprima layout · dato di test",
-  },
+  { id: "schools", value: "80", label: "Scuole partecipanti" },
+  { id: "athletes", value: "2.000", label: "Studenti atleti" },
+  { id: "matches", value: "195", label: "Partite disputate" },
+  { id: "spectators", value: "40mila", label: "Spettatori dal vivo" },
+  { id: "reach", value: "80mila", label: "Studenti e famiglie raggiunti" },
+  { id: "cities", value: "6", label: "Città del circuito" },
 ];
 
 export const PARTNER_KINDS = [
@@ -269,7 +249,7 @@ export const COLLABORATION_PAGE = {
   titleScript: "con LCS",
   lead: "Istituzioni, sponsor, media e realtà tecniche possono sostenere il circuito e far crescere le coppe cittadine.",
   meaning:
-    "Ogni collaborazione resta visibile sul campo, nelle coppe e nei racconti della Lega Calcio Studenti.",
+    "Collabora con Lega Calcio Studenti a livello locale o nazionale, entrando nel vivo delle competizioni.",
   opportunities: [
     {
       index: "01",
@@ -292,8 +272,8 @@ export const COLLABORATION_PAGE = {
       text: "Piattaforme e servizi che rendono possibile organizzare, iscriversi e comunicare.",
     },
   ],
-  ctaLabel: "Contatti",
-  ctaHref: "/contatti",
+  ctaLabel: "Collabora con noi",
+  ctaHref: `mailto:marketing@estudentsleague.com?subject=${encodeURIComponent("Collaborazione con Lega Calcio Studenti")}&body=${encodeURIComponent("Buongiorno,\n\nvorremmo collaborare con Lega Calcio Studenti a livello locale o nazionale.\n\n")}`,
 } as const;
 
 /**
@@ -339,22 +319,22 @@ export const NATIONAL_FINALS = {
   eyebrow: "Un solo circuito",
   titleLead: "Verso le",
   titleScript: "finali nazionali",
-  lead: "Le coppe cittadine di Lega Calcio Studenti non sono tornei isolati. Appartengono a un'unica lega: ogni istituto costruisce la propria stagione nella competizione del territorio, con l'orizzonte delle finali nazionali.",
+  lead: "La vittoria delle coppe locali permette a scuole di tutta Italia di affrontarsi in un unico palcoscenico, in palio il titolo di Campione Nazionale LCS.",
   steps: [
     {
       index: "01",
       title: "Competizioni territoriali",
-      text: "Ogni coppa resta legata alla propria città e alla propria identità, dentro lo stesso circuito.",
+      text: "Ciascuna squadra sfida le altre scuole della propria coppa, puntando alla vittoria del proprio torneo.",
     },
     {
       index: "02",
-      title: "Il percorso delle squadre",
-      text: "La stagione si gioca nelle competizioni locali. È lì che una scuola misura il proprio cammino.",
+      title: "Accesso ai nazionali",
+      text: "Ogni coppa vede una squadra trionfare, qualificandosi alle finali nazionali.",
     },
     {
       index: "03",
-      title: "L'appuntamento nazionale",
-      text: "Le finali riuniscono gli istituti che conquistano sul campo la qualificazione.",
+      title: "Finali nazionali",
+      text: "In un singolo appuntamento, le varie squadre qualificate si affrontano per diventare campioni nazionali.",
     },
   ],
   ctaLabel: "Le finali nazionali",

@@ -1,5 +1,5 @@
 import React from "react";
-import type { CircuitStat } from "@/data/homeData";
+import { visibleStatNote, type CircuitStat } from "@/data/homeData";
 import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
 import styles from "./CircuitStatsSection.module.css";
 
@@ -29,16 +29,20 @@ export const CircuitStatsSection: React.FC<{ stats: CircuitStat[] }> = ({
               <span>LCS in </span>
               <span className={styles.titleScript}>numeri</span>
             </h2>
+            <p className={styles.edition}>Dati dell&apos;ultima edizione</p>
           </header>
 
           <ul className={styles.stats}>
-            {stats.map((stat) => (
-              <li key={stat.id} className={styles.stat}>
-                <p className={styles.value}>{stat.value}</p>
-                <p className={styles.label}>{stat.label}</p>
-                {stat.note ? <p className={styles.note}>{stat.note}</p> : null}
-              </li>
-            ))}
+            {stats.map((stat) => {
+              const note = visibleStatNote(stat.note);
+              return (
+                <li key={stat.id} className={styles.stat}>
+                  <p className={styles.value}>{stat.value}</p>
+                  <p className={styles.label}>{stat.label}</p>
+                  {note ? <p className={styles.note}>{note}</p> : null}
+                </li>
+              );
+            })}
           </ul>
         </RevealOnScroll>
       </div>

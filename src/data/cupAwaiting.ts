@@ -81,11 +81,6 @@ export const CUP_AWAITING = {
     title: "Le storie arriveranno dal campo",
     lead: "Le cronache prenderanno vita con le prime sfide. Tornate dopo il fischio d'inizio: racconteremo ogni derby.",
   },
-  staff: {
-    eyebrow: "Organizzazione",
-    title: "I volti della coppa",
-    lead: "Staff, organizzatori e figure di campo compariranno qui quando la rosa sarà ufficiale.",
-  },
   info: {
     eyebrow: "Info",
     title: "Dettagli in preparazione",

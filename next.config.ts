@@ -47,7 +47,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/competitions/:slug/staff",
-        destination: "/competizioni/:slug/staff",
+        destination: "/competizioni/:slug",
+        statusCode: 301,
+      },
+      {
+        source: "/competizioni/:slug/staff",
+        destination: "/competizioni/:slug",
         statusCode: 301,
       },
       {

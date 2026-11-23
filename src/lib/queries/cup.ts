@@ -756,7 +756,7 @@ export async function getSitemapCupPaths() {
     getPublishedMatchParams(),
     getPublishedSchoolParams(),
   ]);
-  const subpages = ["partite", "classifica", "squadre", "statistiche", "blog", "staff", "info"];
+  const subpages = ["partite", "classifica", "squadre", "statistiche", "blog", "info"];
   const paths = cups.flatMap(({ slug }) => [
     `/competizioni/${slug}`,
     ...subpages.map((page) => `/competizioni/${slug}/${page}`),

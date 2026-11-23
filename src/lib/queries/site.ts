@@ -5,6 +5,7 @@ import { homeBlocks, siteSettings } from "@/db/schema";
 import { cacheTags } from "@/lib/cache-tags";
 import {
   CIRCUIT_PARTNERS,
+  CIRCUIT_STATS,
   HERO_IMAGES,
   MISSION,
   MISSION_LINES,
@@ -124,7 +125,7 @@ export async function getHomePageContent(): Promise<HomePageContent> {
       ...SCHOOL_INVITE,
       titleLines: [...SCHOOL_INVITE.titleLines],
     }),
-    circuitStats: blockPayload(blockRows, "circuit_stats", []),
+    circuitStats: blockPayload(blockRows, "circuit_stats", [...CIRCUIT_STATS]),
     nationalFinals: blockPayload(blockRows, "national_finals", {
       id: "finali",
       href: "/finali-nazionali",

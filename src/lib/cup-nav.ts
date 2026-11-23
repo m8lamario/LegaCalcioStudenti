@@ -4,7 +4,6 @@ export const CUP_TABS = [
   { key: "squadre", label: "Squadre", href: (slug: string) => `/competizioni/${slug}/squadre` },
   { key: "statistiche", label: "Statistiche", href: (slug: string) => `/competizioni/${slug}/statistiche` },
   { key: "news", label: "News", href: (slug: string) => `/competizioni/${slug}/blog` },
-  { key: "staff", label: "Staff", href: (slug: string) => `/competizioni/${slug}/staff` },
   { key: "info", label: "Info", href: (slug: string) => `/competizioni/${slug}/info` },
 ] as const;
 
