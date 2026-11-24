@@ -22,7 +22,7 @@ import {
   type StandingsRules,
 } from "@/db/schema";
 import { cacheTags, cupTag, matchTag, schoolTag, standingsTag, teamTag } from "@/lib/cache-tags";
-import type { LocalCompetition } from "@/data/homeData";
+import { getLocalCompetition, type LocalCompetition } from "@/data/homeData";
 import { DEFAULT_STANDINGS_RULES } from "@/lib/standings";
 import { computeStandings } from "@/lib/standings";
 import { computeAttackDefense, computeCards, computeScorers } from "@/lib/match-stats";
@@ -72,7 +72,7 @@ function toLocalCompetition(
     regionTag: competition.regionTag ?? city?.region ?? undefined,
     stageLabel: competition.stageLabel ?? undefined,
     logo: competition.logo ?? undefined,
-    image: competition.image ?? undefined,
+    image: getLocalCompetition(competition.slug)?.image ?? competition.image ?? undefined,
     imageAlt: competition.imageAlt ?? undefined,
     description: competition.description ?? undefined,
     coordinates:

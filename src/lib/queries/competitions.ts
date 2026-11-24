@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { cities, competitions } from "@/db/schema";
 import { cacheTags } from "@/lib/cache-tags";
-import type { LocalCompetition } from "@/data/homeData";
+import { getLocalCompetition, type LocalCompetition } from "@/data/homeData";
 
 export async function getCompetitionsWithCities(): Promise<LocalCompetition[]> {
   "use cache";
@@ -55,7 +55,7 @@ function toLocalCompetition(
     regionTag: competition.regionTag ?? city?.region ?? undefined,
     stageLabel: competition.stageLabel ?? undefined,
     logo: competition.logo ?? undefined,
-    image: competition.image ?? undefined,
+    image: getLocalCompetition(competition.slug)?.image ?? competition.image ?? undefined,
     imageAlt: competition.imageAlt ?? undefined,
     description: competition.description ?? undefined,
     coordinates:
