@@ -1,6 +1,6 @@
 import React from "react";
 import type { SchoolInviteContent } from "@/lib/queries/site";
-import { withKeptCompounds } from "@/lib/typography";
+import { withKeptSentences } from "@/lib/typography";
 import styles from "./SchoolInviteSection.module.css";
 
 export const SchoolInviteSection: React.FC<{ invite: SchoolInviteContent }> = ({
@@ -61,7 +61,7 @@ export const SchoolInviteSection: React.FC<{ invite: SchoolInviteContent }> = ({
 
         <div className={styles.band}>
           <p className={styles.statement}>
-            {withKeptCompounds(invite.statement, styles.nowrap)}
+            {withKeptSentences(invite.statement)}
           </p>
           <a
             className={styles.cta}

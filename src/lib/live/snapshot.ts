@@ -2,6 +2,7 @@ import { and, asc, eq, isNull } from "drizzle-orm";
 import { alias } from "drizzle-orm/pg-core";
 import { getDb } from "@/db";
 import { cities, competitions, matchEvents, matches, players, teams } from "@/db/schema";
+import { hasPublicCupResults } from "@/data/cupAwaiting";
 import { publicPlayerName } from "@/lib/player-name";
 import { clockFromMatch, displayMinute } from "./clock";
 import { LIVE_ACTIVE_CACHE_KEY, rememberLive } from "./memory-cache";
@@ -108,7 +109,7 @@ export async function loadLiveActive(): Promise<LiveActiveItem[]> {
     .where(and(eq(matches.status, "live"), eq(competitions.status, "published")));
 
   const serverNow = Date.now();
-  return rows.map((row) => {
+  return rows.filter((row) => hasPublicCupResults(row.competition.slug)).map((row) => {
     const clock = clockFromMatch(row.match);
     return {
       matchId: row.match.id,

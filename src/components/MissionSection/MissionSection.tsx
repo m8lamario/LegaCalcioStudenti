@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import type { MissionContent, MissionLine, MissionPillar } from "@/lib/queries/site";
 import { gsap, ScrollTrigger } from "@/lib/gsapClient";
-import { withKeptCompounds } from "@/lib/typography";
+import { withKeptSentences } from "@/lib/typography";
 import styles from "./MissionSection.module.css";
 
 export const MissionSection: React.FC<{
@@ -107,7 +107,7 @@ export const MissionSection: React.FC<{
         </h2>
 
         <p className={styles.statement} data-statement>
-          {withKeptCompounds(mission.statement, styles.nowrap)}
+          {withKeptSentences(mission.statement)}
         </p>
 
         <ul className={styles.pillars} data-pillars>
@@ -116,7 +116,7 @@ export const MissionSection: React.FC<{
               <span className={styles.pillarIndex}>{pillar.index}</span>
               <h3 className={styles.pillarTitle}>{pillar.title}</h3>
               <p className={styles.pillarText}>
-                {withKeptCompounds(pillar.text, styles.nowrap)}
+                {withKeptSentences(pillar.text)}
               </p>
             </li>
           ))}

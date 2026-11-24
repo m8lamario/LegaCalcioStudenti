@@ -4,11 +4,13 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  competitionImageStyle,
   getCompetitionHref,
   sortByLocalCompetitionOrder,
   type LocalCompetition,
 } from "@/data/homeData";
 import { gsap, ScrollTrigger } from "@/lib/gsapClient";
+import { withKeptSentences } from "@/lib/typography";
 import styles from "./CompetitionsSection.module.css";
 
 export const CompetitionsSection: React.FC<{
@@ -104,8 +106,9 @@ export const CompetitionsSection: React.FC<{
             </span>
           </h2>
           <p className={styles.lead} data-comp-lead>
-            Coppe locali con identità e storia propria. I migliori istituti
-            conquistano sul campo la qualificazione alle finali nazionali.
+            {withKeptSentences(
+              "Coppe locali con identità e storia propria. I migliori istituti conquistano sul campo la qualificazione alle finali nazionali.",
+            )}
           </p>
         </header>
 
@@ -130,6 +133,10 @@ export const CompetitionsSection: React.FC<{
                         fill
                         sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 30vw"
                         className={styles.cardImage}
+                        style={competitionImageStyle(
+                          cup.slug,
+                          cup.imageObjectPosition,
+                        )}
                       />
                       <div className={styles.mediaShade} aria-hidden="true" />
                     </>

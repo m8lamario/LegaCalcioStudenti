@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import type { NationalFinalsContent } from "@/lib/queries/site";
 import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
+import { withKeptSentences } from "@/lib/typography";
 import styles from "./NationalFinalsSection.module.css";
 
 export const NationalFinalsSection: React.FC<{
@@ -26,7 +27,7 @@ export const NationalFinalsSection: React.FC<{
                 <span className={styles.titleScript}>{NATIONAL_FINALS.titleScript}</span>
               </h2>
             </div>
-            <p className={styles.lead}>{NATIONAL_FINALS.lead}</p>
+            <p className={styles.lead}>{withKeptSentences(NATIONAL_FINALS.lead)}</p>
           </header>
         </RevealOnScroll>
 
@@ -36,7 +37,7 @@ export const NationalFinalsSection: React.FC<{
               <li key={step.index} className={styles.step}>
                 <span className={styles.stepIndex}>{step.index}</span>
                 <h3 className={styles.stepTitle}>{step.title}</h3>
-                <p className={styles.stepText}>{step.text}</p>
+                <p className={styles.stepText}>{withKeptSentences(step.text)}</p>
               </li>
             ))}
           </ol>

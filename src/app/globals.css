@@ -45,6 +45,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
+
+.lcs-sentence {
+  display: inline-block;
+  max-width: 100%;
+  text-wrap: pretty;
+}
+
 img,
 svg {
   display: block;

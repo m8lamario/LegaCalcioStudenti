@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getCompetitionHref, type LocalCompetition } from "@/data/homeData";
 import { ITALY_MAP, projectToMap } from "@/data/italyMap";
 import { gsap, ScrollTrigger } from "@/lib/gsapClient";
+import { withKeptSentences } from "@/lib/typography";
 import styles from "./CompetitionsMapSection.module.css";
 
 const DEFAULT_CALLOUT = { dx: 0, dy: -140 };
@@ -226,8 +227,9 @@ export const CompetitionsMapSection: React.FC<{
               <span className={styles.titleScript}>gioca</span>
             </h2>
             <p className={styles.lead} data-map-intro>
-              Lega Calcio Studenti si radica sul territorio tramite sei Coppe
-              diverse
+              {withKeptSentences(
+                "Lega Calcio Studenti si radica sul territorio tramite sei Coppe diverse",
+              )}
             </p>
             <dl className={styles.figures} data-map-intro>
               <div>

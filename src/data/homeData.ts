@@ -18,6 +18,8 @@ export interface LocalCompetition {
   stageLabel?: string;
   logo?: string;
   image?: string;
+  /** `object-position` per foto verticali in card 3:2 e banner. */
+  imageObjectPosition?: string;
   imageAlt?: string;
   description?: string;
   /** Coordinate della città di riferimento: senza, la competizione non compare sulla mappa. */
@@ -388,6 +390,7 @@ export const LOCAL_COMPETITIONS: LocalCompetition[] = [
     stageLabel: "Fase a Gironi",
     logo: "/logoCities/molecup.png",
     image: "/backgroundCities/molecup.jpeg",
+    imageObjectPosition: "center 62%",
     imageAlt: "Atmosfera della Mole Cup a Torino",
     coordinates: { lat: 45.0703, lon: 7.6869 },
     mapCallout: { dx: -150, dy: 10 },
@@ -435,6 +438,11 @@ export const LOCAL_COMPETITIONS: LocalCompetition[] = [
 
 export function getLocalCompetition(slug: string) {
   return LOCAL_COMPETITIONS.find((competition) => competition.slug === slug);
+}
+
+export function competitionImageStyle(slug: string, fallback?: string) {
+  const objectPosition = fallback ?? getLocalCompetition(slug)?.imageObjectPosition;
+  return objectPosition ? { objectPosition } : undefined;
 }
 
 export function sortByLocalCompetitionOrder<T extends { slug: string }>(items: T[]): T[] {

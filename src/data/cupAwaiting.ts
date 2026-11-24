@@ -4,6 +4,13 @@ export type CupAwaitingCopy = {
   lead: string;
 };
 
+/** Coppe che pubblicano calendario, risultati e classifica. Le altre restano in preparazione. */
+export const CUPS_WITH_PUBLIC_RESULTS = ["mole-cup"] as const;
+
+export function hasPublicCupResults(slug: string) {
+  return (CUPS_WITH_PUBLIC_RESULTS as readonly string[]).includes(slug);
+}
+
 export const CUP_PREP = [
   {
     key: "squadre",

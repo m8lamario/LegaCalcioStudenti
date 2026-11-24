@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import type { EditorialArticle } from "@/data/homeData";
 import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
+import { withKeptSentences } from "@/lib/typography";
 import styles from "./NewsSection.module.css";
 
 export const NewsSection: React.FC<{ articles: EditorialArticle[] }> = ({
@@ -33,8 +34,9 @@ export const NewsSection: React.FC<{ articles: EditorialArticle[] }> = ({
             </div>
 
             <p className={styles.lead}>
-              Dentro il campionato studentesco: le sfide serali, la passione
-              delle curve d&apos;istituto e il cammino verso le finali nazionali.
+              {withKeptSentences(
+                "Dentro il campionato studentesco: le sfide serali, la passione delle curve d'istituto e il cammino verso le finali nazionali.",
+              )}
             </p>
           </header>
         </RevealOnScroll>

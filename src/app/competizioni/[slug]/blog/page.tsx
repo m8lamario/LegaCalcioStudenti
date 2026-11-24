@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CupAwaiting } from "@/components/CupPage/CupAwaiting";
-import { CUP_AWAITING } from "@/data/cupAwaiting";
+import { CUP_AWAITING, hasPublicCupResults } from "@/data/cupAwaiting";
 import { getCupBlogHref } from "@/data/cupBlog";
 import { getCompetitionBySlug } from "@/lib/queries/site";
 import { getPublishedCupSlugs } from "@/lib/queries/cup";
@@ -39,7 +39,9 @@ export async function generateMetadata({
 export default async function CupBlogIndexPage({ params }: BlogIndexProps) {
   const { slug } = await params;
   const competition = await getCompetitionBySlug(slug);
-  const posts = await getPublishedPostsByCompetition(slug);
+  const posts = hasPublicCupResults(slug)
+    ? await getPublishedPostsByCompetition(slug)
+    : [];
 
   if (!competition) {
     notFound();

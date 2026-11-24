@@ -56,6 +56,7 @@ function toLocalCompetition(
     stageLabel: competition.stageLabel ?? undefined,
     logo: competition.logo ?? undefined,
     image: getLocalCompetition(competition.slug)?.image ?? competition.image ?? undefined,
+    imageObjectPosition: getLocalCompetition(competition.slug)?.imageObjectPosition,
     imageAlt: competition.imageAlt ?? undefined,
     description: competition.description ?? undefined,
     coordinates:

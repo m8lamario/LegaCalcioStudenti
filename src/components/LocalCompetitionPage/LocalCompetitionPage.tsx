@@ -1,7 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { LocalCompetition } from "@/data/homeData";
+import {
+  competitionImageStyle,
+  type LocalCompetition,
+} from "@/data/homeData";
 import { getCupBlogHref } from "@/data/cupBlog";
 import styles from "./LocalCompetitionPage.module.css";
 
@@ -34,6 +37,10 @@ export const LocalCompetitionPage: React.FC<LocalCompetitionPageProps> = ({
             priority
             sizes="100vw"
             className={styles.bannerImage}
+            style={competitionImageStyle(
+              competition.slug,
+              competition.imageObjectPosition,
+            )}
           />
         ) : null}
         <div className={styles.bannerScrim} aria-hidden="true" />

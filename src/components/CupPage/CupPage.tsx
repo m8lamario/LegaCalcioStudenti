@@ -3,7 +3,9 @@ import Link from "next/link";
 import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
 import { SponsorSlot } from "@/components/SponsorSlot/SponsorSlot";
 import { LiveStrip } from "@/components/LiveStrip/LiveStrip";
-import { CUP_PREP } from "@/data/cupAwaiting";
+import { CUP_PREP, hasPublicCupResults } from "@/data/cupAwaiting";
+import { competitionImageStyle } from "@/data/homeData";
+import { withKeptSentences } from "@/lib/typography";
 import type { CupPageData } from "@/lib/cup-types";
 import banner from "@/components/LocalCompetitionPage/LocalCompetitionPage.module.css";
 import { hasStandingsResults } from "./CupAwaiting";
@@ -41,16 +43,21 @@ export function CupPage({ data }: { data: CupPageData }) {
   const place = [competition.city, competition.regionTag].filter(Boolean).join(" · ");
   const socials = socialEntries(competition.social);
   const standingsLive = hasStandingsResults(data.standings);
+  const resultsPublic = hasPublicCupResults(competition.slug);
   const seasonOpen =
-    data.liveMatches.length > 0 ||
-    data.lastResults.length > 0 ||
-    data.upcoming.length > 0 ||
-    standingsLive ||
-    data.schools.length > 0 ||
-    data.posts.length > 0 ||
-    data.scorers.length > 0;
+    resultsPublic &&
+    (data.liveMatches.length > 0 ||
+      data.lastResults.length > 0 ||
+      data.upcoming.length > 0 ||
+      standingsLive ||
+      data.schools.length > 0 ||
+      data.posts.length > 0 ||
+      data.scorers.length > 0);
   const windowLabel = phaseWindow(data);
-  const showStrip = visibleBlocks.match_strip && (data.nextMatch || data.lastResults.length > 0);
+  const showStrip =
+    resultsPublic &&
+    visibleBlocks.match_strip &&
+    (data.nextMatch || data.lastResults.length > 0);
   const liveOrNext = data.nextMatch ? [data.nextMatch] : data.lastResults.slice(0, 3);
 
   return (
@@ -71,6 +78,10 @@ export function CupPage({ data }: { data: CupPageData }) {
               priority
               sizes="100vw"
               className={banner.bannerImage}
+              style={competitionImageStyle(
+                competition.slug,
+                competition.imageObjectPosition,
+              )}
             />
           ) : null}
           <div className={banner.bannerScrim} aria-hidden="true" />
@@ -101,7 +112,7 @@ export function CupPage({ data }: { data: CupPageData }) {
         </header>
       ) : null}
 
-      {visibleBlocks.match_strip ? (
+      {resultsPublic && visibleBlocks.match_strip ? (
         <div className={`lcs-container ${styles.optional}`}>
           <LiveStrip competitionId={competition.dbId} />
           <SponsorSlot placement="live" competitionId={competition.dbId} />
@@ -223,11 +234,12 @@ export function CupPage({ data }: { data: CupPageData }) {
             Il fischio d&apos;inizio si avvicina
           </h2>
           {competition.description ? (
-            <p className={styles.description}>{competition.description}</p>
+            <p className={styles.description}>{withKeptSentences(competition.description)}</p>
           ) : (
             <p className={styles.description}>
-              La {competition.name} è pronta ad accogliere gli istituti. Squadre, calendario e
-              classifica compariranno qui appena la stagione si apre.
+              {withKeptSentences(
+                `La ${competition.name} è pronta ad accogliere gli istituti. Squadre, calendario e classifica compariranno qui appena la stagione si apre.`,
+              )}
             </p>
           )}
           {windowLabel ? <p className={styles.muted}>{windowLabel}</p> : null}
@@ -235,7 +247,7 @@ export function CupPage({ data }: { data: CupPageData }) {
             {CUP_PREP.map((item) => (
               <Link key={item.key} href={item.href(competition.slug)} className={styles.prepCard}>
                 <span className={styles.prepCardTitle}>{item.title}</span>
-                <span className={styles.prepCardLead}>{item.lead}</span>
+                <span className={styles.prepCardLead}>{withKeptSentences(item.lead)}</span>
                 <span className={styles.prepCardAction}>Apri</span>
               </Link>
             ))}

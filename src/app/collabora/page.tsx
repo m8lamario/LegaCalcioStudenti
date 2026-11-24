@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { COLLABORATION_PAGE } from "@/data/homeData";
+import { withKeptSentences } from "@/lib/typography";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -23,8 +24,8 @@ export default function CollaboraPage() {
             <span>{COLLABORATION_PAGE.titleLead} </span>
             <span className={styles.titleScript}>{COLLABORATION_PAGE.titleScript}</span>
           </h1>
-          <p className={styles.lead}>{COLLABORATION_PAGE.lead}</p>
-          <p className={styles.lead}>{COLLABORATION_PAGE.meaning}</p>
+          <p className={styles.lead}>{withKeptSentences(COLLABORATION_PAGE.lead)}</p>
+          <p className={styles.lead}>{withKeptSentences(COLLABORATION_PAGE.meaning)}</p>
         </header>
 
         <ol className={styles.steps}>
@@ -32,7 +33,7 @@ export default function CollaboraPage() {
             <li key={step.index} className={styles.step}>
               <span className={styles.stepIndex}>{step.index}</span>
               <h2 className={styles.stepTitle}>{step.title}</h2>
-              <p className={styles.stepText}>{step.text}</p>
+              <p className={styles.stepText}>{withKeptSentences(step.text)}</p>
             </li>
           ))}
         </ol>

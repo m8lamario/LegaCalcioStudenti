@@ -1,12 +1,13 @@
 import type { CupAwaitingCopy } from "@/data/cupAwaiting";
+import { withKeptLines, withKeptSentences } from "@/lib/typography";
 import styles from "./CupPage.module.css";
 
 export function CupAwaiting({ copy }: { copy: CupAwaitingCopy }) {
   return (
     <div className={styles.awaiting}>
       <p className={styles.eyebrow}>{copy.eyebrow}</p>
-      <p className={styles.awaitingTitle}>{copy.title}</p>
-      <p className={styles.awaitingLead}>{copy.lead}</p>
+      <p className={styles.awaitingTitle}>{withKeptLines(copy.title)}</p>
+      <p className={styles.awaitingLead}>{withKeptSentences(copy.lead)}</p>
     </div>
   );
 }

@@ -28,6 +28,7 @@ import { computeStandings } from "@/lib/standings";
 import { computeAttackDefense, computeCards, computeScorers } from "@/lib/match-stats";
 import { publicPlayerName } from "@/lib/player-name";
 import { isUuid } from "@/lib/slug";
+import { hasPublicCupResults } from "@/data/cupAwaiting";
 import { getPublishedPostsByCompetition } from "@/lib/queries/posts";
 import type {
   CupCompetition,
@@ -73,6 +74,7 @@ function toLocalCompetition(
     stageLabel: competition.stageLabel ?? undefined,
     logo: competition.logo ?? undefined,
     image: getLocalCompetition(competition.slug)?.image ?? competition.image ?? undefined,
+    imageObjectPosition: getLocalCompetition(competition.slug)?.imageObjectPosition,
     imageAlt: competition.imageAlt ?? undefined,
     description: competition.description ?? undefined,
     coordinates:
@@ -350,9 +352,10 @@ export async function getCupPageData(slug: string): Promise<CupPageData | null> 
         .orderBy(asc(phases.sortOrder), asc(phases.name)),
     ]);
 
-  const liveMatches = matchList.filter((match) => match.status === "live");
-  const lastResults = matchList.filter((match) => match.status === "finished").sort(sortFinished);
-  const upcoming = matchList
+  const visibleMatches = hasPublicCupResults(slug) ? matchList : [];
+  const liveMatches = visibleMatches.filter((match) => match.status === "live");
+  const lastResults = visibleMatches.filter((match) => match.status === "finished").sort(sortFinished);
+  const upcoming = visibleMatches
     .filter((match) => match.status === "scheduled")
     .sort(sortUpcoming);
   const nextMatch = upcoming[0] ?? null;
@@ -379,17 +382,18 @@ export async function getCupPageData(slug: string): Promise<CupPageData | null> 
   }
 
   const latestAward = awardRows[0];
-  const mvp: CupMvp | null = latestAward
-    ? {
-        roundLabel: latestAward.award.roundLabel,
-        name: publicPlayerName({
-          name: latestAward.player?.name,
-          number: latestAward.player?.number,
-          publicationConsent: latestAward.player?.publicationConsent,
-        }),
-        note: latestAward.award.note,
-      }
-    : null;
+  const mvp: CupMvp | null =
+    hasPublicCupResults(slug) && latestAward
+      ? {
+          roundLabel: latestAward.award.roundLabel,
+          name: publicPlayerName({
+            name: latestAward.player?.name,
+            number: latestAward.player?.number,
+            publicationConsent: latestAward.player?.publicationConsent,
+          }),
+          note: latestAward.award.note,
+        }
+      : null;
 
   return {
     competition,
@@ -398,10 +402,12 @@ export async function getCupPageData(slug: string): Promise<CupPageData | null> 
     nextMatch,
     lastResults: lastResults.slice(0, 6),
     upcoming: upcoming.slice(0, 6),
-    standings: await loadGroupStandings(loaded.competition.id, matchList, rules),
-    scorers: computeScorers(toStatEvents(eventRows), 5),
+    standings: await loadGroupStandings(loaded.competition.id, visibleMatches, rules),
+    scorers: hasPublicCupResults(slug) ? computeScorers(toStatEvents(eventRows), 5) : [],
     mvp,
-    posts: (await getPublishedPostsByCompetition(slug)).slice(0, 3),
+    posts: hasPublicCupResults(slug)
+      ? (await getPublishedPostsByCompetition(slug)).slice(0, 3)
+      : [],
     schools: [...schoolsMap.values()].sort((a, b) => a.name.localeCompare(b.name, "it")),
     venues: [...venuesMap.values()],
     phases: phaseRows.map((phase) => ({
@@ -418,7 +424,9 @@ export async function getCupMatches(slug: string) {
   cacheTag(cupTag(slug), cacheTags.competitions);
   const loaded = await loadCompetition(slug);
   if (!loaded) return null;
-  const matchList = await loadMatches(loaded.competition.id, slug);
+  const matchList = hasPublicCupResults(slug)
+    ? await loadMatches(loaded.competition.id, slug)
+    : [];
   const groupOptions = [...new Map(
     matchList
       .filter((match) => match.groupSlug && match.groupName)
@@ -443,7 +451,9 @@ export async function getCupStandingsPage(slug: string) {
   cacheTag(cupTag(slug), standingsTag(slug), cacheTags.competitions);
   const loaded = await loadCompetition(slug);
   if (!loaded) return null;
-  const matchList = await loadMatches(loaded.competition.id, slug);
+  const matchList = hasPublicCupResults(slug)
+    ? await loadMatches(loaded.competition.id, slug)
+    : [];
   const rules = await loadStandingsRules(loaded.competition);
   return {
     competition: toCupCompetition(loaded.competition, loaded.city),
@@ -500,10 +510,15 @@ export async function getCupTeamPage(
     loadEventsForCompetition(loaded.competition.id),
   ]);
 
-  const teamMatches = matchList.filter(
-    (match) => match.homeTeam?.id === teamRow.team.id || match.awayTeam?.id === teamRow.team.id,
-  );
-  const teamEvents = eventRows.filter((row) => row.event.teamId === teamRow.team.id);
+  const resultsPublic = hasPublicCupResults(competitionSlug);
+  const teamMatches = resultsPublic
+    ? matchList.filter(
+        (match) => match.homeTeam?.id === teamRow.team.id || match.awayTeam?.id === teamRow.team.id,
+      )
+    : [];
+  const teamEvents = resultsPublic
+    ? eventRows.filter((row) => row.event.teamId === teamRow.team.id)
+    : [];
 
   return {
     competition: toCupCompetition(loaded.competition, loaded.city),
@@ -533,17 +548,20 @@ export async function getCupStats(slug: string): Promise<CupStatsData | null> {
     loadEventsForCompetition(loaded.competition.id),
     getDb().select().from(teams).where(eq(teams.competitionId, loaded.competition.id)),
   ]);
-  const { attack, defense } = computeAttackDefense(
-    teamRows.map((team) => ({ id: team.id, name: team.name })),
-    matchList.map((match) => ({
-      status: match.status,
-      homeTeamId: match.homeTeam?.id ?? null,
-      awayTeamId: match.awayTeam?.id ?? null,
-      homeScore: match.homeScore,
-      awayScore: match.awayScore,
-    })),
-  );
-  const stats = toStatEvents(eventRows);
+  const resultsPublic = hasPublicCupResults(slug);
+  const { attack, defense } = resultsPublic
+    ? computeAttackDefense(
+        teamRows.map((team) => ({ id: team.id, name: team.name })),
+        matchList.map((match) => ({
+          status: match.status,
+          homeTeamId: match.homeTeam?.id ?? null,
+          awayTeamId: match.awayTeam?.id ?? null,
+          homeScore: match.homeScore,
+          awayScore: match.awayScore,
+        })),
+      )
+    : { attack: [], defense: [] };
+  const stats = resultsPublic ? toStatEvents(eventRows) : [];
   return {
     competition: toCupCompetition(loaded.competition, loaded.city),
     scorers: computeScorers(stats, 50),
@@ -637,7 +655,13 @@ export async function getMatchPage(idOrSlug: string): Promise<MatchPageData | nu
     .where(where)
     .limit(1);
 
-  if (!row || row.competition.status !== "published") return null;
+  if (
+    !row ||
+    row.competition.status !== "published" ||
+    !hasPublicCupResults(row.competition.slug)
+  ) {
+    return null;
+  }
 
   const eventRows = await db
     .select({ event: matchEvents, player: players })
@@ -705,15 +729,21 @@ export async function getPublishedMatchParams() {
   "use cache";
   cacheTag(cacheTags.competitions);
   const rows = await getDb()
-    .select({ id: matches.id, legacySlug: matches.legacySlug })
+    .select({
+      id: matches.id,
+      legacySlug: matches.legacySlug,
+      slug: competitions.slug,
+    })
     .from(matches)
     .innerJoin(competitions, eq(matches.competitionId, competitions.id))
     .where(eq(competitions.status, "published"));
-  return rows.flatMap((row) => {
-    const params = [{ id: row.id }];
-    if (row.legacySlug) params.push({ id: row.legacySlug });
-    return params;
-  });
+  return rows
+    .filter((row) => hasPublicCupResults(row.slug))
+    .flatMap((row) => {
+      const params = [{ id: row.id }];
+      if (row.legacySlug) params.push({ id: row.legacySlug });
+      return params;
+    });
 }
 
 export async function getPublishedTeamParams() {

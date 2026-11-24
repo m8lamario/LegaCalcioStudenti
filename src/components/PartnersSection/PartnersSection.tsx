@@ -7,6 +7,7 @@ import {
   type CircuitPartner,
 } from "@/data/homeData";
 import { RevealOnScroll } from "@/components/RevealOnScroll/RevealOnScroll";
+import { withKeptSentences } from "@/lib/typography";
 import styles from "./PartnersSection.module.css";
 
 function isExternal(href: string) {
@@ -48,8 +49,9 @@ export const PartnersSection: React.FC<{
               </h2>
             </div>
             <p className={styles.lead}>
-              Le realtà che sostengono il circuito, dalle istituzioni agli
-              sponsor, fino a chi racconta e organizza le competizioni.
+              {withKeptSentences(
+                "Le realtà che sostengono il circuito, dalle istituzioni agli sponsor, fino a chi racconta e organizza le competizioni.",
+              )}
             </p>
           </header>
 

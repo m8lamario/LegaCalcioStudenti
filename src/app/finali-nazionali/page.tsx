@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getHomePageContent } from "@/lib/queries/site";
+import { withKeptSentences } from "@/lib/typography";
 import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.css";
 
@@ -26,8 +27,8 @@ export default async function NationalFinalsPage() {
             <span>{nationalFinals.pageTitleLead} </span>
             <span className={styles.titleScript}>{nationalFinals.pageTitleScript}</span>
           </h1>
-          <p className={styles.lead}>{nationalFinals.pageLead}</p>
-          <p className={styles.lead}>{nationalFinals.pageMeaning}</p>
+          <p className={styles.lead}>{withKeptSentences(nationalFinals.pageLead)}</p>
+          <p className={styles.lead}>{withKeptSentences(nationalFinals.pageMeaning)}</p>
         </header>
 
         <ol className={styles.steps}>
@@ -35,7 +36,7 @@ export default async function NationalFinalsPage() {
             <li key={step.index} className={styles.step}>
               <span className={styles.stepIndex}>{step.index}</span>
               <h2 className={styles.stepTitle}>{step.title}</h2>
-              <p className={styles.stepText}>{step.text}</p>
+              <p className={styles.stepText}>{withKeptSentences(step.text)}</p>
             </li>
           ))}
         </ol>
