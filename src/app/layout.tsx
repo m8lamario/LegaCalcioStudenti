@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Navbar } from "@/components/Navbar/Navbar";
@@ -16,10 +16,19 @@ import {
 import { getHomePageContent } from "@/lib/queries/site";
 import "./globals.css";
 
+export const viewport: Viewport = {
+  themeColor: "#011674",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: DEFAULT_TITLE,
   description: DEFAULT_DESCRIPTION,
+  applicationName: SITE_NAME,
+  appleWebApp: {
+    title: "LCS",
+    capable: true,
+  },
   openGraph: {
     title: DEFAULT_TITLE,
     description:

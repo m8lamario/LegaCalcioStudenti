@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 
 export const SITE_URL = "https://www.legacalciostudenti.com";
 export const SITE_NAME = "Lega Calcio Studenti";
-export const DEFAULT_OG_IMAGE = "/eslHome/19.webp";
-export const DEFAULT_OG_ALT =
-  "Studenti sugli spalti durante una partita della Lega Calcio Studenti";
+export const BRAND_LOGO = "/brand/logo-lcs-512.png";
+export const DEFAULT_OG_IMAGE = "/brand/og-default.png";
+export const DEFAULT_OG_ALT = "Lega Calcio Studenti — logo e nome del circuito";
 
-export const DEFAULT_TITLE = "Lega Calcio Studenti (LCS)";
+export const DEFAULT_TITLE = "Lega Calcio Studenti";
 export const DEFAULT_DESCRIPTION =
   "Oltre la scuola, oltre lo sport. Il circuito nazionale delle competizioni calcistiche tra licei e istituti superiori italiani.";
 

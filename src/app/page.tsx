@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { LiveStrip } from "@/components/LiveStrip/LiveStrip";
 import { SponsorSlot } from "@/components/SponsorSlot/SponsorSlot";
 import cupStyles from "@/components/CupPage/CupPage.module.css";
-import { sportsOrganizationJsonLd } from "@/lib/jsonLd";
+import { sportsOrganizationJsonLd, websiteJsonLd } from "@/lib/jsonLd";
 import { getHomePageContent } from "@/lib/queries/site";
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, pageMetadata } from "@/lib/seo";
 
@@ -26,6 +26,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd data={websiteJsonLd()} />
       <JsonLd data={sportsOrganizationJsonLd(content.motto)} />
       <Hero images={content.heroImages} />
       <section className={`lcs-container ${cupStyles.block}`} aria-label="In diretta">

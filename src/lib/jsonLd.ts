@@ -1,9 +1,33 @@
 import type { LocalCompetition } from "@/data/homeData";
 import type { CupBlogPost } from "@/data/cupBlog";
 import { SITE_MOTTO } from "@/data/homeData";
-import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/seo";
+import {
+  absoluteUrl,
+  BRAND_LOGO,
+  DEFAULT_OG_IMAGE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/seo";
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+const BRAND_LOGO_OBJECT = {
+  "@type": "ImageObject" as const,
+  url: absoluteUrl(BRAND_LOGO),
+  width: 512,
+  height: 512,
+};
+
+export function websiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    alternateName: ["LCS", "Lega Calcio Studenti LCS"],
+    url: `${SITE_URL}/`,
+    inLanguage: "it-IT",
+    publisher: { "@id": ORGANIZATION_ID },
+  };
+}
 
 export function sportsOrganizationJsonLd(motto = SITE_MOTTO) {
   return {
@@ -11,10 +35,10 @@ export function sportsOrganizationJsonLd(motto = SITE_MOTTO) {
     "@type": "SportsOrganization",
     "@id": ORGANIZATION_ID,
     name: SITE_NAME,
-    alternateName: "LCS",
+    alternateName: ["LCS", "Lega Calcio Studenti LCS"],
     url: SITE_URL,
     description: motto,
-    logo: absoluteUrl("/logoCities/lcsw.png"),
+    logo: BRAND_LOGO_OBJECT,
     image: absoluteUrl(DEFAULT_OG_IMAGE),
     sport: "Soccer",
     email: "privacy@legacalciostudenti.it",
@@ -155,10 +179,7 @@ export function newsArticleJsonLd(post: CupBlogPost, competitionName: string) {
       "@id": ORGANIZATION_ID,
       "@type": "SportsOrganization",
       name: SITE_NAME,
-      logo: {
-        "@type": "ImageObject",
-        url: absoluteUrl("/logoCities/lcsw.png"),
-      },
+      logo: BRAND_LOGO_OBJECT,
     },
     isPartOf: {
       "@type": "SportsEvent",
